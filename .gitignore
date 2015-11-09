@@ -24,7 +24,7 @@ local.properties
 /captures
 
 #built application files
-*.apk
+#*.apk
 *.ap_
 
 # files for the dex VM

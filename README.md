@@ -5,7 +5,7 @@ AndroidBasicProject是一个免费的、开源的、简易的Android基础项目
 ##Demo截图
 [APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo_1.0.apk)
 
-![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-25-46.png)
+![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-14-26-58.png)
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-26-07.png)
 
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-27-17.png)

@@ -35,8 +35,8 @@ public class Demo implements Serializable {
   public static List<Demo> getDemos(){
     if(DataUtil.isEmpty(demos)){
       demos = new ArrayList<Demo>();
-      demos.add(new Demo("下载", Color.parseColor("#ffeb3b"),TYPE_DOWNLOAD));
-      demos.add(new Demo("工具类", Color.parseColor("#76ff03"),TYPE_UTILS));
+      demos.add(new Demo("下载", Color.parseColor("#76ff03"),TYPE_DOWNLOAD));
+      //demos.add(new Demo("工具类", Color.parseColor("#76ff03"),TYPE_UTILS));
       demos.add(new Demo("启动页", Color.parseColor("#00bcd4"),TYPE_SPLASH));
       demos.add(new Demo("Fragment", Color.parseColor("#ff4081"),TYPE_FRAGMENT));
       demos.add(new Demo("通用适配器", Color.parseColor("#9c27b0"),TYPE_ADAPTER));

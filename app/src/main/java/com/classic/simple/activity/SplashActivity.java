@@ -17,9 +17,9 @@ public class SplashActivity extends BaseSplashActivity {
      * startAlpha - 图片资源开始时的透明程度。0-255之间。
      * isExpand - 如果为true，则图片会被拉伸至全屏幕大小进行展示，否则按原大小展示。
      */
-    resources.add(new SplashImgResource(R.mipmap.splash,3000,50f,true));
-    resources.add(new SplashImgResource(R.mipmap.splash1,3000,50f,true));
-    resources.add(new SplashImgResource(R.mipmap.splash2,3000,50f,true));
+    resources.add(new SplashImgResource(R.mipmap.splash,1500,100f,true));
+    resources.add(new SplashImgResource(R.mipmap.splash1,1500,100f,true));
+    resources.add(new SplashImgResource(R.mipmap.splash2,1500,100f,true));
   }
 
   @Override protected boolean isAutoStartNextActivity() {

@@ -147,9 +147,9 @@ public class MainActivity extends BaseActivity {
       case Demo.TYPE_SPLASH:
         startActivity(MainActivity.this,SplashActivity.class);
         break;
-      case Demo.TYPE_UTILS:
-        ToastUtil.showToast(getApplicationContext(),"TYPE_UTILS");
-        break;
+      //case Demo.TYPE_UTILS:
+      //  ToastUtil.showToast(getApplicationContext(),"TYPE_UTILS");
+      //  break;
       case Demo.TYPE_FRAGMENT:
         startActivity(MainActivity.this,FragmentActivity.class);
         break;

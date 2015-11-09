@@ -35,8 +35,10 @@ public class DownloadActivity extends BaseActivity {
   }
 
   @Override public void initView() {
+    //这里偷懒，使用默认的。实际项目中建议使用ToolBar
     getSupportActionBar().setTitle("下载管理器示例");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
   }
 
   @Override public void initData() {

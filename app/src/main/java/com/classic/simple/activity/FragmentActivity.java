@@ -27,6 +27,7 @@ public class FragmentActivity extends BaseActivity {
 
   @Override public void initView() {
     fragmentLayout.setOnClickListener(this);
+    //这里偷懒，使用默认的。实际项目中建议使用ToolBar
     getSupportActionBar().setTitle("Fragment示例");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     changeFragment(R.id.fragment_layout, new ImageFragment());

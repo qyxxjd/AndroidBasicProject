@@ -36,6 +36,7 @@ public class EventBusActivity extends BaseActivity {
 
   @Override public void initView() {
     eventbusButton.setOnClickListener(this);
+    //这里偷懒，使用默认的。实际项目中建议使用ToolBar
     getSupportActionBar().setTitle("AndroidEventBus示例");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }

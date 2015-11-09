@@ -34,10 +34,10 @@ public class SplashActivity extends BaseSplashActivity {
   @Override protected void runOnBackground() {
     //这里可以执行耗时操作、初始化工作
     //请注意：如果执行了耗时操作，那么启动页会等到耗时操作执行完才会进行跳转
-    try {
-      Thread.sleep(15 * 1000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    //try {
+    //  Thread.sleep(15 * 1000);
+    //} catch (InterruptedException e) {
+    //  e.printStackTrace();
+    //}
   }
 }

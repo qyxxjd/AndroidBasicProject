@@ -5,7 +5,7 @@ import butterknife.Bind;
 import com.classic.core.activity.BaseActivity;
 import com.classic.core.download.core.DownloadManagerPro;
 import com.classic.core.download.report.listener.DownloadManagerListener;
-import com.classic.core.log.L;
+import com.classic.core.log.Logger;
 import com.classic.core.utils.NetworkUtil;
 import com.classic.core.utils.SDcardUtil;
 import com.classic.core.utils.ToastUtil;
@@ -74,7 +74,7 @@ public class DownloadActivity extends BaseActivity {
           runOnUiThread(new Runnable() {
             @Override public void run() {
               downloadView.success();
-              L.d("下载完成");
+              Logger.d("下载完成");
             }
           });
         }
@@ -108,7 +108,7 @@ public class DownloadActivity extends BaseActivity {
         downloadManagerPro.startDownload(currTaskId);
       } catch (IOException e) {
         e.printStackTrace();
-        L.e(e.getMessage());
+        Logger.e(e.getMessage());
       }
     }else{
       ToastUtil.showToast(this,"请检查网络连接");

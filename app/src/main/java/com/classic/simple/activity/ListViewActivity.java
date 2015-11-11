@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.ListView;
 import butterknife.Bind;
 import com.classic.core.activity.BaseActivity;
+import com.classic.core.adapter.AdapterItem;
+import com.classic.core.adapter.CommonAdapter;
 import com.classic.simple.R;
 import java.util.ArrayList;
 import java.util.List;
-import kale.adapter.AdapterItem;
-import kale.adapter.abs.CommonAdapter;
 
 /**
  * 通用适配器示例By ListView

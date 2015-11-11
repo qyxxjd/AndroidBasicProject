@@ -8,7 +8,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
-import com.classic.core.log.L;
+import com.classic.core.log.Logger;
 import com.classic.core.utils.ShellUtil.CommandResult;
 import java.io.File;
 import java.util.List;
@@ -143,7 +143,7 @@ public final class PackageUtil {
             return INSTALL_SUCCEEDED;
         }
 
-        L.e(new StringBuilder().append("installSilent successMsg:").append(commandResult.successMsg)
+        Logger.e(new StringBuilder().append("installSilent successMsg:").append(commandResult.successMsg)
                         .append(", ErrorMsg:").append(commandResult.errorMsg).toString());
         if (commandResult.errorMsg == null) {
             return INSTALL_FAILED_OTHER;
@@ -341,7 +341,7 @@ public final class PackageUtil {
                 && (commandResult.successMsg.contains("Success") || commandResult.successMsg.contains("success"))) {
             return DELETE_SUCCEEDED;
         }
-        L.e(new StringBuilder().append("uninstallSilent successMsg:")
+        Logger.e(new StringBuilder().append("uninstallSilent successMsg:")
             .append(commandResult.successMsg)
             .append(", ErrorMsg:")
             .append(commandResult.errorMsg)
@@ -459,7 +459,7 @@ public final class PackageUtil {
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                L.e("pm get-install-location error");
+                Logger.e("pm get-install-location error");
             }
         }
         return APP_INSTALL_AUTO;

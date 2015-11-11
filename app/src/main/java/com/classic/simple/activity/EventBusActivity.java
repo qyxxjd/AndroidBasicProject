@@ -44,7 +44,7 @@ public class EventBusActivity extends BaseActivity {
   @Override public void viewClick(View v) {
     if(v.getId() == R.id.eventbus_button){
       //发布一个事件
-      EventUtil.post(DateUtil.formatDate("HH:mm:ss", System.currentTimeMillis()),EVENT_TAG);
+      EventUtil.post(DateUtil.formatDate("HH:mm:ss.SSS", System.currentTimeMillis()),EVENT_TAG);
     }
   }
 

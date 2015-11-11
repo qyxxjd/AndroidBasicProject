@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.TextUtils;
-import com.classic.core.log.L;
+import com.classic.core.log.Logger;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,7 +32,7 @@ public final class FileUtil {
    * @throws Exception
    */
   public static long getFolderSize(java.io.File file) throws Exception {
-    L.d("获取文件大小 - path:" + file.getPath());
+    Logger.d("获取文件大小 - path:" + file.getPath());
     long size = 0;
     java.io.File[] fileList = file.listFiles();
     for (int i = 0; i < fileList.length; i++) {
@@ -42,7 +42,7 @@ public final class FileUtil {
         size = size + fileList[i].length();
       }
     }
-    L.d("获取文件大小 - size:" + size);
+    Logger.d("获取文件大小 - size:" + size);
     return size;
   }
 
@@ -77,7 +77,7 @@ public final class FileUtil {
    * @return
    */
   public static String formetFileSize(long size) {
-    L.d("格式化文件大小前 - size:" + size);
+    Logger.d("格式化文件大小前 - size:" + size);
     DecimalFormat df = new DecimalFormat("#.00");
     String fileSizeString = "";
     if (size < 1) {
@@ -91,7 +91,7 @@ public final class FileUtil {
     } else {
       fileSizeString = df.format((double) size / SizeUtil.GB_2_BYTE) + "G";
     }
-    L.d("格式化文件大小后 - size:" + fileSizeString);
+    Logger.d("格式化文件大小后 - size:" + fileSizeString);
     return fileSizeString;
   }
 

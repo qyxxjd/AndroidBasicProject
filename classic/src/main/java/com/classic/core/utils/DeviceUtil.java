@@ -13,7 +13,7 @@ package com.classic.core.utils;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import com.orhanobut.logger.Logger;
+import com.classic.core.log.Logger;
 import java.util.UUID;
 
 /**

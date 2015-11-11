@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.classic.core.fragment.BaseFragment;
-import com.classic.core.log.L;
+import com.classic.core.log.Logger;
 import com.classic.core.utils.ToastUtil;
 import com.classic.simple.R;
 
@@ -19,7 +19,7 @@ public class Image2Fragment extends BaseFragment {
   }
 
   @Override protected void onFirst() {
-    L.d("亲！只有第一次才会执行哦！");
+    Logger.d("亲！只有第一次才会执行哦！");
     //这里可以做一些界面功能引导
   }
 

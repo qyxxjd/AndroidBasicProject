@@ -12,15 +12,15 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.classic.core.activity.BaseActivity;
-import com.classic.core.log.L;
+import com.classic.core.adapter.AdapterItem;
+import com.classic.core.adapter.CommonRcvAdapter;
+import com.classic.core.log.Logger;
 import com.classic.core.utils.DoubleClickExitHelper;
 import com.classic.core.utils.SDcardUtil;
 import com.classic.core.utils.ToastUtil;
 import com.classic.simple.R;
 import com.classic.simple.model.Demo;
 import java.util.List;
-import kale.adapter.AdapterItem;
-import kale.adapter.recycler.CommonRcvAdapter;
 
 /**
  * 通用适配器示例By RecyclerView
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override protected void onFirst() {
-    L.d("亲！只有第一次才会执行哦！");
+    Logger.d("亲！只有第一次才会执行哦！");
     //这里可以做一些界面功能引导
   }
 
@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
    */
   @Override public void initData() {
     demos = Demo.getDemos();
-
+    Logger.object(demos);
     //双击退出应用工具类使用方法，别忘了重写onKeyDown方法（见底部）
     doubleClickExitHelper = new DoubleClickExitHelper(this);
     //doubleClickExitHelper = new DoubleClickExitHelper(this)

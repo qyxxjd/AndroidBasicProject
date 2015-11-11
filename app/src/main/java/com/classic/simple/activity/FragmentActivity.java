@@ -25,19 +25,23 @@ public class FragmentActivity extends BaseActivity {
     return R.layout.activity_fragment;
   }
 
+  private ImageFragment imageFragment;
+  private Image2Fragment image2Fragment;
   @Override public void initView() {
     fragmentLayout.setOnClickListener(this);
     //这里偷懒，使用默认的。实际项目中建议使用ToolBar
     getSupportActionBar().setTitle("Fragment示例");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    changeFragment(R.id.fragment_layout, new ImageFragment());
+    imageFragment = new ImageFragment();
+    image2Fragment = new Image2Fragment();
+    changeFragment(R.id.fragment_layout, imageFragment);
   }
 
   private boolean isImageFragment = true;
   @Override public void viewClick(View v) {
     if(v.getId() == R.id.fragment_layout){
       isImageFragment = !isImageFragment;
-      changeFragment(R.id.fragment_layout,isImageFragment? new ImageFragment() : new Image2Fragment());
+      changeFragment(R.id.fragment_layout,isImageFragment? imageFragment : image2Fragment);
     }
   }
 

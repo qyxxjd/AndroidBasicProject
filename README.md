@@ -1,18 +1,20 @@
 # AndroidBasicProject
 AndroidBasicProject是一个免费的、开源的、简易的Android基础项目，方便您快速的进行Android应用程序的开发。包含以下内容：
 基础的Activity、Fragment；Event事件管理；下载管理；异常信息收集；日志打印；通用适配器；常用工具类。
+
 本项目并没有集成：图片加载、网络请求、数据库，不同的项目不同的需求可能会有不同的选择。以下优秀的库可供参考：
-图片加载 [glide](https://github.com/bumptech/glide)
- [fresco](https://github.com/facebook/fresco)
- [picasso](https://github.com/square/picasso)
 
-网络请求 [okhttp](https://github.com/square/okhttp)
- [retrofit](https://github.com/square/retrofit)
- [android-async-http](https://github.com/loopj/android-async-http)
+图片加载  [glide](https://github.com/bumptech/glide)
+  [fresco](https://github.com/facebook/fresco)
+  [picasso](https://github.com/square/picasso)
 
-数据库 [greenDAO](https://github.com/greenrobot/greenDAO)
- [ormlite](https://github.com/j256/ormlite-android)
- [ActiveAndroid](https://github.com/pardom/ActiveAndroid)
+网络请求  [okhttp](https://github.com/square/okhttp)
+  [retrofit](https://github.com/square/retrofit)
+  [android-async-http](https://github.com/loopj/android-async-http)
+
+数据库  [greenDAO](https://github.com/greenrobot/greenDAO)
+  [ormlite](https://github.com/j256/ormlite-android)
+  [ActiveAndroid](https://github.com/pardom/ActiveAndroid)
 
 ##Demo截图
 [APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo_1.0.apk)

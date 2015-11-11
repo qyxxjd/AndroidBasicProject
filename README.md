@@ -11,6 +11,46 @@ AndroidBasicProject是一个免费的、开源的、简易的Android基础项目
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-27-17.png)
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-40-44.png)
 
+##使用步骤
+第一步：
+```gradle
+dependencies {
+    compile 'com.classic.core:classic:1.2'
+}
+```
+第二步：
+```java
+public class YourApplication extends Application {
+  public static final String LOG_TAG = "classic";
+  private static final String ROOT_DIR_NAME = "classic";
+
+  @Override public void onCreate() {
+    super.onCreate();
+
+    //可选配置，默认目录名称：download
+    SDcardUtil.setRootDirName(ROOT_DIR_NAME);
+    SDcardUtil.initDir();
+    //配置异常信息收集
+    CrashHandler.getInstance(this);
+    //日志打印配置
+    Logger
+        .init(LOG_TAG)                   // default PRETTYLOGGER
+        .hideThreadInfo()                // default show
+        //.logLevel(LogLevel.NONE)       // default LogLevel.FULL
+        //.methodOffset(2)               // default 0
+        //.logTool(new AndroidLogTool()) // custom log tool, optional
+        ;
+  }
+}
+```
+
+##感谢
+[ButterKnife - JakeWharton](https://github.com/JakeWharton/butterknife)
+[AndroidEventBus - Mr.SIMPLE](https://github.com/bboyfeiyu/AndroidEventBus)
+[CommonAdapter - tianzhijiexian](https://github.com/tianzhijiexian/CommonAdapter)
+[logger - Orhan Obut](https://github.com/orhanobut/logger)
+[LogUtils - pengwei1024](https://github.com/pengwei1024/LogUtils)
+
 ##代码示例
 Activity示例
 ```java
@@ -118,7 +158,7 @@ public class SplashActivity extends BaseSplashActivity {
 }
 ```
 
-AndroidEventBus示例  [点击查看更多介绍](https://github.com/bboyfeiyu/AndroidEventBus)
+AndroidEventBus示例 [点击查看更多介绍](https://github.com/bboyfeiyu/AndroidEventBus)
 ```java
   //发布一个事件
   EventUtil.post(params,EVENT_TAG);
@@ -136,7 +176,7 @@ AndroidEventBus示例  [点击查看更多介绍](https://github.com/bboyfeiyu/A
   }
 ```
 
-通用适配器示例  [点击查看更多介绍](https://github.com/tianzhijiexian/Android-Best-Practices)
+通用适配器示例 [点击查看更多介绍](https://github.com/tianzhijiexian/CommonAdapter)
 ```java
   @Override public void initView() {
     LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -190,9 +230,45 @@ AndroidEventBus示例  [点击查看更多介绍](https://github.com/bboyfeiyu/A
     }
   }
 ```
+打印日志 [点击查看更多介绍](https://github.com/tianzhijiexian/Android-Best-Practices/blob/master/2015.8/log/log.md)
+```java
+Logger.d("hello");
+Logger.e("hello");
+Logger.w("hello");
+Logger.v("hello");
+Logger.wtf("hello");
+//打印json数据
+Logger.json(JSON_CONTENT);
+//打印xml数据
+Logger.xml(XML_CONTENT);
+//打印对象(Bean,Array,Collection,Map...)
+Logger.object(object);
+```
+注意事项：确保包装选项是禁用的
+![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/log.png)
 
+##License
+```
+Copyright 2015 classic
 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
 
 
 

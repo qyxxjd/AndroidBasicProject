@@ -21,10 +21,22 @@ public interface I_Activity {
    */
   int setLayoutResId();
 
+  /** 第一次启动会执行此方法 */
+  void onFirst();
+
+  /**
+   * 此方法会在setContentView之前调用
+   */
+  void initPre();
   /**
    * 初始化数据
    */
   void initData();
+
+  /**
+   * 初始化Toolbar
+   */
+  void initToolbar();
 
   /**
    * 初始化控件
@@ -49,30 +61,30 @@ public interface I_Activity {
   /**
    * 跳转指定activity，并关闭当前activity
    */
-  public void skipActivity(Activity aty, Class<?> cls);
+  void skipActivity(Activity aty, Class<?> cls);
 
   /**
    * 跳转指定activity，并关闭当前activity
    */
-  public void skipActivity(Activity aty, Intent it);
+  void skipActivity(Activity aty, Intent it);
 
   /**
    * 跳转指定activity，并关闭当前activity
    */
-  public void skipActivity(Activity aty, Class<?> cls, Bundle extras);
+  void skipActivity(Activity aty, Class<?> cls, Bundle extras);
 
   /**
    * 跳转activity
    */
-  public void startActivity(Activity aty, Class<?> cls);
+  void startActivity(Activity aty, Class<?> cls);
 
   /**
    * 跳转activity
    */
-  public void startActivity(Activity aty, Intent it);
+  void startActivity(Activity aty, Intent it);
 
   /**
    * 跳转activity
    */
-  public void startActivity(Activity aty, Class<?> cls, Bundle extras);
+  void startActivity(Activity aty, Class<?> cls, Bundle extras);
 }

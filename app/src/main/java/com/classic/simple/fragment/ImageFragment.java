@@ -18,7 +18,7 @@ public class ImageFragment extends BaseFragment {
     return false;
   }
 
-  @Override protected void onFirst() {
+  @Override public void onFirst() {
     Logger.d("亲！只有第一次才会执行哦！");
     //这里可以做一些界面功能引导
   }
@@ -36,14 +36,14 @@ public class ImageFragment extends BaseFragment {
    * 方法执行顺序：
    * initData() --> initView(view)
    */
-  @Override protected void initData() {
+  @Override public void initData() {
     //初始化数据
   }
   /**
    * 方法执行顺序：
    * initData() --> initView(view)
    */
-  @Override protected void initView(View parentView) {
+  @Override public void initView(View parentView) {
     //初始化view
   }
 }

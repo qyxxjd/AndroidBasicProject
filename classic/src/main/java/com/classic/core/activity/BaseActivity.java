@@ -32,13 +32,11 @@ public abstract class BaseActivity extends AppCompatActivity
 
   protected abstract boolean configButterKnife();
   protected abstract boolean configEventBus();
-  /** 第一次启动会执行此方法 */
-  protected void onFirst(){ }
-
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     activity = this;
+    initPre();
     BaseActivityStack.getInstance().addActivity(this);
     setContentView(setLayoutResId());
     if(configButterKnife()){
@@ -54,20 +52,23 @@ public abstract class BaseActivity extends AppCompatActivity
       spUtil.putBooleanValue(simpleName, false);
     }
     initData();
+    initToolbar();
     initView();
     register();
   }
 
-  @Override public void initData() {
-
-  }
-
-  @Override public void initView() {
-
-  }
-
-  @Override public void viewClick(View v) {
-
+  @Override public void initPre() { }
+  @Override public void onFirst(){ }
+  @Override public void initData() { }
+  @Override public void initToolbar() { }
+  @Override public void initView() { }
+  @Override public void viewClick(View v) { }
+  @Override public void showProgress() { }
+  @Override public void hideProgress() { }
+  @Override public void register() { }
+  @Override public void unRegister() { }
+  @Override public void onClick(View v) {
+    viewClick(v);
   }
 
   @Override public void skipActivity(Activity aty, Class<?> cls) {
@@ -100,25 +101,6 @@ public abstract class BaseActivity extends AppCompatActivity
     intent.putExtras(extras);
     intent.setClass(aty, cls);
     aty.startActivity(intent);
-  }
-
-  @Override public void register() {
-
-  }
-
-  @Override public void unRegister() {
-
-  }
-  @Override public void showProgress() {
-
-  }
-
-  @Override public void hideProgress() {
-
-  }
-
-  @Override public void onClick(View v) {
-    viewClick(v);
   }
 
   /**
@@ -154,6 +136,11 @@ public abstract class BaseActivity extends AppCompatActivity
     activityState = RESUME;
   }
 
+  @Override protected void onPause() {
+    super.onPause();
+    activityState = PAUSE;
+  }
+
   @Override protected void onStop() {
     super.onStop();
     activityState = STOP;
@@ -173,8 +160,8 @@ public abstract class BaseActivity extends AppCompatActivity
   }
 
   @Override public void finish() {
-    super.finish();
     KeyBoardUtil.hide(getWindow().getDecorView());
+    super.finish();
   }
 
 }

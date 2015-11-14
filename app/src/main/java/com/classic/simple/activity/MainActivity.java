@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
     return R.layout.activity_main;
   }
 
-  @Override protected void onFirst() {
+  @Override public void onFirst() {
     Logger.d("亲！只有第一次才会执行哦！");
     //这里可以做一些界面功能引导
   }

@@ -162,6 +162,4 @@ public final class WindowUtil {
         view.destroyDrawingCache();
         return bp;
     }
-
-
 }

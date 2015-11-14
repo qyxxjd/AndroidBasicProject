@@ -29,7 +29,7 @@ AndroidBasicProject是一个免费的、开源的、简易的Android基础项目
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:1.2'
+    compile 'com.classic.core:classic:1.3'
 }
 ```
 第二步：
@@ -57,6 +57,14 @@ public class YourApplication extends Application {
   }
 }
 ```
+
+##更新日志
+*v1.2
+    修复部分库冲突问题；
+    修复一些bug。
+*v1.3
+    规范Fragment接口；
+    Activity添加initPre()、initToolbar()方法。
 
 ##感谢
 [ButterKnife - JakeWharton](https://github.com/JakeWharton/butterknife)

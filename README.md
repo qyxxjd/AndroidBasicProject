@@ -60,12 +60,16 @@ public class YourApplication extends Application {
 
 ##更新日志
 > v1.2
-> > 修复部分库冲突问题；
-> > 修复一些bug。
+>
+> 修复部分库冲突问题；
+>
+> 修复一些bug。
 >
 > v1.3
-> > 规范Fragment接口；
-> > Activity添加initPre()、initToolbar()方法。
+>
+> 规范Fragment接口；
+>
+> Activity添加initPre()、initToolbar()方法。
 
 ##感谢
 [ButterKnife - JakeWharton](https://github.com/JakeWharton/butterknife)

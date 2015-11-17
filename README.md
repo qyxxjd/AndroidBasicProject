@@ -17,7 +17,7 @@ AndroidBasicProject是一个免费的、开源的、简易的Android基础项目
   [ActiveAndroid](https://github.com/pardom/ActiveAndroid)
 
 ##Demo截图
-[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.2.apk)
+[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.2.apk?raw=true)
 
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-14-26-58.png)
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-26-07.png)

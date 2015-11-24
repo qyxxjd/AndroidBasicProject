@@ -17,7 +17,7 @@ AndroidBasicProject是一个免费的、开源的、简易的Android基础项目
   [ActiveAndroid](https://github.com/pardom/ActiveAndroid)
 
 ##Demo截图
-[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.2.apk)
+[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.2.apk?raw=true)
 
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-14-26-58.png)
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-26-07.png)
@@ -69,7 +69,7 @@ public class YourApplication extends Application {
 >
 > 规范Fragment接口；
 >
-> Activity添加initPre()、initToolbar()方法。
+> BaseActivity添加initPre()、initToolbar()方法。
 
 ##感谢
 [ButterKnife - JakeWharton](https://github.com/JakeWharton/butterknife)
@@ -107,11 +107,13 @@ public class TestActivity extends BaseActivity {
   @Override protected void onFirst() {
     //只有第一次会执行此方法
   }
-
   /**
    * 方法执行顺序：
-   * initData() --> initView() --> register()
+   * initPre() --> initData() --> initView() --> register()
    */
+  @Override public void initPre() {
+    //这个方法会在setContentView(...)方法之前执行
+  }
   @Override public void initData() {
     //可以初始化一些数据
   }
@@ -150,7 +152,61 @@ public class TestActivity extends BaseActivity {
   }
 }
 ```
+Fragment示例
+```java
+public class TestFragment extends BaseFragment {
+  @Override protected boolean configButterKnife() {
+    return true;
+  }
+  @Override protected boolean configEventBus() {
+    return true;
+  }
 
+  @Override
+  protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+    return inflater.inflate(R.layout.fragment_test, container, false);
+  }
+  @Override public void onFirst() {
+    //只有第一次会执行此方法
+  }
+  @Override public void onChange() {
+    //这个方法会在Fragment从后台切换到前台时执行
+  }
+  /**
+   * 方法执行顺序：
+   * initData() --> initView() --> register()
+   */
+  @Override public void initData() {
+    //可以初始化一些数据
+  }
+  @Override public void initView(View parentView) {
+    //初始化view
+  }
+  @Override public void register() {
+    //这里可以注册一些广播、服务
+  }
+  @Override public void unRegister() {
+    //注销广播、服务
+  }
+  @Override public void showProgress() {
+    //需要显示进度条，可以重写此方法
+  }
+  @Override public void hideProgress() {
+    //关闭进度条
+  }
+  @Override public void viewClick(View v) {
+    //处理一些点击事件
+    switch (v.getId()){
+      case R.id.button:
+        //...
+        break;
+      case R.id.text:
+        //...
+        break;
+    }
+  }
+}
+```
 启动页示例
 ```java
 public class SplashActivity extends BaseSplashActivity {

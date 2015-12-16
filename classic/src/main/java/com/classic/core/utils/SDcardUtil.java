@@ -116,66 +116,6 @@ public final class SDcardUtil {
         videoDir = checkDir(root.getAbsolutePath() + videoDownloadPath);
         bookDir = checkDir(root.getAbsolutePath() + bookDownloadPath);
         logDir = checkDir(root.getAbsolutePath() + logDownloadPath);
-
-        //File downloadDir = new File(root.getAbsolutePath() + downloadRootPath);
-        //if (!downloadDir.exists()) {
-        //  downloadDir.mkdirs();
-        //}
-        //rootDir = downloadDir.getPath();
-        //
-        //File cacheDownloadDirFile = new File(root.getAbsolutePath() + cacheDownloadPath);
-        //if (!cacheDownloadDirFile.exists()) {
-        //  cacheDownloadDirFile.mkdirs();
-        //}
-        //cacheDir = cacheDownloadDirFile.getPath();
-        //
-        //File imageDownloadDirFile = new File(root.getAbsolutePath() + imageDownloadPath);
-        //if (!imageDownloadDirFile.exists()) {
-        //  imageDownloadDirFile.mkdirs();
-        //}
-        //imageDir = imageDownloadDirFile.getPath();
-        //
-        //File fileDownloadDirFile = new File(root.getAbsolutePath() + fileDownloadPath);
-        //if (!fileDownloadDirFile.exists()) {
-        //  fileDownloadDirFile.mkdirs();
-        //}
-        //fileDir = fileDownloadDirFile.getPath();
-        //
-        //File apkDownloadDirFile = new File(root.getAbsolutePath() + apkDownloadPath);
-        //if (!apkDownloadDirFile.exists()) {
-        //  apkDownloadDirFile.mkdirs();
-        //}
-        //apkDir = apkDownloadDirFile.getPath();
-        //
-        //File dbDownloadDirFile = new File(root.getAbsolutePath() + dbDownloadPath);
-        //if (!dbDownloadDirFile.exists()) {
-        //  dbDownloadDirFile.mkdirs();
-        //}
-        //dbDir = dbDownloadDirFile.getPath();
-        //
-        //File audioDownloadDirFile = new File(root.getAbsolutePath() + audioDownloadPath);
-        //if (!audioDownloadDirFile.exists()) {
-        //  audioDownloadDirFile.mkdirs();
-        //}
-        //audioDir = audioDownloadDirFile.getPath();
-        //
-        //File videoDownloadDirFile = new File(root.getAbsolutePath() + videoDownloadPath);
-        //if (!videoDownloadDirFile.exists()) {
-        //  videoDownloadDirFile.mkdirs();
-        //}
-        //videoDir = videoDownloadDirFile.getPath();
-        //
-        //File bookDownloadDirFile = new File(root.getAbsolutePath() + bookDownloadPath);
-        //if (!bookDownloadDirFile.exists()) {
-        //  bookDownloadDirFile.mkdirs();
-        //}
-        //bookDir = bookDownloadDirFile.getPath();
-        //
-        //File logDownloadDirFile = new File(root.getAbsolutePath() + logDownloadPath);
-        //if (!logDownloadDirFile.exists()) {
-        //  logDownloadDirFile.mkdirs();
-        //}
-        //logDir = logDownloadDirFile.getPath();
       }
     } catch (Exception e) {
       e.printStackTrace();

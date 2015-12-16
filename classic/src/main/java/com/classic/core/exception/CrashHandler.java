@@ -53,11 +53,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
   }
 
   //log后缀名
+  public static final String LOG_NAME_PREFIX = "crash_";
   public static final String LOG_NAME_SUFFIX = ".log";
 
   private void saveToSDCard(Throwable ex) throws Exception {
-    final StringBuilder sb = new StringBuilder(/*SDcardUtil.getLogDir()*/)
-        //.append(File.separator)
+    final StringBuilder sb = new StringBuilder(LOG_NAME_PREFIX)
         .append(new SimpleDateFormat("yyyyMM").format(new Date(System.currentTimeMillis())))
         .append(LOG_NAME_SUFFIX);
     boolean append = false;

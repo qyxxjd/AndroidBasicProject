@@ -5,4 +5,4 @@
  * @see
  * <src>AndroidEventBus  Mr.SIMPLE<br/>https://github.com/bboyfeiyu/AndroidEventBus</src>
  */
-package com.classic.core.event;
+package com.classic.simple.event;

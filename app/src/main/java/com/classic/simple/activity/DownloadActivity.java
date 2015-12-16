@@ -2,7 +2,6 @@ package com.classic.simple.activity;
 
 import android.view.MenuItem;
 import butterknife.Bind;
-import com.classic.core.activity.BaseActivity;
 import com.classic.core.download.core.DownloadManagerPro;
 import com.classic.core.download.report.listener.DownloadManagerListener;
 import com.classic.core.log.Logger;
@@ -16,25 +15,18 @@ import java.io.IOException;
 /**
  * 下载管理器示例
  */
-public class DownloadActivity extends BaseActivity {
+public class DownloadActivity extends AppBaseActivity {
   @Bind(R.id.download_view)
   ElasticDownloadView downloadView;
   private DownloadManagerPro downloadManagerPro;
   private int currTaskId;
 
-  @Override protected boolean configButterKnife() {
-    return true;
-  }
-
-  @Override protected boolean configEventBus() {
-    return true;
-  }
-
-  @Override public int setLayoutResId() {
+  @Override public int getLayoutResId() {
     return R.layout.activity_download;
   }
 
   @Override public void initView() {
+    super.initView();
     //这里偷懒，使用默认的。实际项目中建议使用ToolBar
     getSupportActionBar().setTitle("下载管理器示例");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -42,6 +34,7 @@ public class DownloadActivity extends BaseActivity {
   }
 
   @Override public void initData() {
+    super.initData();
     final String imgUrl = "http://www.hy345.com/data/attachment/album/201504/04/231626t7tgggmm7a2oudfv.jpg";
     downloadManagerPro = new DownloadManagerPro(this);
     downloadManagerPro.init(SDcardUtil.getImageDir(), 3, new DownloadManagerListener() {

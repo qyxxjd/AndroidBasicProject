@@ -28,4 +28,7 @@ dependencies {
   compile 'com.android.support:recyclerview-v7:22.2.1'
   compile 'com.github.tibolte:elasticdownload:1.0.+'
 
+  compile 'com.jakewharton:butterknife:7.0.1'
+  compile 'org.simple:androideventbus:latest'
+
 }

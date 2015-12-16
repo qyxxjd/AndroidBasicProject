@@ -1,4 +1,4 @@
-package com.classic.core.event;
+package com.classic.simple.event;
 
 import org.simple.eventbus.EventBus;
 

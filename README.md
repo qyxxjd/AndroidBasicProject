@@ -1,6 +1,6 @@
 # AndroidBasicProject
 AndroidBasicProject是一个免费的、开源的、简易的Android基础项目，方便您快速的进行Android应用程序的开发。包含以下内容：
-基础的Activity、Fragment；Event事件管理；下载管理；异常信息收集；日志打印；通用适配器；常用工具类。
+基础的Activity、Fragment；下载管理；异常信息收集；日志打印；通用适配器；常用工具类。
 
 本项目并没有集成：图片加载、网络请求、数据库，不同的项目不同的需求可能会有不同的选择。有以下优秀的库可供参考：
 
@@ -29,7 +29,7 @@ AndroidBasicProject是一个免费的、开源的、简易的Android基础项目
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:1.3'
+    compile 'com.classic.core:classic:1.4'
 }
 ```
 第二步：
@@ -59,23 +59,21 @@ public class YourApplication extends Application {
 ```
 
 ##更新日志
-> v1.2
+> v1.4
 >
-> 修复部分库冲突问题；
+> BaseActivity、BaseFragment添加initInstanceState方法，方便做一些状态的恢复操作。
+> BaseFragment添加onHidden方法，当前fragment被切换到后台时会执行此方法。
+> 修复MoneyUtil的一些bug，支持链式计算：
+> MoneyUtil.obtain(13.89)
+>         .add(56.73)
+>         .multiply(99.789)
+>         .divide(16)
+>         .multiply(7)
+>         .subtract(66.123)
+>         .create()。
 >
-> 修复一些bug。
->
-> v1.3
->
-> 规范Fragment接口；
->
-> BaseActivity添加initPre()、initToolbar()方法。
 
 ##感谢
-[ButterKnife - JakeWharton](https://github.com/JakeWharton/butterknife)
-
-[AndroidEventBus - Mr.SIMPLE](https://github.com/bboyfeiyu/AndroidEventBus)
-
 [CommonAdapter - tianzhijiexian](https://github.com/tianzhijiexian/CommonAdapter)
 
 [logger - Orhan Obut](https://github.com/orhanobut/logger)
@@ -87,113 +85,150 @@ Activity示例
 ```java
 public class TestActivity extends BaseActivity {
 
-  @Bind(R.id.button) Button button;
-  @Bind(R.id.text) TextView text;
+  @Bind(R.id.main_rv) RecyclerView recyclerView;
 
-  //是否使用ButterKnife,如果设置false,需要在initView里面findviewById...
-  @Override protected boolean configButterKnife() {
-    return true;
-  }
+  private List<Demo> demos;
+  private DoubleClickExitHelper doubleClickExitHelper;
 
-  //是否使用AndroidEventBus
-  @Override protected boolean configEventBus() {
-    return true;
-  }
-
-  @Override public int setLayoutResId() {
+  @Override public int getLayoutResId() {
     return R.layout.activity_test;
   }
 
-  @Override protected void onFirst() {
-    //只有第一次会执行此方法
+  @Override public void onFirst() {
+    super.onFirst();
+    Logger.d("onFirst只有第一次才会执行");
+    //这里可以做一些界面功能引导
   }
+
   /**
    * 方法执行顺序：
-   * initPre() --> initData() --> initView() --> register()
+   * initPre() --> initInstanceState(Bundle savedInstanceState) -->
+   * initData() --> initView() --> register()
    */
   @Override public void initPre() {
+    super.initPre();
     //这个方法会在setContentView(...)方法之前执行
   }
+
+  @Override public void initInstanceState(Bundle savedInstanceState) {
+    super.initInstanceState(savedInstanceState);
+    //这里可以做一些状态的恢复操作
+  }
+
   @Override public void initData() {
-    //可以初始化一些数据
+    super.initData();
+    demos = Demo.getDemos();
+    Logger.object(demos);
+    //双击退出应用工具类使用方法，别忘了重写onKeyDown方法（见底部）
+    doubleClickExitHelper = new DoubleClickExitHelper(this);
+    //.setTimeInterval(3000)
+    //.setToastContent("再按一次退出demo");
   }
+
   @Override public void initView() {
-    //初始化view
-    button.setOnClickListener(this);
-    text.setOnClickListener(this);
-  }
+    super.initView();
+    ButterKnife.bind(this);
 
-  @Override public void viewClick(View v) {
-    //处理一些点击事件
-    switch (v.getId()){
-      case R.id.button:
-
-        break;
-      case R.id.text:
-
-        break;
-    }
+    recyclerView.setOnClickListener(this);
+    LinearLayoutManager manager = new LinearLayoutManager(this);
+    manager.setOrientation(LinearLayoutManager.VERTICAL);
+    recyclerView.setLayoutManager(manager);
+    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+    recyclerView.setHasFixedSize(true);
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setAdapter(new CommonRcvAdapter<Demo>(demos) {
+      @NonNull @Override public AdapterItem<Demo> getItemView(Object o) {
+        return new TextItem();
+      }
+    });
   }
 
   @Override public void register() {
+    super.register();
+    EventUtil.registerEventBus(this);
     //这里可以注册一些广播、服务
   }
 
   @Override public void unRegister() {
+    super.unRegister();
+    ButterKnife.unbind(this);
+    EventUtil.unRegisterEventBus(this);
     //注销广播、服务
   }
 
+  @Override public void viewClick(View v) {
+    switch (v.getId()){
+      case R.id.main_rv:
+        //点击事件处理
+        break;
+    }
+  }
   @Override public void showProgress() {
     //需要显示进度条，可以重写此方法
   }
 
   @Override public void hideProgress() {
     //关闭进度条
+  }
+
+  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    return doubleClickExitHelper.onKeyDown(keyCode, event);
   }
 }
 ```
 Fragment示例
 ```java
 public class TestFragment extends BaseFragment {
-  @Override protected boolean configButterKnife() {
-    return true;
-  }
-  @Override protected boolean configEventBus() {
-    return true;
+
+  @Override public int getLayoutResId() {
+    return R.layout.fragment_test;
   }
 
-  @Override
-  protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-    return inflater.inflate(R.layout.fragment_test, container, false);
-  }
-  @Override public void onFirst() {
-    //只有第一次会执行此方法
-  }
   @Override public void onChange() {
-    //这个方法会在Fragment从后台切换到前台时执行
+    //当前fragment从后台被切换到前台时会执行此方法
   }
+
+  @Override public void onHidden() {
+    super.onHidden();
+    //当前fragment从前台被切换到后台时会执行此方法
+  }
+
+  @Override public void onFirst() {
+    super.onFirst();
+    Logger.d("onFirst只有第一次才会执行");
+    //这里可以做一些界面功能引导
+  }
+
   /**
    * 方法执行顺序：
-   * initData() --> initView() --> register()
+   * initInstanceState(Bundle savedInstanceState) -->
+   * initData() --> initView(View parentView) --> register()
    */
+  @Override public void initInstanceState(Bundle savedInstanceState) {
+    super.initInstanceState(savedInstanceState);
+    //这里可以做一些状态的恢复操作
+  }
+
   @Override public void initData() {
-    //可以初始化一些数据
+    super.initData();
   }
+
   @Override public void initView(View parentView) {
-    //初始化view
+    super.initView(parentView);
+    ButterKnife.bind(this, parentView);
   }
+
   @Override public void register() {
+    super.register();
     //这里可以注册一些广播、服务
   }
+
   @Override public void unRegister() {
+    super.unRegister();
+    ButterKnife.unbind(this);
     //注销广播、服务
   }
-  @Override public void showProgress() {
-    //需要显示进度条，可以重写此方法
-  }
-  @Override public void hideProgress() {
-    //关闭进度条
-  }
+
   @Override public void viewClick(View v) {
     //处理一些点击事件
     switch (v.getId()){
@@ -204,6 +239,13 @@ public class TestFragment extends BaseFragment {
         //...
         break;
     }
+  }
+  @Override public void showProgress() {
+    //需要显示进度条，可以重写此方法
+  }
+
+  @Override public void hideProgress() {
+    //关闭进度条
   }
 }
 ```
@@ -243,24 +285,6 @@ public class SplashActivity extends BaseSplashActivity {
     //}
   }
 }
-```
-
-AndroidEventBus示例 [点击查看更多介绍](https://github.com/bboyfeiyu/AndroidEventBus)
-```java
-  //发布一个事件
-  EventUtil.post(params,EVENT_TAG);
-
-  /**
-   * 接收事件
-   * 当用户post事件时,只有指定了EVENT_TAG的事件才会触发该函数,
-   * ThreadMode.MAIN : 默认方法，执行在UI线程，可省略不写
-   * ThreadMode.ASYNC: 执行在一个独立的线程
-   * ThreadMode.POST : post函数在哪个线程执行,该函数就执行在哪个线程
-   */
-  @Subscriber(tag = EVENT_TAG,mode = ThreadMode.MAIN)
-  public void updateUI(Object params){
-    //业务逻辑处理
-  }
 ```
 
 通用适配器示例 [点击查看更多介绍](https://github.com/tianzhijiexian/CommonAdapter)

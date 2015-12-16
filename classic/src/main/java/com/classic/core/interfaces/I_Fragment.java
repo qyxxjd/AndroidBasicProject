@@ -1,5 +1,6 @@
 package com.classic.core.interfaces;
 
+import android.os.Bundle;
 import android.view.View;
 
 /**
@@ -10,12 +11,27 @@ import android.view.View;
 public interface I_Fragment {
 
   /**
+   * 获取布局文件
+   */
+  int getLayoutResId();
+
+  /**
    * Fragment被切换到前台时调用
    */
   void onChange();
+  /**
+   * Fragment被切换到后台时调用
+   */
+  void onHidden();
 
   /** 第一次启动会执行此方法 */
   void onFirst();
+
+  /**
+   * 处理savedInstanceState
+   */
+  void initInstanceState(Bundle savedInstanceState);
+
   /**
    * 初始化数据
    */

@@ -6,25 +6,27 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
 import com.classic.core.activity.BaseActivity;
-import com.classic.core.event.EventUtil;
 import com.classic.core.interfaces.I_Fragment;
 import com.classic.core.interfaces.I_Register;
 import com.classic.core.utils.SharedPreferencesUtil;
 
+/**
+ * Fragment父类
+ * @author 续写经典
+ * @date 2015/12/16
+ */
 public abstract class BaseFragment extends Fragment implements I_Fragment,I_Register,View.OnClickListener {
   protected Activity activity;
   protected View parentView;
   private SharedPreferencesUtil spUtil;
-  protected abstract boolean configButterKnife();
-  protected abstract boolean configEventBus();
-  protected abstract View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle);
 
   @Override public void onFirst(){ }
+  @Override public void initInstanceState(Bundle savedInstanceState) { }
   @Override public void initData() { }
   @Override public void initView(View parentView) { }
   @Override public void onChange() { }
+  @Override public void onHidden() { }
   @Override public void viewClick(View v) { }
   @Override public void showProgress() { }
   @Override public void hideProgress() { }
@@ -37,37 +39,26 @@ public abstract class BaseFragment extends Fragment implements I_Fragment,I_Regi
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     activity = getActivity();
-    parentView = inflaterView(inflater, container, savedInstanceState);
-    if(configButterKnife()){
-      ButterKnife.bind(this, parentView);
-    }
-    if(configEventBus()){
-      EventUtil.registerEventBus(this);
-    }
+    parentView = inflater.inflate(getLayoutResId(),container,false);
     spUtil = new SharedPreferencesUtil(getActivity(), BaseActivity.SP_NAME);
     final String simpleName = this.getClass().getSimpleName();
     if(spUtil.getBooleanValue(simpleName, true)){
       onFirst();
       spUtil.putBooleanValue(simpleName, false);
     }
-    initData();
     return parentView;
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    initInstanceState(savedInstanceState);
+    initData();
     initView(parentView);
     register();
   }
 
   @Override public void onDestroyView() {
     unRegister();
-    if(configButterKnife()){
-      ButterKnife.unbind(this);
-    }
-    if(configEventBus()){
-      EventUtil.unRegisterEventBus(this);
-    }
     super.onDestroyView();
   }
 }

@@ -1,21 +1,12 @@
 package com.classic.simple.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import com.classic.core.fragment.BaseFragment;
 import com.classic.core.log.Logger;
-import com.classic.core.utils.ToastUtil;
 import com.classic.simple.R;
 
-public class ImageFragment extends BaseFragment {
-  @Override protected boolean configButterKnife() {
-    return true;
-  }
+public class ImageFragment extends AppBaseFragment {
 
-  @Override protected boolean configEventBus() {
-    return false;
+  @Override public int getLayoutResId() {
+    return R.layout.activity_listview_item;
   }
 
   @Override public void onFirst() {
@@ -24,26 +15,12 @@ public class ImageFragment extends BaseFragment {
   }
 
   @Override public void onChange() {
-    ToastUtil.showToast(getActivity(),"onChange:"+this.getClass().getSimpleName());
+    //ToastUtil.showToast(getActivity(),"onChange:"+this.getClass().getSimpleName());
+    Logger.d("ImageFragment --> onChange");
   }
 
-  @Override
-  protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-    return inflater.inflate(R.layout.activity_listview_item,container,false);
-  }
-
-  /**
-   * 方法执行顺序：
-   * initData() --> initView(view)
-   */
-  @Override public void initData() {
-    //初始化数据
-  }
-  /**
-   * 方法执行顺序：
-   * initData() --> initView(view)
-   */
-  @Override public void initView(View parentView) {
-    //初始化view
+  @Override public void onHidden() {
+    super.onHidden();
+    Logger.d("ImageFragment --> onHidden");
   }
 }

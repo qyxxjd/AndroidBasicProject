@@ -5,36 +5,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.Bind;
-import com.classic.core.activity.BaseActivity;
-import com.classic.core.event.EventUtil;
 import com.classic.core.utils.DataUtil;
 import com.classic.core.utils.DateUtil;
 import com.classic.simple.R;
+import com.classic.simple.event.EventUtil;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
 
 /**
  * AndroidEventBus示例
  */
-public class EventBusActivity extends BaseActivity {
+public class EventBusActivity extends AppBaseActivity {
   public static final String EVENT_TAG = "classic";
 
   @Bind(R.id.eventbus_button) Button eventbusButton;
   @Bind(R.id.eventbus_content) TextView eventbusContent;
 
-  @Override protected boolean configButterKnife() {
+  @Override public boolean configEventBus() {
     return true;
   }
 
-  @Override protected boolean configEventBus() {
-    return true;
-  }
-
-  @Override public int setLayoutResId() {
+  @Override public int getLayoutResId() {
     return R.layout.activity_eventbus;
   }
 
   @Override public void initView() {
+    super.initView();
     eventbusButton.setOnClickListener(this);
     //这里偷懒，使用默认的。实际项目中建议使用ToolBar
     getSupportActionBar().setTitle("AndroidEventBus示例");
@@ -44,7 +40,7 @@ public class EventBusActivity extends BaseActivity {
   @Override public void viewClick(View v) {
     if(v.getId() == R.id.eventbus_button){
       //发布一个事件
-      EventUtil.post(DateUtil.formatDate("HH:mm:ss.SSS", System.currentTimeMillis()),EVENT_TAG);
+      EventUtil.post(DateUtil.formatDate("HH:mm:ss.SSS", System.currentTimeMillis()), EVENT_TAG);
     }
   }
 

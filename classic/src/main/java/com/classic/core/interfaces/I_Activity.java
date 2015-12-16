@@ -17,9 +17,9 @@ public interface I_Activity {
   int RESUME = 0x03;
 
   /**
-   * 设置界面
+   * 获取布局文件
    */
-  int setLayoutResId();
+  int getLayoutResId();
 
   /** 第一次启动会执行此方法 */
   void onFirst();
@@ -28,6 +28,12 @@ public interface I_Activity {
    * 此方法会在setContentView之前调用
    */
   void initPre();
+
+  /**
+   * 处理savedInstanceState
+   */
+  void initInstanceState(Bundle savedInstanceState);
+
   /**
    * 初始化数据
    */

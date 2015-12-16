@@ -1,4 +1,4 @@
-package com.classic.core.event;
+package com.classic.simple.event;
 
 import java.util.Timer;
 import java.util.TimerTask;

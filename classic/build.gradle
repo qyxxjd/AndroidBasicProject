@@ -4,7 +4,7 @@ apply plugin: 'com.android.library'
 
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
 // 这个version影响后面的引用
-//version = "1.3"
+//version = "1.4"
 
 android {
 //  resourcePrefix "AndroidBasicProject" //随意填写
@@ -15,8 +15,8 @@ android {
   defaultConfig {
     minSdkVersion 9
     targetSdkVersion 22
-    versionCode 5
-    versionName "1.3"
+    versionCode 6
+    versionName "1.4"
   }
   buildTypes {
     release {
@@ -30,12 +30,10 @@ dependencies {
   compile 'com.android.support:appcompat-v7:22.2.1'
   compile 'com.android.support:support-v4:22.2.1'
   compile 'com.android.support:recyclerview-v7:22.2.1'
-  compile 'com.jakewharton:butterknife:7.0.1'
-  compile 'org.simple:androideventbus:latest'
 }
 
 //def siteUrl = 'https://github.com/qyxxjd/AndroidBasicProject'   // 项目的主页
-//def gitUrl = 'https://github.com/qyxxjd/AndroidBasicProject'   // Git仓库的url
+//def gitUrl = 'https://github.com/qyxxjd/AndroidBasicProject.git'   // Git仓库的url
 //group = "com.classic.core"            //包名
 //install {
 //  repositories.mavenInstaller {
@@ -57,7 +55,7 @@ dependencies {
 //          developer {
 //            id 'qyxxjd'        //填写的一些基本信息
 //            name 'classic'
-//            email '630404403@qq.com'
+//            email 'pgliubin@gmail.com'
 //          }
 //        }
 //        scm {

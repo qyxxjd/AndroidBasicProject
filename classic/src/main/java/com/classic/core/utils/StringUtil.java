@@ -45,7 +45,7 @@ public final class StringUtil {
   }
 
   /**
-   * 描述：是否只是数字.
+   * 描述：判断字符串是否全是数字.
    *
    * @param str 指定的字符串
    * @return 是否只是数字:是为true，否则false

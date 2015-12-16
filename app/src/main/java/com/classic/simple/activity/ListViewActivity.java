@@ -5,7 +5,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import butterknife.Bind;
-import com.classic.core.activity.BaseActivity;
 import com.classic.core.adapter.AdapterItem;
 import com.classic.core.adapter.CommonAdapter;
 import com.classic.simple.R;
@@ -15,20 +14,12 @@ import java.util.List;
 /**
  * 通用适配器示例By ListView
  */
-public class ListViewActivity extends BaseActivity {
+public class ListViewActivity extends AppBaseActivity {
   @Bind(R.id.listview_lv)
   ListView listView;
   private List<Integer> typeList;
-  //是否启用ButterKnife,如果设置false,需要在initView里面findviewById...
-  @Override protected boolean configButterKnife() {
-    return true;
-  }
-  //是否启用AndroidEventBus
-  @Override protected boolean configEventBus() {
-    return false;
-  }
 
-  @Override public int setLayoutResId() {
+  @Override public int getLayoutResId() {
     return R.layout.activity_listview;
   }
 
@@ -37,6 +28,7 @@ public class ListViewActivity extends BaseActivity {
    * initData() --> initView() --> register()
    */
   @Override public void initData() {
+    super.initData();
     typeList = new ArrayList<Integer>();
     for(int i = 0;i<20;i++){
       typeList.add(i%3==0?1:0);
@@ -47,6 +39,7 @@ public class ListViewActivity extends BaseActivity {
    * initData() --> initView() --> register()
    */
   @Override public void initView() {
+    super.initView();
     getSupportActionBar().setTitle("通用适配器示例");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     /*

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.classic.core.activity.BaseActivity;
 import com.classic.core.adapter.AdapterItem;
 import com.classic.core.adapter.CommonRcvAdapter;
 import com.classic.core.log.Logger;
@@ -25,28 +24,24 @@ import java.util.List;
 /**
  * 通用适配器示例By RecyclerView
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppBaseActivity {
   @Bind(R.id.main_rv) RecyclerView recyclerView;
 
   private List<Demo> demos;
   private DoubleClickExitHelper doubleClickExitHelper;
 
-  //是否启用ButterKnife,如果设置false,需要在initView里面findviewById...
-  @Override protected boolean configButterKnife() {
-    return true;
-  }
-  //是否启用AndroidEventBus
-  @Override protected boolean configEventBus() {
-    return true;
-  }
-
-  @Override public int setLayoutResId() {
+  @Override public int getLayoutResId() {
     return R.layout.activity_main;
   }
 
   @Override public void onFirst() {
-    Logger.d("亲！只有第一次才会执行哦！");
+    super.onFirst();
+    Logger.d("onFirst只有第一次才会执行");
     //这里可以做一些界面功能引导
+  }
+
+  @Override public void initToolbar() {
+    super.initToolbar();
   }
 
   /**
@@ -54,6 +49,7 @@ public class MainActivity extends BaseActivity {
    * initData() --> initView() --> register()
    */
   @Override public void initData() {
+    super.initData();
     demos = Demo.getDemos();
     Logger.object(demos);
     //双击退出应用工具类使用方法，别忘了重写onKeyDown方法（见底部）
@@ -67,6 +63,8 @@ public class MainActivity extends BaseActivity {
    * initData() --> initView() --> register()
    */
   @Override public void initView() {
+    super.initView();
+    recyclerView.setOnClickListener(this);
     LinearLayoutManager manager = new LinearLayoutManager(this);
     manager.setOrientation(LinearLayoutManager.VERTICAL);
     recyclerView.setLayoutManager(manager);
@@ -79,15 +77,21 @@ public class MainActivity extends BaseActivity {
       }
     });
   }
+
+  @Override public void viewClick(View v) {
+  }
+
   /**
    * 方法执行顺序：
    * initData() --> initView() --> register()
    */
   @Override public void register() {
+    super.register();
     //这里可以注册一些广播、服务
   }
 
   @Override public void unRegister() {
+    super.unRegister();
     //注销广播、服务
   }
 

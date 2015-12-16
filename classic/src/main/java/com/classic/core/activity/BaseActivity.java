@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import butterknife.ButterKnife;
-import com.classic.core.event.EventUtil;
 import com.classic.core.fragment.BaseFragment;
 import com.classic.core.interfaces.I_Activity;
 import com.classic.core.interfaces.I_Register;
@@ -14,7 +12,7 @@ import com.classic.core.utils.KeyBoardUtil;
 import com.classic.core.utils.SharedPreferencesUtil;
 
 /**
- * 父类Activitiy
+ * Activity父类
  * @author 续写经典
  * @date 2015/11/7
  */
@@ -30,27 +28,19 @@ public abstract class BaseActivity extends AppCompatActivity
   private SharedPreferencesUtil spUtil;
   public static final String SP_NAME = "firstConfig";
 
-  protected abstract boolean configButterKnife();
-  protected abstract boolean configEventBus();
-
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     activity = this;
     initPre();
     BaseActivityStack.getInstance().addActivity(this);
-    setContentView(setLayoutResId());
-    if(configButterKnife()){
-      ButterKnife.bind(this);
-    }
-    if(configEventBus()){
-      EventUtil.registerEventBus(this);
-    }
+    setContentView(getLayoutResId());
     spUtil = new SharedPreferencesUtil(this,SP_NAME);
     final String simpleName = this.getClass().getSimpleName();
     if(spUtil.getBooleanValue(simpleName, true)){
       onFirst();
       spUtil.putBooleanValue(simpleName, false);
     }
+    initInstanceState(savedInstanceState);
     initData();
     initToolbar();
     initView();
@@ -59,6 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
   @Override public void initPre() { }
   @Override public void onFirst(){ }
+  @Override public void initInstanceState(Bundle savedInstanceState) { }
   @Override public void initData() { }
   @Override public void initToolbar() { }
   @Override public void initView() { }
@@ -126,6 +117,7 @@ public abstract class BaseActivity extends AppCompatActivity
     if (currentFragment != null
         && currentFragment.isVisible()) {
       transaction.hide(currentFragment);
+      currentFragment.onHidden();
     }
     currentFragment = targetFragment;
     transaction.commit();
@@ -151,12 +143,6 @@ public abstract class BaseActivity extends AppCompatActivity
     super.onDestroy();
     activityState = DESTROY;
     BaseActivityStack.getInstance().finishActivity(this);
-    if(configButterKnife()){
-      ButterKnife.unbind(this);
-    }
-    if(configEventBus()){
-      EventUtil.unRegisterEventBus(this);
-    }
   }
 
   @Override public void finish() {

@@ -2,7 +2,7 @@
 AndroidBasicProject是一个免费的、开源的、简易的Android基础项目，方便您快速的进行Android应用程序的开发。包含以下内容：
 基础的Activity、Fragment；下载管理；异常信息收集；日志打印；通用适配器；常用工具类。
 
-本项目并没有集成：图片加载、网络请求、数据库，不同的项目不同的需求可能会有不同的选择。有以下优秀的库可供参考：
+配合以下库使用，效果更酸爽，哈哈！
 
 图片加载  [glide](https://github.com/bumptech/glide)
   [fresco](https://github.com/facebook/fresco)
@@ -59,19 +59,20 @@ public class YourApplication extends Application {
 ```
 
 ##更新日志
-> v1.4
->
-> BaseActivity、BaseFragment添加initInstanceState方法，方便做一些状态的恢复操作。
-> BaseFragment添加onHidden方法，当前fragment被切换到后台时会执行此方法。
-> 修复MoneyUtil的一些bug，支持链式计算：
-> MoneyUtil.obtain(13.89)
->         .add(56.73)
->         .multiply(99.789)
->         .divide(16)
->         .multiply(7)
->         .subtract(66.123)
->         .create()。
->
+```java
+v1.4
+
+BaseActivity、BaseFragment添加initInstanceState方法，方便做一些状态的恢复操作。
+BaseFragment添加onHidden方法，当前fragment被切换到后台时会执行此方法。
+修复MoneyUtil的一些bug，支持链式计算：
+MoneyUtil.obtain(13.89)
+        .add(56.73)
+        .multiply(99.789)
+        .divide(16)
+        .multiply(7)
+        .subtract(66.123)
+        .create()。
+```
 
 ##感谢
 [CommonAdapter - tianzhijiexian](https://github.com/tianzhijiexian/CommonAdapter)
@@ -357,6 +358,10 @@ Logger.object(object);
 ```
 注意事项：确保包装选项是禁用的
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/log.png)
+
+##工具类
+[AppInfoUtil](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/AppInfoUtil.java) <br/>
+[BitmapUtil](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/BitmapUtil.java) <br/>
 
 ##关于
 * Blog: [http://blog.csdn.net/qy1387](http://blog.csdn.net/qy1387)

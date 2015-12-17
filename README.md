@@ -1,34 +1,13 @@
 AndroidBasicProject是一个简易的Android基础项目，方便您快速进行开发。包含以下内容：
 基础的Activity、Fragment；下载管理；异常信息收集；日志打印；通用适配器；常用工具类。
 
-配合以下库使用，效果更酸爽，哈哈！
-
-图片加载  [glide](https://github.com/bumptech/glide)
-  [fresco](https://github.com/facebook/fresco)
-  [picasso](https://github.com/square/picasso)
-
-网络请求  [okhttp](https://github.com/square/okhttp)
-  [retrofit](https://github.com/square/retrofit)
-  [android-async-http](https://github.com/loopj/android-async-http)
-
-数据库  [greenDAO](https://github.com/greenrobot/greenDAO)
-  [ormlite](https://github.com/j256/ormlite-android)
-  [ActiveAndroid](https://github.com/pardom/ActiveAndroid)
-
-##Demo截图
 [APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.2.apk?raw=true)
-
-![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-14-26-58.png)
-![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-26-07.png)
-
-![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-27-17.png)
-![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/Screenshot_2015-11-09-13-40-44.png)
 
 ##使用步骤
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:1.4'
+    compile 'com.classic.core:classic:1.5'
 }
 ```
 第二步：
@@ -59,7 +38,7 @@ public class YourApplication extends Application {
 
 ##更新日志
 ```java
-v1.4
+v1.5
 
 BaseActivity、BaseFragment添加initInstanceState方法，方便做一些状态的恢复操作。
 BaseFragment添加onHidden方法，当前fragment被切换到后台时会执行此方法。

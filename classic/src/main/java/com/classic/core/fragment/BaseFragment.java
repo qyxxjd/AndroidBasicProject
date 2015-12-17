@@ -46,14 +46,14 @@ public abstract class BaseFragment extends Fragment implements I_Fragment,I_Regi
       onFirst();
       spUtil.putBooleanValue(simpleName, false);
     }
+    initInstanceState(savedInstanceState);
+    initData();
+    initView(parentView);
     return parentView;
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    initInstanceState(savedInstanceState);
-    initData();
-    initView(parentView);
     register();
   }
 

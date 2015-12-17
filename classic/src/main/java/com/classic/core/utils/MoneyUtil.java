@@ -15,32 +15,32 @@ public class MoneyUtil {
 	}
 	private BigDecimal root;
 
-	public static MoneyUtil obtain(Number number){
+	public static MoneyUtil obtain(Object number){
 		final MoneyUtil moneyUtil = new MoneyUtil();
 		moneyUtil.root = objectToBigDecimal(number);
 		return moneyUtil;
 	}
 
 	/** 减 */
-	public MoneyUtil subtract(Number number){
+	public MoneyUtil subtract(Object number){
 		root = root.subtract(objectToBigDecimal(number));
 		return this;
 	}
 
 	/** 乘 */
-	public MoneyUtil multiply(Number number){
+	public MoneyUtil multiply(Object number){
 		root = root.multiply(objectToBigDecimal(number));
 		return this;
 	}
 
 	/** 除 */
-	public MoneyUtil divide(Number number){
+	public MoneyUtil divide(Object number){
 		root = root.divide(objectToBigDecimal(number));
 		return this;
 	}
 
 	/** 加 */
-	public MoneyUtil add(Number number){
+	public MoneyUtil add(Object number){
 		root = root.add(objectToBigDecimal(number));
 		return this;
 	}
@@ -81,10 +81,10 @@ public class MoneyUtil {
 	}
 
 	/** 加 */
-	public static double add(Object v1, Object v2) {
+	public static BigDecimal add(Object v1, Object v2) {
 		BigDecimal b1 = objectToBigDecimal(v1);
 		BigDecimal b2 = objectToBigDecimal(v2);
-		return b1.add(b2).doubleValue();
+		return b1.add(b2);
 	}
 
 	/** 减 */
@@ -141,8 +141,8 @@ public class MoneyUtil {
 	 * @param price
 	 * @return
 	 */
-    public static String replace(Number price){
-        String s = String.valueOf(price);
+    public static String replace(Object price){
+        String s = price instanceof String ? price.toString() : (String)price;
         if(s.indexOf(".") > 0){
             s = s.replaceAll("0+?$", "");//去掉后面无用的零
             s = s.replaceAll("[.]$", "");//如小数点后面全是零则去掉小数点

@@ -42,14 +42,7 @@ v1.5
 
 BaseActivity、BaseFragment添加initInstanceState方法，方便做一些状态的恢复操作。
 BaseFragment添加onHidden方法，当前fragment被切换到后台时会执行此方法。
-修复MoneyUtil的一些bug，支持链式计算：
-MoneyUtil.obtain(13.89)
-        .add(56.73)
-        .multiply(99.789)
-        .divide(16)
-        .multiply(7)
-        .subtract(66.123)
-        .create()。
+修复一些工具类的bug。
 ```
 
 ##感谢

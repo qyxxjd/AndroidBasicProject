@@ -1,12 +1,10 @@
 package com.classic.simple.activity;
 
-import android.support.annotation.NonNull;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import butterknife.Bind;
-import com.classic.core.adapter.AdapterItem;
-import com.classic.core.adapter.CommonAdapter;
+import com.classic.adapter.BaseAdapterHelper;
+import com.classic.adapter.CommonAdapter;
 import com.classic.simple.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,96 +13,51 @@ import java.util.List;
  * 通用适配器示例By ListView
  */
 public class ListViewActivity extends AppBaseActivity {
-  @Bind(R.id.listview_lv)
-  ListView listView;
-  private List<Integer> typeList;
+    @Bind(R.id.listview_lv) ListView listView;
+    private List<Integer> typeList;
 
-  @Override public int getLayoutResId() {
-    return R.layout.activity_listview;
-  }
-
-  /**
-   * 方法执行顺序：
-   * initData() --> initView() --> register()
-   */
-  @Override public void initData() {
-    super.initData();
-    typeList = new ArrayList<Integer>();
-    for(int i = 0;i<20;i++){
-      typeList.add(i%3==0?1:0);
+    @Override public int getLayoutResId() {
+        return R.layout.activity_listview;
     }
-  }
-  /**
-   * 方法执行顺序：
-   * initData() --> initView() --> register()
-   */
-  @Override public void initView() {
-    super.initView();
-    getSupportActionBar().setTitle("通用适配器示例");
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    /*
-     * ListView和RecyclerView唯一的不同就是：
-     * ListView用的CommonAdapter；
-     * RecyclerView用的CommonRcvAdapter；
-     * 其它的使用完全一样。
+
+    /**
+     * 方法执行顺序：
+     * initData() --> initView() --> register()
      */
-    listView.setAdapter(new CommonAdapter<Integer>(typeList,2) {
-      @Override public Object getItemViewType(Integer type) {
-        return type;
-      }
-
-      @NonNull @Override public AdapterItem<Integer> getItemView(Object type) {
-        switch (Integer.valueOf(type.toString())) {
-          case 1:
-            return new ImageItem2();
-          default:
-            return new ImageItem();
+    @Override public void initData() {
+        super.initData();
+        typeList = new ArrayList<Integer>();
+        for (int i = 0; i < 20; i++) {
+            typeList.add(i % 3 == 0 ? 1 : 0);
         }
-      }
-    });
-  }
-
-  private class ImageItem implements AdapterItem<Integer> {
-
-    @Override public int getLayoutResId() {
-      return R.layout.activity_listview_item;
-    }
-    @Override public void onBindViews(View view) {
-      //在这里做findviewById的工作吧
     }
 
-    @Override public void onSetViews() {
-      //这个方法仅仅在item构建时才会触发，所以在这里也仅仅建立一次监听器，不会重复建立
+    /**
+     * 方法执行顺序：
+     * initData() --> initView() --> register()
+     */
+    @Override public void initView() {
+        super.initView();
+        getSupportActionBar().setTitle("通用适配器示例");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        listView.setAdapter(
+            new CommonAdapter<Integer>(activity, R.layout.activity_listview_item, typeList) {
+                @Override public int getLayoutResId(Integer item) {
+                    return item == 1 ? R.layout.activity_listview_item2
+                        : R.layout.activity_listview_item;
+                }
+
+                @Override public void onUpdate(BaseAdapterHelper helper, Integer item) {
+                }
+            });
     }
 
-    @Override public void onUpdateViews(Integer type, int i) {
-      // 在每次适配器getView的时候就会触发，这里避免做耗时的操作
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
-  }
-  private class ImageItem2 implements AdapterItem<Integer> {
-
-    @Override public int getLayoutResId() {
-      return R.layout.activity_listview_item2;
-    }
-    @Override public void onBindViews(View view) {
-    }
-
-    @Override public void onSetViews() {
-    }
-
-    @Override public void onUpdateViews(Integer type, int i) {
-    }
-  }
-
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    if(item.getItemId() == android.R.id.home)
-    {
-      finish();
-      return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
 }

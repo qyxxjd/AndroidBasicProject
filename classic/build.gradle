@@ -4,19 +4,19 @@ apply plugin: 'com.android.library'
 
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
 // 这个version影响后面的引用
-//version = "1.5"
+//version = "1.6"
 
 android {
 //  resourcePrefix "AndroidBasicProject" //随意填写
 
-  compileSdkVersion 22
-  buildToolsVersion "22.0.1"
+  compileSdkVersion 23
+  buildToolsVersion "23.0.1"
 
   defaultConfig {
     minSdkVersion 9
-    targetSdkVersion 22
-    versionCode 7
-    versionName "1.5"
+    targetSdkVersion 23
+    versionCode 8
+    versionName "1.6"
   }
   buildTypes {
     release {
@@ -27,9 +27,7 @@ android {
 }
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile 'com.android.support:appcompat-v7:22.2.1'
-  compile 'com.android.support:support-v4:22.2.1'
-  compile 'com.android.support:recyclerview-v7:22.2.1'
+  compile 'com.android.support:appcompat-v7:23.2.0'
 }
 
 //def siteUrl = 'https://github.com/qyxxjd/AndroidBasicProject'   // 项目的主页

@@ -9,7 +9,7 @@ public class MIME
 {
 	/** 二进制流,匹配所有类型 */
 	public static final String FILE      = "application/octet-stream";
-	
+
 	/**
 	 * "application/xml" 和 "text/xml" 二者功能一模一样，唯一的区别就是编码格式.<br/>
 	 * text/xml : 忽略xml头所指定编码格式而默认采用us-ascii编码<br/>
@@ -17,7 +17,7 @@ public class MIME
 	 */
 	public static final String HTTP_XML  = "application/xml;charset=UTF-8";
 	public static final String HTTP_JSON = "application/json;charset=UTF-8";
-	
+
 	/*********** 文件 **********/
 	/** APK文件(安卓系统) */
 	public static final String APK       = "application/vnd.android.package-archive";
@@ -34,7 +34,7 @@ public class MIME
 	public static final String DLL       = "application/x-msdownload";
 	public static final String VCF       = "text/x-vcard";
 	public static final String RTF       = "application/rtf";
-	
+
 	/*********** web **********/
 	/** c、h、txt 、bas */
 	public static final String TEXT      = "text/plain";
@@ -47,21 +47,21 @@ public class MIME
 	public static final String XML       = "text/xml";
 	public static final String CSS       = "text/css";
 	public static final String JS        = "application/x-javascript";
-	
+
 	/*********** 压缩文件 **********/
 	public static final String ZIP       = "application/zip";
 	public static final String GZ        = "application/x-gzip";
 	public static final String TGZ       = "application/x-compressed";
 	public static final String TAR       = "application/x-tar";
 	public static final String GTAR      = "application/x-gtar";
-	
+
 	/*********** 文档 **********/
 	public static final String XLS       = "application/vnd.ms-excel";
 	public static final String WPS       = "application/vnd.ms-works";
 	public static final String PPT       = "application/vnd.ms-powerpoint";
 	public static final String PDF       = "application/pdf";
 	public static final String DOC       = "application/msword";
-	
+
 	/*********** 图片、动画 **********/
 	public static final String GIF       = "image/gif";
 	public static final String ICO       = "image/x-icon";
@@ -69,7 +69,7 @@ public class MIME
 	public static final String PNG       = "image/png";
 	public static final String BMP       = "image/bmp";
 	public static final String SVG       = "image/svg+xml";
-	
+
 	/*********** 音频、视频 **********/
 	public static final String SWF       = "application/x-shockwave-flash";
 	public static final String RM        = "application/vnd.rn-realmedia";
@@ -99,7 +99,7 @@ public class MIME
 	public static final String WMV       = "audio/x-ms-wmv";
 	public static final String OGG       = "audio/ogg";
 	public static final String VOX       = "audio/voxware";
-	
+
 	public static final String M4U       = "video/vnd.mpegurl";
 	public static final String M4V       = "video/x-m4v";
 	public static final String MP4       = "video/mp4";
@@ -110,5 +110,5 @@ public class MIME
 	public static final String AVI       = "video/x-msvideo";
 	public static final String MOV       = "video/quicktime";
 	public static final String RMVB      = "application/vnd.rn-realmedia-vbr";
-	
+
 }

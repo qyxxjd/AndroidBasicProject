@@ -37,11 +37,7 @@
         android:name=".activity.SplashActivity"
         android:screenOrientation="portrait"
         />
-    <activity
-        android:name=".activity.DownloadActivity"
-        android:screenOrientation="portrait"
-        />
-    <activity
+      <activity
         android:name=".activity.EventBusActivity"
         android:screenOrientation="portrait"
         />

@@ -1,5 +1,12 @@
-AndroidBasicProject是一个简易的Android基础项目，方便您快速进行开发。包含以下内容：
-基础的Activity、Fragment；下载管理；异常信息收集；日志打印；通用适配器；常用工具类。
+AndroidBasicProject是一个简易的Android基础项目，方便您快速进行开发。
+包含以下内容：
+- BaseActivity、BaseFragment
+- Activity栈管理
+- 异常信息收集
+- 日志打印
+- 丰富的工具类
+
+通用适配器请参考: [CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
 
 [APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.2.apk?raw=true)
 
@@ -13,44 +20,31 @@ dependencies {
 第二步：
 ```java
 public class YourApplication extends Application {
-  public static final String LOG_TAG = "classic";
-  private static final String ROOT_DIR_NAME = "classic";
 
   @Override public void onCreate() {
     super.onCreate();
 
-    //可选配置，默认目录名称：download
-    SDcardUtil.setRootDirName(ROOT_DIR_NAME);
-    SDcardUtil.initDir();
-    //配置异常信息收集
-    CrashHandler.getInstance(this);
-    //日志打印配置
-    Logger
-        .init(LOG_TAG)                   // default PRETTYLOGGER
-        .hideThreadInfo()                // default show
-        //.logLevel(LogLevel.NONE)       // default LogLevel.FULL
-        //.methodOffset(2)               // default 0
-        //.logTool(new AndroidLogTool()) // custom log tool, optional
-        ;
+        /**
+         * 默认配置
+         * 内部调用了: initDir() initLog() initExceptionHandler()三个方法
+         */
+        BasicConfig.getInstance(this).init();
+
+        or
+
+        /**
+         * 自定义配置
+         * initDir() 初始化SDCard缓存目录
+         * initLog() 初始化日志打印
+         * initExceptionHandler() 初始化异常信息收集
+         */
+        BasicConfig.getInstance(this)
+                   .initDir() // or initDir(rootDirName)
+                   .initLog() // or initDir(rootDirName)
+                   .initExceptionHandler();
   }
 }
 ```
-
-##更新日志
-```java
-v1.5
-
-BaseActivity、BaseFragment添加initInstanceState方法，方便做一些状态的恢复操作。
-BaseFragment添加onHidden方法，当前fragment被切换到后台时会执行此方法。
-修复一些工具类的bug。
-```
-
-##感谢
-[CommonAdapter - tianzhijiexian](https://github.com/tianzhijiexian/CommonAdapter)
-
-[logger - Orhan Obut](https://github.com/orhanobut/logger)
-
-[LogUtils - pengwei1024](https://github.com/pengwei1024/LogUtils)
 
 ##代码示例
 Activity示例
@@ -74,8 +68,7 @@ public class TestActivity extends BaseActivity {
 
   /**
    * 方法执行顺序：
-   * initPre() --> initInstanceState(Bundle savedInstanceState) -->
-   * initData() --> initView() --> register()
+   * initPre() --> initInstanceState(Bundle savedInstanceState) --> initData() --> initView() --> register()
    */
   @Override public void initPre() {
     super.initPre();
@@ -173,8 +166,7 @@ public class TestFragment extends BaseFragment {
 
   /**
    * 方法执行顺序：
-   * initInstanceState(Bundle savedInstanceState) -->
-   * initData() --> initView(View parentView) --> register()
+   * initInstanceState(Bundle savedInstanceState) --> initData() --> initView(View parentView) --> register()
    */
   @Override public void initInstanceState(Bundle savedInstanceState) {
     super.initInstanceState(savedInstanceState);
@@ -259,60 +251,6 @@ public class SplashActivity extends BaseSplashActivity {
 }
 ```
 
-通用适配器示例 [点击查看更多介绍](https://github.com/tianzhijiexian/CommonAdapter)
-```java
-  @Override public void initView() {
-    LinearLayoutManager manager = new LinearLayoutManager(this);
-    manager.setOrientation(LinearLayoutManager.VERTICAL);
-    recyclerView.setLayoutManager(manager);
-    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(new CommonRcvAdapter<Demo>(demos) {
-      @NonNull @Override public AdapterItem<Demo> getItemView(Object o) {
-        return new TextItem();
-      }
-    });
-  }
-  private class TextItem implements AdapterItem<Demo> {
-
-    @Override public int getLayoutResId() {
-      return R.layout.activity_main_item;
-    }
-    private ViewHolder holder;
-    private View view;
-    @Override public void onBindViews(View view) {
-      this.view = view;
-      //在这里做findviewById的工作吧
-      holder = new ViewHolder(view);
-    }
-
-    @Override public void onSetViews() {
-      //这个方法仅仅在item构建时才会触发，所以在这里也仅仅建立一次监听器，不会重复建立
-      holder.mainItemCardview.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          final int position = recyclerView.getChildAdapterPosition(v);
-          itemClick(demos.get(position));
-        }
-      });
-    }
-
-    @Override public void onUpdateViews(Demo demo, int i) {
-      // 在每次适配器getView的时候就会触发，这里避免做耗时的操作
-      holder.mainItemCardview.setCardBackgroundColor(demo.bgColor);
-      holder.mainItemTv.setText(demo.title);
-    }
-
-  }
-  class ViewHolder {
-    @Bind(R.id.main_item_tv) TextView mainItemTv;
-    @Bind(R.id.main_item_cardview) CardView mainItemCardview;
-
-    ViewHolder(View view) {
-      ButterKnife.bind(this, view);
-    }
-  }
-```
 打印日志 [点击查看更多介绍](https://github.com/tianzhijiexian/Android-Best-Practices/blob/master/2015.8/log/log.md)
 ```java
 Logger.d("hello");
@@ -357,6 +295,11 @@ Logger.object(object);
 * [ViewHolder](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/ViewHolder.java)<br/>
 * [WifiUtil](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/WifiUtil.java)<br/>
 * [WindowUtil](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/WindowUtil.java)<br/>
+
+##感谢
+[logger - Orhan Obut](https://github.com/orhanobut/logger)
+
+[LogUtils - pengwei1024](https://github.com/pengwei1024/LogUtils)
 
 ##关于
 * Blog: [http://blog.csdn.net/qy1387](http://blog.csdn.net/qy1387)

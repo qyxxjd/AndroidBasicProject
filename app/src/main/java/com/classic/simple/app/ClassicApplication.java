@@ -1,28 +1,31 @@
 package com.classic.simple.app;
 
 import android.app.Application;
-import com.classic.core.exception.CrashHandler;
-import com.classic.core.log.Logger;
-import com.classic.core.utils.SDcardUtil;
+
+import com.classic.core.BasicConfig;
 
 public class ClassicApplication extends Application {
-    public static final String LOG_TAG = "classic";
-    public static final String ROOT_DIR_NAME = "classic";
 
     @Override public void onCreate() {
         super.onCreate();
 
-        //日志打印配置
-        Logger.init(LOG_TAG)                   // default PRETTYLOGGER
-            .hideThreadInfo()                // default show
-        //.logLevel(LogLevel.NONE)       // default LogLevel.FULL
-        //.methodOffset(2)               // default 0
-        //.logTool(new AndroidLogTool()) // custom log tool, optional
-        ;
-        //可选配置，默认目录名称：download
-        SDcardUtil.setRootDirName(ROOT_DIR_NAME);
-        SDcardUtil.initDir();
-        //配置异常信息收集
-        CrashHandler.getInstance(this);
+        /**
+         * 默认配置
+         * 内部调用了: initDir() initLog() initExceptionHandler()三个方法
+         */
+        BasicConfig.getInstance(this).init();
+
+//        or
+
+        /**
+         * 自定义配置
+         * initDir() 初始化SDCard缓存目录
+         * initLog() 初始化日志打印
+         * initExceptionHandler() 初始化异常信息收集
+         */
+//        BasicConfig.getInstance(this)
+//                   .initDir() // or initDir(rootDirName)
+//                   .initLog() // or initDir(rootDirName)
+//                   .initExceptionHandler();
     }
 }

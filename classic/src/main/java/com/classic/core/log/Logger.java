@@ -5,7 +5,7 @@ package com.classic.core.log;
  * But more pretty, simple and powerful
  */
 public final class Logger {
-  private static final String DEFAULT_TAG = "PRETTYLOGGER";
+  private static final String DEFAULT_TAG = "Classic";
 
   private static Printer printer = new LoggerPrinter();
 

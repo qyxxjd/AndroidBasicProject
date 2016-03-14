@@ -40,7 +40,7 @@ public class YourApplication extends Application {
          */
         BasicConfig.getInstance(this)
                    .initDir() // or initDir(rootDirName)
-                   .initLog() // or initDir(rootDirName)
+                   .initLog() // or initLog(tagName)
                    .initExceptionHandler();
   }
 }

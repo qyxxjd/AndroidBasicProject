@@ -8,13 +8,13 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 
 通用适配器请参考: [CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
 
-[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.2.apk?raw=true)
+[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.6.apk?raw=true)
 
 ##使用步骤
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:1.5'
+    compile 'com.classic.core:classic:1.6'
 }
 ```
 第二步：

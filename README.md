@@ -75,6 +75,13 @@ public class TestActivity extends BaseActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        
+        /**
+         * 使用Fragment
+         * 参数1：被替换为Fragment的视图id
+         * 参数2：BaseFragment对象
+         */
+        changeFragment(R.id.fragment_layout, new ImageFragment());
     }
 
 

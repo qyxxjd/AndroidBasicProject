@@ -12,9 +12,6 @@ public final class ArrayUtil {
 
     /**
      * 获取数组的纬度
-     *
-     * @param objects
-     * @return
      */
     public static int getArrayDimension(Object objects) {
         int dim = 0;
@@ -100,9 +97,6 @@ public final class ArrayUtil {
 
     /**
      * 数组转化为字符串
-     *
-     * @param object
-     * @return
      */
     public static Pair arrayToString(Object object) {
         StringBuilder builder = new StringBuilder("[");
@@ -162,14 +156,12 @@ public final class ArrayUtil {
                 builder.append(SystemUtil.objectToString(item) + ",\t");
             }
         }
-        return Pair.create(length, builder.replace(builder.length() - 2, builder.length(), "]").toString());
+        return Pair.create(length,
+            builder.replace(builder.length() - 2, builder.length(), "]").toString());
     }
 
     /**
      * 是否为数组
-     *
-     * @param object
-     * @return
      */
     public static boolean isArray(Object object) {
         return object.getClass().isArray();
@@ -179,7 +171,6 @@ public final class ArrayUtil {
      * 获取数组类型
      *
      * @param object 如L为int型
-     * @return
      */
     public static char getType(Object object) {
         if (isArray(object)) {
@@ -191,9 +182,6 @@ public final class ArrayUtil {
 
     /**
      * 遍历数组
-     *
-     * @param result
-     * @param object
      */
     private static void traverseArray(StringBuilder result, Object object) {
         if (!isArray(object)) {
@@ -239,5 +227,4 @@ public final class ArrayUtil {
         traverseArray(result, object);
         return result.toString();
     }
-
 }

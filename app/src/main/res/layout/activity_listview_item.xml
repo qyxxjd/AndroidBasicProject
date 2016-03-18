@@ -16,6 +16,7 @@
         android:src="@mipmap/test_image"
         />
     <TextView
+        android:id="@+id/item_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

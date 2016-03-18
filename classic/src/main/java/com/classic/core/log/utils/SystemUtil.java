@@ -8,22 +8,18 @@ import java.lang.reflect.Field;
 public class SystemUtil {
     /**
      * 获取StackTraceElement对象
-     * @return
      */
-    public static StackTraceElement getStackTrace(){
+    public static StackTraceElement getStackTrace() {
         return Thread.currentThread().getStackTrace()[4];
     }
 
-
     // 基本数据类型
-    private final static String[] types = {"int", "java.lang.String", "boolean", "char",
-            "float", "double", "long", "short", "byte"};
+    private final static String[] types = {
+        "int", "java.lang.String", "boolean", "char", "float", "double", "long", "short", "byte"
+    };
 
     /**
      * 将对象转化为String
-     *
-     * @param object
-     * @return
      */
     public static <T> String objectToString(T object) {
         if (object == null) {
@@ -43,14 +39,14 @@ public class SystemUtil {
                             value = field.get(object);
                         } catch (IllegalAccessException e) {
                             value = e;
-                        }finally {
+                        } finally {
                             builder.append(String.format("%s=%s, ", field.getName(),
-                                    value == null ? "null" : value.toString()));
+                                value == null ? "null" : value.toString()));
                             break;
                         }
                     }
                 }
-                if(!flag){
+                if (!flag) {
                     builder.append(String.format("%s=%s, ", field.getName(), "Object"));
                 }
             }
@@ -59,5 +55,4 @@ public class SystemUtil {
             return object.toString();
         }
     }
-
 }

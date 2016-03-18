@@ -11,12 +11,14 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 [APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.6.apk?raw=true)
 
 ##使用步骤
+
 第一步：
 ```gradle
 dependencies {
     compile 'com.classic.core:classic:1.6'
 }
 ```
+
 第二步：
 ```java
 public class YourApplication extends Application {
@@ -47,207 +49,130 @@ public class YourApplication extends Application {
 ```
 
 ##代码示例
+
 Activity示例
 ```java
 public class TestActivity extends BaseActivity {
+    private RecyclerView recyclerView;
 
-  @Bind(R.id.main_rv) RecyclerView recyclerView;
-
-  private List<Demo> demos;
-  private DoubleClickExitHelper doubleClickExitHelper;
-
-  @Override public int getLayoutResId() {
-    return R.layout.activity_test;
-  }
-
-  @Override public void onFirst() {
-    super.onFirst();
-    Logger.d("onFirst只有第一次才会执行");
-    //这里可以做一些界面功能引导
-  }
-
-  /**
-   * 方法执行顺序：
-   * initPre() --> initInstanceState(Bundle savedInstanceState) --> initData() --> initView() --> register()
-   */
-  @Override public void initPre() {
-    super.initPre();
-    //这个方法会在setContentView(...)方法之前执行
-  }
-
-  @Override public void initInstanceState(Bundle savedInstanceState) {
-    super.initInstanceState(savedInstanceState);
-    //这里可以做一些状态的恢复操作
-  }
-
-  @Override public void initData() {
-    super.initData();
-    demos = Demo.getDemos();
-    Logger.object(demos);
-    //双击退出应用工具类使用方法，别忘了重写onKeyDown方法（见底部）
-    doubleClickExitHelper = new DoubleClickExitHelper(this);
-    //.setTimeInterval(3000)
-    //.setToastContent("再按一次退出demo");
-  }
-
-  @Override public void initView() {
-    super.initView();
-    ButterKnife.bind(this);
-
-    recyclerView.setOnClickListener(this);
-    LinearLayoutManager manager = new LinearLayoutManager(this);
-    manager.setOrientation(LinearLayoutManager.VERTICAL);
-    recyclerView.setLayoutManager(manager);
-    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(new CommonRcvAdapter<Demo>(demos) {
-      @NonNull @Override public AdapterItem<Demo> getItemView(Object o) {
-        return new TextItem();
-      }
-    });
-  }
-
-  @Override public void register() {
-    super.register();
-    EventUtil.registerEventBus(this);
-    //这里可以注册一些广播、服务
-  }
-
-  @Override public void unRegister() {
-    super.unRegister();
-    ButterKnife.unbind(this);
-    EventUtil.unRegisterEventBus(this);
-    //注销广播、服务
-  }
-
-  @Override public void viewClick(View v) {
-    switch (v.getId()){
-      case R.id.main_rv:
-        //点击事件处理
-        break;
+    @Override public int getLayoutResId() {
+        return R.layout.activity_main;
     }
-  }
-  @Override public void showProgress() {
-    //需要显示进度条，可以重写此方法
-  }
 
-  @Override public void hideProgress() {
-    //关闭进度条
-  }
+    //初始化一些数据
+    @Override public void initData() {
+        super.initData();
+        Intent intent = getIntent();
+        params = intent.getStringExtra(...);
+    }
 
-  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-    return doubleClickExitHelper.onKeyDown(keyCode, event);
-  }
+    //初始化view
+    @Override public void initView() {
+        super.initView();
+        recyclerView = (RecyclerView) findViewById(R.id.main_rv);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+
+    //以下为可选方法，根据需要进行重载.
+    //方法执行顺序：
+    //initPre() --> initInstanceState(Bundle savedInstanceState) --> initData() --> initView() --> register()
+    //unRegister()方法默认在onDestroy()内部执行
+
+    //这里可以注册一些广播、服务
+    @Override public void register() { }
+    //注销广播、服务
+    @Override public void unRegister() { }
+    //只有第一次才会执行，这里可以做一些界面功能引导
+    @Override public void onFirst() { }
+    //这个方法会在setContentView(...)方法之前执行
+    @Override public void initPre() { }
+    //处理状态的恢复操作
+    @Override public void initInstanceState(Bundle savedInstanceState) { }
+    @Override public void initToolbar() { }
+    //view点击事件统一处理
+    @Override public void viewClick(View v) { }
+    @Override public void showProgress() { }
+    @Override public void hideProgress() { }
 }
 ```
+
 Fragment示例
 ```java
 public class TestFragment extends BaseFragment {
+    private TextView tvTitle;
 
-  @Override public int getLayoutResId() {
-    return R.layout.fragment_test;
-  }
-
-  @Override public void onChange() {
-    //当前fragment从后台被切换到前台时会执行此方法
-  }
-
-  @Override public void onHidden() {
-    super.onHidden();
-    //当前fragment从前台被切换到后台时会执行此方法
-  }
-
-  @Override public void onFirst() {
-    super.onFirst();
-    Logger.d("onFirst只有第一次才会执行");
-    //这里可以做一些界面功能引导
-  }
-
-  /**
-   * 方法执行顺序：
-   * initInstanceState(Bundle savedInstanceState) --> initData() --> initView(View parentView) --> register()
-   */
-  @Override public void initInstanceState(Bundle savedInstanceState) {
-    super.initInstanceState(savedInstanceState);
-    //这里可以做一些状态的恢复操作
-  }
-
-  @Override public void initData() {
-    super.initData();
-  }
-
-  @Override public void initView(View parentView) {
-    super.initView(parentView);
-    ButterKnife.bind(this, parentView);
-  }
-
-  @Override public void register() {
-    super.register();
-    //这里可以注册一些广播、服务
-  }
-
-  @Override public void unRegister() {
-    super.unRegister();
-    ButterKnife.unbind(this);
-    //注销广播、服务
-  }
-
-  @Override public void viewClick(View v) {
-    //处理一些点击事件
-    switch (v.getId()){
-      case R.id.button:
-        //...
-        break;
-      case R.id.text:
-        //...
-        break;
+    @Override public int getLayoutResId() {
+        return R.layout.activity_listview_item;
     }
-  }
-  @Override public void showProgress() {
-    //需要显示进度条，可以重写此方法
-  }
 
-  @Override public void hideProgress() {
-    //关闭进度条
-  }
+    @Override public void initView(View parentView) {
+        super.initView(parentView);
+        tvTitle = (TextView) parentView.findViewById(R.id.item_title_tv);
+    }
+
+    //以下为可选方法，根据需要进行重载.
+    //方法执行顺序：
+    //initInstanceState(Bundle savedInstanceState) --> initData() --> initView(View parentView) --> register()
+    //unRegister()方法默认在onDestroyView()内部执行
+
+    //这里可以注册一些广播、服务
+    @Override public void register() { }
+    //注销广播、服务
+    @Override public void unRegister() { }
+    //只有第一次才会执行，这里可以做一些界面功能引导
+    @Override public void onFirst() { }
+    //处理状态的恢复操作
+    @Override public void initInstanceState(Bundle savedInstanceState) { }
+    @Override public void initData() { }
+    @Override public void onChange() { }
+    @Override public void onHidden() { }
+    //view点击事件统一处理
+    @Override public void viewClick(View v) { }
+    @Override public void showProgress() { }
+    @Override public void hideProgress() { }
 }
 ```
+
 启动页示例
 ```java
 public class SplashActivity extends BaseSplashActivity {
 
-  @Override protected void setSplashResources(List<SplashImgResource> resources) {
-    /**
-     * SplashImgResource参数:
-     * mResId - 图片资源的ID。
-     * playerTime - 图片资源的播放时间，单位为毫秒。。
-     * startAlpha - 图片资源开始时的透明程度。0-255之间。
-     * isExpand - 如果为true，则图片会被拉伸至全屏幕大小进行展示，否则按原大小展示。
-     */
-    resources.add(new SplashImgResource(R.mipmap.splash,1500,100f,true));
-    resources.add(new SplashImgResource(R.mipmap.splash1,1500,100f,true));
-    resources.add(new SplashImgResource(R.mipmap.splash2,1500,100f,true));
-  }
-
-  @Override protected boolean isAutoStartNextActivity() {
-    return false;
-  }
-  @Override protected Class<?> nextActivity() {
-    return null;
-    //如果isAutoStartNextActivity设置为true,这里需要指定跳转的activity
-    //return MainActivity.class;
-  }
-
-  @Override protected void runOnBackground() {
-    //这里可以执行耗时操作、初始化工作
-    //请注意：如果执行了耗时操作，那么启动页会等到耗时操作执行完才会进行跳转
-    //try {
-    //  Thread.sleep(15 * 1000);
-    //} catch (InterruptedException e) {
-    //  e.printStackTrace();
-    //}
-  }
+    @Override protected void setSplashResources(List<SplashImgResource> resources) {
+        /**
+         * SplashImgResource参数:
+         * mResId - 图片资源的ID。
+         * playerTime - 图片资源的播放时间，单位为毫秒。。
+         * startAlpha - 图片资源开始时的透明程度。0-255之间。
+         * isExpand - 如果为true，则图片会被拉伸至全屏幕大小进行展示，否则按原大小展示。
+         */
+        resources.add(new SplashImgResource(R.mipmap.splash,1500,100f,true));
+        resources.add(new SplashImgResource(R.mipmap.splash1,1500,100f,true));
+        resources.add(new SplashImgResource(R.mipmap.splash2,1500,100f,true));
+    }
+    
+    @Override protected boolean isAutoStartNextActivity() {
+        return false;
+    }
+    @Override protected Class<?> nextActivity() {
+        return null;
+        //如果isAutoStartNextActivity设置为true,这里需要指定跳转的activity
+        //return MainActivity.class;
+    }
+    
+    @Override protected void runOnBackground() {
+        //这里可以执行耗时操作、初始化工作
+        //请注意：如果执行了耗时操作，那么启动页会等到耗时操作执行完才会进行跳转
+        //try {
+        //  Thread.sleep(15 * 1000);
+        //} catch (InterruptedException e) {
+        //  e.printStackTrace();
+        //}
+    }
 }
 ```
 

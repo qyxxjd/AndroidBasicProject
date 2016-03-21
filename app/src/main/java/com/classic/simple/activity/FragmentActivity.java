@@ -27,6 +27,10 @@ public class FragmentActivity extends AppBaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imageFragment = new ImageFragment();
         image2Fragment = new Image2Fragment();
+        /**
+         * 参数1：被替换为Fragment的视图id
+         * 参数2：BaseFragment对象
+         */
         changeFragment(R.id.fragment_layout, imageFragment);
     }
 

@@ -1,5 +1,6 @@
 package com.classic.core.utils;
 
+import android.text.TextUtils;
 import java.math.BigDecimal;
 
 /**
@@ -149,4 +150,18 @@ public class MoneyUtil {
         }
         return s;
     }
+
+	/**
+	 * 去掉小数点后无效的0
+	 * @param number
+	 * @return
+	 */
+	public static String replace(String number){
+		if(TextUtils.isEmpty(number)) return "0";
+		if(number.indexOf(".") > 0){
+			number = number.replaceAll("0+?$", "");//去掉后面无用的零
+			number = number.replaceAll("[.]$", "");//如小数点后面全是零则去掉小数点
+		}
+		return number;
+	}
 }

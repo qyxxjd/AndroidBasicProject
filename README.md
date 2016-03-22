@@ -15,7 +15,7 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:1.6'
+    compile 'com.classic.core:classic:1.8'
 }
 ```
 
@@ -23,16 +23,16 @@ dependencies {
 ```java
 public class YourApplication extends Application {
 
-  @Override public void onCreate() {
-    super.onCreate();
+    @Override public void onCreate() {
+        super.onCreate();
 
         /**
          * 默认配置
-         * 内部调用了: initDir() initLog() initExceptionHandler()三个方法
+         * 内部调用了: initDir() initLog(false) initExceptionHandler()三个方法
          */
         BasicConfig.getInstance(this).init();
 
-        or
+//        or
 
         /**
          * 自定义配置
@@ -42,9 +42,32 @@ public class YourApplication extends Application {
          */
         BasicConfig.getInstance(this)
                    .initDir() // or initDir(rootDirName)
-                   .initLog() // or initLog(tagName)
-                   .initExceptionHandler();
-  }
+                   .initExceptionHandler()
+                   .initLog(true); //更多初始化日志方法见下方
+
+
+        
+
+        /**
+         * @param tag 日志标示
+         */
+        initLog(tag)
+                
+        /**
+         * @param tag 日志标示
+         * @param isDebug true:打印全部日志，false:不打印日志
+         */
+        initLog(tag, isDebug)
+
+        /**
+         * @param tag 日志标示，可以为空
+         * @param methodCount 显示方法行数，默认为：2
+         * @param isHideThreadInfo 是否显示线程信息，默认显示
+         * @param logTool 自定义日志打印，可以为空
+         * @param isDebug true:打印全部日志，false:不打印日志
+         */
+        initLog(tag, methodCount, isHideThreadInfo, logTool, isDebug)
+    }
 }
 ```
 
@@ -183,19 +206,17 @@ public class SplashActivity extends BaseSplashActivity {
 }
 ```
 
-打印日志 [点击查看更多介绍](https://github.com/tianzhijiexian/Android-Best-Practices/blob/master/2015.8/log/log.md)
+打印日志
 ```java
-Logger.d("hello");
-Logger.e("hello");
-Logger.w("hello");
-Logger.v("hello");
-Logger.wtf("hello");
+Logger.d(content);
+Logger.e(content);
+Logger.w(content);
+Logger.v(content);
+Logger.wtf(content);
 //打印json数据
-Logger.json(JSON_CONTENT);
+Logger.json(jsonContent);
 //打印xml数据
-Logger.xml(XML_CONTENT);
-//打印对象(Bean,Array,Collection,Map...)
-Logger.object(object);
+Logger.xml(xmlContent);
 ```
 注意事项：确保包装选项是禁用的
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/log.png)
@@ -229,9 +250,7 @@ Logger.object(object);
 * [WindowUtil - 屏幕管理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/WindowUtil.java)<br/>
 
 ##感谢
-[logger - Orhan Obut](https://github.com/orhanobut/logger)
-
-[LogUtils - pengwei1024](https://github.com/pengwei1024/LogUtils)
+[logger](https://github.com/orhanobut/logger)
 
 ##关于
 * Blog: [http://blog.csdn.net/qy1387](http://blog.csdn.net/qy1387)

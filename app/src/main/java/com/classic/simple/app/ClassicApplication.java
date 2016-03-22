@@ -1,7 +1,6 @@
 package com.classic.simple.app;
 
 import android.app.Application;
-
 import com.classic.core.BasicConfig;
 
 public class ClassicApplication extends Application {
@@ -10,12 +9,10 @@ public class ClassicApplication extends Application {
         super.onCreate();
 
         /**
-         * 默认配置
-         * 内部调用了: initDir() initLog() initExceptionHandler()三个方法
+         * 默认配置，适用于正式版本
+         * 内部调用了: initDir() initLog(false) initExceptionHandler()三个方法
          */
-        BasicConfig.getInstance(this).init();
-
-//        or
+        //BasicConfig.getInstance(this).init();
 
         /**
          * 自定义配置
@@ -23,9 +20,9 @@ public class ClassicApplication extends Application {
          * initLog() 初始化日志打印
          * initExceptionHandler() 初始化异常信息收集
          */
-//        BasicConfig.getInstance(this)
-//                   .initDir() // or initDir(rootDirName)
-//                   .initLog() // or initDir(rootDirName)
-//                   .initExceptionHandler();
+        BasicConfig.getInstance(this)
+                   .initDir() // or initDir(rootDirName)
+                   //.initExceptionHandler()
+                   .initLog(true);
     }
 }

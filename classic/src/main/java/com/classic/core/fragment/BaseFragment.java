@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.classic.core.activity.BaseActivity;
 import com.classic.core.interfaces.IFragment;
 import com.classic.core.interfaces.IRegister;
 import com.classic.core.utils.SharedPreferencesUtil;
@@ -19,6 +18,7 @@ import com.classic.core.utils.SharedPreferencesUtil;
  */
 public abstract class BaseFragment extends Fragment
     implements IFragment, IRegister, View.OnClickListener {
+    private final String SP_NAME = "firstConfig";
     protected Activity activity;
     protected View parentView;
     private SharedPreferencesUtil spUtil;
@@ -64,7 +64,7 @@ public abstract class BaseFragment extends Fragment
         Bundle savedInstanceState) {
         activity = getActivity();
         parentView = inflater.inflate(getLayoutResId(), container, false);
-        spUtil = new SharedPreferencesUtil(getActivity(), BaseActivity.SP_NAME);
+        spUtil = new SharedPreferencesUtil(getActivity(), SP_NAME);
         final String simpleName = this.getClass().getSimpleName();
         if (spUtil.getBooleanValue(simpleName, true)) {
             onFirst();

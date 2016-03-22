@@ -2,10 +2,12 @@ package com.classic.core;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-
+import android.text.TextUtils;
 import com.classic.core.exception.CrashHandler;
 import com.classic.core.log.LogLevel;
+import com.classic.core.log.LogTool;
 import com.classic.core.log.Logger;
+import com.classic.core.log.Settings;
 import com.classic.core.utils.SDcardUtil;
 
 /**
@@ -15,12 +17,13 @@ import com.classic.core.utils.SDcardUtil;
  * @date 2016/03/13
  */
 public final class BasicConfig {
+    private static final String LOG_TAG = "classic";
 
     private Context context;
     private BasicConfig(Context context){ this.context = context; }
-    private static BasicConfig config ;
+    private volatile static BasicConfig config ;
 
-    public static final synchronized BasicConfig getInstance(@NonNull Context context){
+    public static final BasicConfig getInstance(@NonNull Context context){
         if(null == config){
             synchronized (BasicConfig.class){
                 if(null == config){
@@ -37,7 +40,7 @@ public final class BasicConfig {
      */
     public void init(){
         initDir();
-        initLog();
+        initLog(false);
         initExceptionHandler();
     }
 
@@ -72,21 +75,59 @@ public final class BasicConfig {
     }
 
     /**
-     * 初始化日志打印
+     * 日志打印参数配置
+     * @param isDebug true:打印全部日志，false:不打印日志
      * @return
      */
-    public BasicConfig initLog(){
-        Logger.init().logLevel(LogLevel.FULL) ;
+    public BasicConfig initLog(boolean isDebug){
+        initLog(LOG_TAG, null, true, null,isDebug);
         return this;
     }
 
     /**
-     * 初始化日志打印
+     * 日志打印参数配置
      * @param tag 日志标示
      * @return
      */
-    public BasicConfig initLog(@NonNull String tag){
-        Logger.init(tag).logLevel(LogLevel.FULL);
+    public BasicConfig initLog(String tag){
+        initLog(tag,true);
+        return this;
+    }
+    /**
+     * 日志打印参数配置
+     * @param tag 日志标示，可以为空
+     * @param isDebug true:打印全部日志，false:不打印日志
+     * @return
+     */
+    public BasicConfig initLog(String tag,boolean isDebug){
+        initLog(tag,null,true,null,isDebug);
+        return this;
+    }
+
+    /**
+     * 日志打印参数配置
+     * @param tag 日志标示，可以为空
+     * @param methodCount 显示方法行数，默认为：2
+     * @param isHideThreadInfo 是否显示线程信息，默认显示
+     * @param logTool 自定义日志打印，可以为空
+     * @param isDebug true:打印全部日志，false:不打印日志
+     * @return
+     */
+    public BasicConfig initLog(String tag,Integer methodCount,
+                               boolean isHideThreadInfo,LogTool logTool,
+                               boolean isDebug){
+
+        Settings settings = Logger.init(TextUtils.isEmpty(tag) ? LOG_TAG : tag);
+        if(null != methodCount){
+            settings.methodCount(methodCount);
+        }
+        if(isHideThreadInfo){
+            settings.hideThreadInfo();
+        }
+        if(null != logTool){
+            settings.logTool(logTool);
+        }
+        settings.logLevel(isDebug ? LogLevel.FULL : LogLevel.NONE);
         return this;
     }
 }

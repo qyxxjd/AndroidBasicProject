@@ -143,8 +143,11 @@ public final class PackageUtil {
             return INSTALL_SUCCEEDED;
         }
 
-        Logger.e(new StringBuilder().append("installSilent successMsg:").append(commandResult.successMsg)
-                        .append(", ErrorMsg:").append(commandResult.errorMsg).toString());
+        Logger.e(new StringBuilder().append("installSilent successMsg:")
+                                    .append(commandResult.successMsg)
+                                    .append(", ErrorMsg:")
+                                    .append(commandResult.errorMsg)
+                                    .toString());
         if (commandResult.errorMsg == null) {
             return INSTALL_FAILED_OTHER;
         }

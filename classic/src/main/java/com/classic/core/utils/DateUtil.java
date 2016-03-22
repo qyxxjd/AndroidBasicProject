@@ -201,7 +201,6 @@ public final class DateUtil {
         cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - s);//根据日历的规则，给当前日期减往星期几与一个星期第一天的差值 
         cal.add(Calendar.WEEK_OF_YEAR, -1);
         String imptimeBegin = sdf.format(cal.getTime());
-//      System.out.println("所在周星期日的日期："+imptimeBegin);
         return imptimeBegin;
     }
 
@@ -228,7 +227,6 @@ public final class DateUtil {
         cal.add(Calendar.DATE, cal.getFirstDayOfWeek() + (6 - s));
         cal.add(Calendar.WEEK_OF_YEAR, -1);
         String imptimeBegin = sdf.format(cal.getTime());
-//      System.out.println("星期六的日期："+imptimeBegin);
         return imptimeBegin;
     }
 
@@ -255,7 +253,6 @@ public final class DateUtil {
         cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - s);//根据日历的规则，给当前日期减往星期几与一个星期第一天的差值 
 
         String imptimeBegin = sdf.format(cal.getTime());
-        //  System.out.println("所在周星期日的日期："+imptimeBegin);
         return imptimeBegin;
     }
 
@@ -301,7 +298,6 @@ public final class DateUtil {
         Calendar cal = Calendar.getInstance();
         cal.setTime(newdate);
         String imptimeBegin = sdf.format(cal.getTime());
-//      System.out.println(imptimeBegin);
         return imptimeBegin;
     }
 
@@ -321,7 +317,6 @@ public final class DateUtil {
         Calendar cal = Calendar.getInstance();
         cal.setTime(newdate);
         String imptimeBegin = sdf.format(cal.getTime());
-//      System.out.println(imptimeBegin);
         return imptimeBegin;
     }
 

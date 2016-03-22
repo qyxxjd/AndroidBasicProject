@@ -39,7 +39,7 @@ public final class WifiHelper {
     private WifiManager mWifiManager;
 
 
-    public static synchronized WifiHelper getInstance(Context context) {
+    public static final WifiHelper getInstance(Context context) {
         if (null == sWifiHelper) {
             synchronized (WifiHelper.class) {
                 if (null == sWifiHelper) {

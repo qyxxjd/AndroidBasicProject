@@ -19,7 +19,7 @@ import com.classic.core.utils.SharedPreferencesUtil;
  */
 public abstract class BaseActivity extends AppCompatActivity
     implements View.OnClickListener, IActivity, IRegister {
-
+    private final String SP_NAME = "firstConfig";
     /**
      * Activity状态
      */
@@ -27,7 +27,6 @@ public abstract class BaseActivity extends AppCompatActivity
     protected BaseFragment currentFragment;
     protected Activity activity;
     private SharedPreferencesUtil spUtil;
-    public static final String SP_NAME = "firstConfig";
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

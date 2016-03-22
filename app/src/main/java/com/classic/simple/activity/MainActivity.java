@@ -50,7 +50,6 @@ public class MainActivity extends AppBaseActivity {
     @Override public void initData() {
         super.initData();
         demos = Demo.getDemos();
-        Logger.object(demos);
         //双击退出应用工具类使用方法，别忘了重写onKeyDown方法（见底部）
         doubleClickExitHelper = new DoubleClickExitHelper(this);
         //doubleClickExitHelper = new DoubleClickExitHelper(this)

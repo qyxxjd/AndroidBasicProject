@@ -1,11 +1,14 @@
 package com.classic.core.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import java.io.File;
 
@@ -14,26 +17,33 @@ import java.io.File;
  * @author 续写经典
  * @date 2015/11/3
  */
-public final class IntentUtil
-{
-	private IntentUtil(){}
+public final class IntentUtil {
+	private IntentUtil() {}
+
 
 	/** 进入拨号界面 */
-	public static void dial(Activity activity,String phoneNumber){
-		if(activity != null){
-			Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:" + phoneNumber));
+	public static void dial(Activity activity, String phoneNumber) {
+		if (activity != null) {
+			Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activity.startActivity(intent);
 		}
 	}
+
+
 	/**
 	 *  直接拨号
 	 *  需要权限：android.permission.CALL_PHONE
 	 */
-	public static void call(Activity activity,String phoneNumber){
-		if(activity != null){
+	public static void call(Activity activity, String phoneNumber) {
+		if (activity != null) {
 			Intent intentPhone = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
-			activity.startActivity(intentPhone);
+			//权限检测
+			if (ActivityCompat.checkSelfPermission(activity,
+					Manifest.permission.CALL_PHONE) ==
+					PackageManager.PERMISSION_GRANTED) {
+				activity.startActivity(intentPhone);
+			}
 		}
 	}
 	/** 用浏览器打开url */

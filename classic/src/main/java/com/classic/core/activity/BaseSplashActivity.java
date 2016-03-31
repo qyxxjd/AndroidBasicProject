@@ -47,7 +47,6 @@ import java.util.List;
  * @date 2015/11/7
  */
 public abstract class BaseSplashActivity extends Activity {
-    private static final String THREAD_NAME = "base_splash_thread";
     /**
      * 后台任务完成的标志。
      */
@@ -139,14 +138,6 @@ public abstract class BaseSplashActivity extends Activity {
                 mUiHandler.sendEmptyMessage(BACKGROUND_FINISH);
             }
         }).start();
-        //HandlerThread splashThread = new HandlerThread(THREAD_NAME);
-        //splashThread.start();
-        //new Handler(splashThread.getLooper()).post(new Runnable() {
-        //	@Override public void run() {
-        //		runOnBackground();
-        //		mUiHandler.sendEmptyMessage(BACKGROUND_FINISH);
-        //	}
-        //});
     }
 
     /**
@@ -271,16 +262,12 @@ public abstract class BaseSplashActivity extends Activity {
                         Intent intent = new Intent(splash, splash.nextActivity());
                         splash.setIntentDate(intent);
                         splash.startActivity(intent);
+                        splash.finish();
                     }
-                    splash.finish();
                 }
             }
         }
-
-        ;
     }
-
-    ;
 
     /**
      * 开场动画的图片资源类。封装了图片、播放时间、开始时的透明程度。

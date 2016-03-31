@@ -36,7 +36,7 @@ public final class DeviceUtil
 	}
 
 	/**
-	 * 打印设备信息（调试专用）
+	 * 打印设备信息(调试专用)
 	 */
 	public void printInfo(){
 		StringBuffer sb = new StringBuffer("设备信息：\n");
@@ -121,24 +121,30 @@ public final class DeviceUtil
 	}
 	/**
 	 * 返回手机服务商名字
+	 * <pre>
+	 * 46000 中国移动 (GSM)
+	 * 46001 中国联通 (GSM)
+	 * 46002 中国移动 (TD-S)
+	 * 46003 中国电信 (CDMA)
+	 * 46005 中国电信 (CDMA)
+	 * 46006 中国联通 (WCDMA)
+	 * 46007 中国移动 (TD-S)
+	 * 46011 中国电信 (FDD-LTE)
+	 * </pre>
 	 */
 	public String getProvidersName()
 	{
 		String ProvidersName = null;
 		// IMSI号前面3位460是国家，紧接着后面2位00 02是中国移动，01是中国联通，03是中国电信。
 		String IMSI = getSubscriberId();
-		if (IMSI.startsWith("46000") || IMSI.startsWith("46002"))
-		{
+		if (IMSI.startsWith("46000") || IMSI.startsWith("46002") || IMSI.startsWith("46007")) {
 			ProvidersName = "中国移动";
-		} else if (IMSI.startsWith("46001"))
-		{
+		} else if (IMSI.startsWith("46001") || IMSI.startsWith("46006")) {
 			ProvidersName = "中国联通";
-		} else if (IMSI.startsWith("46003"))
-		{
+		} else if (IMSI.startsWith("46003") || IMSI.startsWith("46005") || IMSI.startsWith("46011")) {
 			ProvidersName = "中国电信";
-		} else
-		{
-			ProvidersName = "其他服务商";
+		} else {
+			ProvidersName = "其它服务商";
 		}
 		return ProvidersName;
 	}
@@ -185,7 +191,7 @@ public final class DeviceUtil
      * NETWORK_TYPE_HSUPA  网络类型为HSUPA
      * NETWORK_TYPE_UMTS   网络类型为UMTS
      * 
-     * 在中国，
+     * 在国内，
      * 联通的3G为UMTS或HSDPA，
      * 移动和联通的2G为GPRS或EGDE，
      * 电信的2G为CDMA，

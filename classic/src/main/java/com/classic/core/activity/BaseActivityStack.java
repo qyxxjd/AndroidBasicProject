@@ -81,8 +81,7 @@ public final class BaseActivityStack {
     public void finishActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
-            // activity.finish();//此处不用finish
-            activity = null;
+            activity.finish();
         }
     }
 

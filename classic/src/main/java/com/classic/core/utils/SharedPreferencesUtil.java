@@ -11,92 +11,92 @@ import android.content.SharedPreferences.Editor;
  * @date 2015/11/3
  */
 public class SharedPreferencesUtil {
-    private SharedPreferences sp;
-    private Editor editor;
+    private SharedPreferences mSharedPreferences;
+    private Editor mEditor;
 
     public SharedPreferencesUtil(Context context, String name) {
-        sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
-        editor = sp.edit();
+        mSharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        mEditor = mSharedPreferences.edit();
     }
 
     private SharedPreferencesUtil() {
     }
 
     public SharedPreferences getSP() {
-        return sp;
+        return mSharedPreferences;
     }
 
     public Editor getEditor() {
-        return editor;
+        return mEditor;
     }
 
     /**
      * 存储数据(Long)
      */
     public void putLongValue(String key, long value) {
-        editor.putLong(key, value).commit();
+        mEditor.putLong(key, value).commit();
     }
 
     /**
      * 存储数据(Int)
      */
     public void putIntValue(String key, int value) {
-        editor.putInt(key, value).commit();
+        mEditor.putInt(key, value).commit();
     }
 
     /**
      * 存储数据(String)
      */
     public void putStringValue(String key, String value) {
-        editor.putString(key, value).commit();
+        mEditor.putString(key, value).commit();
     }
 
     /**
      * 存储数据(boolean)
      */
     public void putBooleanValue(String key, boolean value) {
-        editor.putBoolean(key, value).commit();
+        mEditor.putBoolean(key, value).commit();
     }
 
     /**
      * 取出数据(Long)
      */
     public long getLongValue(String key, long defValue) {
-        return sp.getLong(key, defValue);
+        return mSharedPreferences.getLong(key, defValue);
     }
 
     /**
      * 取出数据(int)
      */
     public int getIntValue(String key, int defValue) {
-        return sp.getInt(key, defValue);
+        return mSharedPreferences.getInt(key, defValue);
     }
 
     /**
      * 取出数据(boolean)
      */
     public boolean getBooleanValue(String key, boolean defValue) {
-        return sp.getBoolean(key, defValue);
+        return mSharedPreferences.getBoolean(key, defValue);
     }
 
     /**
      * 取出数据(String)
      */
     public String getStringValue(String key, String defValue) {
-        return sp.getString(key, defValue);
+        return mSharedPreferences.getString(key, defValue);
     }
 
     /**
      * 清空所有数据
      */
     public void clear() {
-        editor.clear().commit();
+        mEditor.clear().commit();
     }
 
     /**
      * 移除指定数据
      */
     public void remove(String key) {
-        editor.remove(key).commit();
+        mEditor.remove(key).commit();
     }
 }

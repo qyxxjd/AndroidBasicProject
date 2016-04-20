@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 应用程序相关信息工具类
+ *
  * @author 续写经典
  * @date 2015/11/4
  */
@@ -17,22 +18,21 @@ public final class AppInfoUtil {
 
     private AppInfoUtil() { }
 
+
     /**
      * 获取应用程序信息
      */
     public static PackageInfo getPackageInfo(Context context) {
-        try
-        {
+        try {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), 0);
             return info;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
     /**
      * 获取应用程序名称
@@ -48,39 +48,35 @@ public final class AppInfoUtil {
         }
         return null;
     }
+
+
     /**
      * 获取应用程序版本名称
-     * @param context
-     * @return
      */
     public static String getVersionName(Context context) {
-        return null==getPackageInfo(context) ? null : getPackageInfo(context).versionName;
+        return null == getPackageInfo(context) ? null : getPackageInfo(context).versionName;
     }
+
+
     /**
      * 获取应用程序版本号
-     * @param context
-     * @return
      */
     public static int getVersionCode(Context context) {
-        return null==getPackageInfo(context) ? null : getPackageInfo(context).versionCode;
+        return null == getPackageInfo(context) ? null : getPackageInfo(context).versionCode;
     }
+
 
     /**
      * 获取应用程序包名
-     * @param context
-     * @return
      */
     public static String getPackageName(Context context) {
-        return null==getPackageInfo(context) ? null : getPackageInfo(context).packageName;
+        return null == getPackageInfo(context) ? null : getPackageInfo(context).packageName;
     }
 
 
     /**
      * 判断当前应用程序是否处于后台
      * <pre>需要权限：&lt;uses-permission android:name="android.permission.GET_TASKS" /&gt;  </pre>
-     * @param context
-     * @return
-     *
      */
     public static boolean isApplicationToBackground(final Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -94,15 +90,14 @@ public final class AppInfoUtil {
         return false;
     }
 
+
     /**
      * 获取当前运行的进程名
-     *
-     * @param context
-     * @return
      */
     public static String getProcessName(Context context) {
         int pid = android.os.Process.myPid();
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(
+                Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
             if (appProcess.pid == pid) {
                 return appProcess.processName;
@@ -111,15 +106,14 @@ public final class AppInfoUtil {
         return null;
     }
 
+
     /**
      * 获取当前运行的所有进程名
-     *
-     * @param context
-     * @return
      */
     public static List<String> getProcessName(Context context, String packageName) {
         List<String> list = new ArrayList<String>();
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(
+                Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
             if (appProcess.processName.startsWith(packageName)) {
                 // System.out.println("p:"+appProcess.processName);
@@ -129,14 +123,13 @@ public final class AppInfoUtil {
         return list;
     }
 
+
     /**
      * 获取当前运行界面的包名
-     *
-     * @param context
-     * @return
      */
     public static String getTopPackageName(Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(
+                Context.ACTIVITY_SERVICE);
         ComponentName cn = activityManager.getRunningTasks(1).get(0).topActivity;
         return cn.getPackageName();
     }

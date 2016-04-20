@@ -10,28 +10,28 @@ import com.classic.simple.fragment.ImageFragment;
 
 public class FragmentActivity extends AppBaseActivity {
 
-    @Bind(R.id.fragment_layout) RelativeLayout fragmentLayout;
+    @Bind(R.id.fragment_layout) RelativeLayout mFragmentLayout;
 
     @Override public int getLayoutResId() {
         return R.layout.activity_fragment;
     }
 
-    private ImageFragment imageFragment;
-    private Image2Fragment image2Fragment;
+    private ImageFragment mImageFragment;
+    private Image2Fragment mImage2Fragment;
 
     @Override public void initView() {
         super.initView();
-        fragmentLayout.setOnClickListener(this);
+        mFragmentLayout.setOnClickListener(this);
         //这里偷懒，使用默认的。实际项目中建议使用ToolBar
         getSupportActionBar().setTitle("Fragment示例");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        imageFragment = new ImageFragment();
-        image2Fragment = new Image2Fragment();
+        mImageFragment = new ImageFragment();
+        mImage2Fragment = new Image2Fragment();
         /**
          * 参数1：被替换为Fragment的视图id
          * 参数2：BaseFragment对象
          */
-        changeFragment(R.id.fragment_layout, imageFragment);
+        changeFragment(R.id.fragment_layout, mImageFragment);
     }
 
     private boolean isImageFragment = true;
@@ -39,7 +39,7 @@ public class FragmentActivity extends AppBaseActivity {
     @Override public void viewClick(View v) {
         if (v.getId() == R.id.fragment_layout) {
             isImageFragment = !isImageFragment;
-            changeFragment(R.id.fragment_layout, isImageFragment ? imageFragment : image2Fragment);
+            changeFragment(R.id.fragment_layout, isImageFragment ? mImageFragment : mImage2Fragment);
         }
     }
 

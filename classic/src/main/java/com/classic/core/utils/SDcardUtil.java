@@ -11,11 +11,10 @@ import java.io.File;
  * @createtime:2015/11/4
  */
 public final class SDcardUtil {
-    private SDcardUtil() {
-    }
+    private SDcardUtil() { }
 
     /** 默认根目录名称 */
-    private static String ROOT_DIR = "download";
+    private static String sRootDir = "classic";
     /** 默认图片目录名称 */
     public static final String IMAGE_DIR = "images";
     /** 默认文件目录名称 */
@@ -36,31 +35,31 @@ public final class SDcardUtil {
     public static final String LOG_DIR = "logs";
 
     /** 默认根目录 */
-    private static String rootDir = null;
+    private static String sRootDirPath = null;
     /** 默认图片目录 */
-    private static String imageDir = null;
+    private static String sImageDirPath = null;
     /** 默认文件目录 */
-    private static String fileDir = null;
+    private static String sFileDirPath = null;
     /** 默认缓存目录 */
-    private static String cacheDir = null;
+    private static String sCacheDirPath = null;
     /** 默认apk文件的目录 */
-    private static String apkDir = null;
+    private static String sApkDirPath = null;
     /** 默认数据库文件的目录 */
-    private static String dbDir = null;
+    private static String sDbDirPath = null;
     /** 默认音频的目录 */
-    private static String audioDir = null;
+    private static String sAudioDirPath = null;
     /** 默认视频的目录 */
-    private static String videoDir = null;
+    private static String sVideoDirPath = null;
     /** 默认书籍的目录 */
-    private static String bookDir = null;
+    private static String sBookDirPath = null;
     /** 默认日志的目录 */
-    private static String logDir = null;
+    private static String sLogDirPath = null;
 
     /**
      * 设置SD卡文件存放根目录名称
      */
     public static void setRootDirName(String dirName) {
-        ROOT_DIR = dirName;
+        sRootDir = dirName;
     }
 
     /**
@@ -83,7 +82,7 @@ public final class SDcardUtil {
     public static void initDir() {
 
         //默认根目录
-        String downloadRootPath = File.separator + ROOT_DIR + File.separator;
+        String downloadRootPath = File.separator + sRootDir + File.separator;
         //默认图片目录
         String imageDownloadPath = downloadRootPath + IMAGE_DIR + File.separator;
         //默认文件目录
@@ -107,16 +106,16 @@ public final class SDcardUtil {
             if (isCanUseSD()) {
                 File root = Environment.getExternalStorageDirectory();
 
-                rootDir = checkDir(root.getAbsolutePath() + downloadRootPath);
-                cacheDir = checkDir(root.getAbsolutePath() + cacheDownloadPath);
-                imageDir = checkDir(root.getAbsolutePath() + imageDownloadPath);
-                fileDir = checkDir(root.getAbsolutePath() + fileDownloadPath);
-                apkDir = checkDir(root.getAbsolutePath() + apkDownloadPath);
-                dbDir = checkDir(root.getAbsolutePath() + dbDownloadPath);
-                audioDir = checkDir(root.getAbsolutePath() + audioDownloadPath);
-                videoDir = checkDir(root.getAbsolutePath() + videoDownloadPath);
-                bookDir = checkDir(root.getAbsolutePath() + bookDownloadPath);
-                logDir = checkDir(root.getAbsolutePath() + logDownloadPath);
+                sRootDirPath = checkDir(root.getAbsolutePath() + downloadRootPath);
+                sCacheDirPath = checkDir(root.getAbsolutePath() + cacheDownloadPath);
+                sImageDirPath = checkDir(root.getAbsolutePath() + imageDownloadPath);
+                sFileDirPath = checkDir(root.getAbsolutePath() + fileDownloadPath);
+                sApkDirPath = checkDir(root.getAbsolutePath() + apkDownloadPath);
+                sDbDirPath = checkDir(root.getAbsolutePath() + dbDownloadPath);
+                sAudioDirPath = checkDir(root.getAbsolutePath() + audioDownloadPath);
+                sVideoDirPath = checkDir(root.getAbsolutePath() + videoDownloadPath);
+                sBookDirPath = checkDir(root.getAbsolutePath() + bookDownloadPath);
+                sLogDirPath = checkDir(root.getAbsolutePath() + logDownloadPath);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,99 +146,99 @@ public final class SDcardUtil {
      * 获取下载根目录
      */
     public static String getRootDir() {
-        if (rootDir == null) {
+        if (sRootDirPath == null) {
             initDir();
         }
-        return rootDir;
+        return sRootDirPath;
     }
 
     /**
      * 获取下载图片文件目录
      */
-    public static String getImageDir() {
-        if (imageDir == null) {
+    public static String getImageDirPath() {
+        if (sImageDirPath == null) {
             initDir();
         }
-        return imageDir;
+        return sImageDirPath;
     }
 
     /**
      * 获取下载文件目录
      */
-    public static String getFileDir() {
-        if (fileDir == null) {
+    public static String getFileDirPath() {
+        if (sFileDirPath == null) {
             initDir();
         }
-        return fileDir;
+        return sFileDirPath;
     }
 
     /**
      * 获取缓存目录
      */
-    public static String getCacheDir() {
-        if (cacheDir == null) {
+    public static String getCacheDirPath() {
+        if (sCacheDirPath == null) {
             initDir();
         }
-        return cacheDir;
+        return sCacheDirPath;
     }
 
     /**
      * 获取apk文件的目录
      */
-    public static String getApkDir() {
-        if (apkDir == null) {
+    public static String getApkDirPath() {
+        if (sApkDirPath == null) {
             initDir();
         }
-        return apkDir;
+        return sApkDirPath;
     }
 
     /**
      * 获取数据库文件的目录
      */
-    public static String getDbDir() {
-        if (dbDir == null) {
+    public static String getDbDirPath() {
+        if (sDbDirPath == null) {
             initDir();
         }
-        return dbDir;
+        return sDbDirPath;
     }
 
     /**
      * 获取音频文件的目录
      */
-    public static String getAudioDir() {
-        if (audioDir == null) {
+    public static String getAudioDirPath() {
+        if (sAudioDirPath == null) {
             initDir();
         }
-        return audioDir;
+        return sAudioDirPath;
     }
 
     /**
      * 获取视频文件的目录
      */
-    public static String getVideoDir() {
-        if (videoDir == null) {
+    public static String getVideoDirPath() {
+        if (sVideoDirPath == null) {
             initDir();
         }
-        return videoDir;
+        return sVideoDirPath;
     }
 
     /**
      * 获取书籍文件的目录
      */
-    public static String getBookDir() {
-        if (bookDir == null) {
+    public static String getBookDirPath() {
+        if (sBookDirPath == null) {
             initDir();
         }
-        return bookDir;
+        return sBookDirPath;
     }
 
     /**
      * 获取日志文件的目录
      */
-    public static String getLogDir() {
-        if (logDir == null) {
+    public static String getLogDirPath() {
+        if (sLogDirPath == null) {
             initDir();
         }
-        return logDir;
+        return sLogDirPath;
     }
 }

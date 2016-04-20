@@ -23,13 +23,12 @@ public class SplashActivity extends BaseSplashActivity {
     }
 
     @Override protected boolean isAutoStartNextActivity() {
-        return false;
+        return true;
     }
 
     @Override protected Class<?> nextActivity() {
-        return null;
         //如果isAutoStartNextActivity设置为true,这里需要指定跳转的activity
-        //return MainActivity.class;
+        return MainActivity.class;
     }
 
     @Override protected void runOnBackground() {

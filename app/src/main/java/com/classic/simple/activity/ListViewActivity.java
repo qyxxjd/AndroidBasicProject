@@ -13,8 +13,8 @@ import java.util.List;
  * 通用适配器示例By ListView
  */
 public class ListViewActivity extends AppBaseActivity {
-    @Bind(R.id.listview_lv) ListView listView;
-    private List<Integer> typeList;
+    @Bind(R.id.listview_lv) ListView mListView;
+    private List<Integer> mTypeList;
 
     @Override public int getLayoutResId() {
         return R.layout.activity_listview;
@@ -26,9 +26,9 @@ public class ListViewActivity extends AppBaseActivity {
      */
     @Override public void initData() {
         super.initData();
-        typeList = new ArrayList<Integer>();
+        mTypeList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            typeList.add(i % 3 == 0 ? 1 : 0);
+            mTypeList.add(i % 3 == 0 ? 1 : 0);
         }
     }
 
@@ -41,16 +41,18 @@ public class ListViewActivity extends AppBaseActivity {
         getSupportActionBar().setTitle("通用适配器示例");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView.setAdapter(
-            new CommonAdapter<Integer>(activity, R.layout.activity_listview_item, typeList) {
-                @Override public int getLayoutResId(Integer item) {
-                    return item == 1 ? R.layout.activity_listview_item2
-                        : R.layout.activity_listview_item;
-                }
+        mListView.setAdapter(
+                new CommonAdapter<Integer>(activity, R.layout.activity_listview_item, mTypeList) {
+                    @Override public int getLayoutResId(Integer item) {
+                        return item == 1
+                               ? R.layout.activity_listview_item2
+                               : R.layout.activity_listview_item;
+                    }
 
-                @Override public void onUpdate(BaseAdapterHelper helper, Integer item) {
-                }
-            });
+
+                    @Override public void onUpdate(BaseAdapterHelper helper, Integer item) {
+                    }
+                });
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {

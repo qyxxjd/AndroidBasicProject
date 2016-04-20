@@ -11,8 +11,7 @@ import android.net.NetworkInfo;
  * @date 2015/11/3
  */
 public final class NetworkUtil {
-    private NetworkUtil() {
-    }
+    private NetworkUtil() { }
 
     public static final int NONE = 0x00;
     public static final int WIFI = 0x01;

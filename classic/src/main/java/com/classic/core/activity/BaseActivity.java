@@ -18,15 +18,17 @@ import com.classic.core.utils.SharedPreferencesUtil;
  * @date 2015/11/7
  */
 public abstract class BaseActivity extends AppCompatActivity
-    implements View.OnClickListener, IActivity, IRegister {
-    private final String SP_NAME = "firstConfig";
+        implements View.OnClickListener, IActivity, IRegister {
+    private static final String SP_NAME = "firstConfig";
     /**
      * Activity状态
      */
     public int activityState = DESTROY;
-    protected BaseFragment currentFragment;
     protected Activity activity;
-    private SharedPreferencesUtil spUtil;
+    protected BaseFragment currentFragment;
+
+    private SharedPreferencesUtil mSharedPreferencesUtil;
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +36,11 @@ public abstract class BaseActivity extends AppCompatActivity
         initPre();
         BaseActivityStack.getInstance().addActivity(this);
         setContentView(getLayoutResId());
-        spUtil = new SharedPreferencesUtil(this, SP_NAME);
+        mSharedPreferencesUtil = new SharedPreferencesUtil(this, SP_NAME);
         final String simpleName = this.getClass().getSimpleName();
-        if (spUtil.getBooleanValue(simpleName, true)) {
+        if (mSharedPreferencesUtil.getBooleanValue(simpleName, true)) {
             onFirst();
-            spUtil.putBooleanValue(simpleName, false);
+            mSharedPreferencesUtil.putBooleanValue(simpleName, false);
         }
         initInstanceState(savedInstanceState);
         initData();
@@ -47,57 +49,44 @@ public abstract class BaseActivity extends AppCompatActivity
         register();
     }
 
-    @Override public void initPre() {
-    }
 
-    @Override public void onFirst() {
-    }
+    @Override public void onFirst() { }
+    @Override public void initPre() { }
+    @Override public void initInstanceState(Bundle savedInstanceState) { }
+    @Override public void initData() { }
+    @Override public void initToolbar() { }
+    @Override public void initView() { }
+    @Override public void showProgress() { }
+    @Override public void hideProgress() { }
+    @Override public void register() { }
+    @Override public void unRegister() { }
 
-    @Override public void initInstanceState(Bundle savedInstanceState) {
-    }
-
-    @Override public void initData() {
-    }
-
-    @Override public void initToolbar() {
-    }
-
-    @Override public void initView() {
-    }
-
-    @Override public void viewClick(View v) {
-    }
-
-    @Override public void showProgress() {
-    }
-
-    @Override public void hideProgress() {
-    }
-
-    @Override public void register() {
-    }
-
-    @Override public void unRegister() {
-    }
 
     @Override public void onClick(View v) {
         viewClick(v);
     }
+
+
+    @Override public void viewClick(View v) { }
+
 
     @Override public void skipActivity(Activity aty, Class<?> cls) {
         startActivity(aty, cls);
         aty.finish();
     }
 
+
     @Override public void skipActivity(Activity aty, Intent it) {
         startActivity(aty, it);
         aty.finish();
     }
 
+
     @Override public void skipActivity(Activity aty, Class<?> cls, Bundle extras) {
         startActivity(aty, cls, extras);
         aty.finish();
     }
+
 
     @Override public void startActivity(Activity aty, Class<?> cls) {
         Intent intent = new Intent();
@@ -105,9 +94,11 @@ public abstract class BaseActivity extends AppCompatActivity
         aty.startActivity(intent);
     }
 
+
     @Override public void startActivity(Activity aty, Intent it) {
         aty.startActivity(it);
     }
+
 
     @Override public void startActivity(Activity aty, Class<?> cls, Bundle extras) {
         Intent intent = new Intent();
@@ -115,6 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity
         intent.setClass(aty, cls);
         aty.startActivity(intent);
     }
+
 
     /**
      * 用Fragment替换视图
@@ -126,8 +118,8 @@ public abstract class BaseActivity extends AppCompatActivity
         if (targetFragment.equals(currentFragment)) {
             return;
         }
-        android.support.v4.app.FragmentTransaction transaction =
-            getSupportFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction
+                = getSupportFragmentManager().beginTransaction();
         if (!targetFragment.isAdded()) {
             transaction.add(resView, targetFragment, targetFragment.getClass().getName());
         }
@@ -143,20 +135,24 @@ public abstract class BaseActivity extends AppCompatActivity
         transaction.commit();
     }
 
+
     @Override protected void onResume() {
         super.onResume();
         activityState = RESUME;
     }
+
 
     @Override protected void onPause() {
         super.onPause();
         activityState = PAUSE;
     }
 
+
     @Override protected void onStop() {
         super.onStop();
         activityState = STOP;
     }
+
 
     @Override protected void onDestroy() {
         unRegister();
@@ -164,6 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity
         activityState = DESTROY;
         BaseActivityStack.getInstance().finishActivity(this);
     }
+
 
     @Override public void finish() {
         KeyBoardUtil.hide(getWindow().getDecorView());

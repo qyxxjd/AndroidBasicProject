@@ -8,6 +8,7 @@ import java.util.Locale;
 
 /**
  * 日期操作工具类
+ *
  * @author 续写经典
  * @date 2015/11/3
  */
@@ -17,24 +18,24 @@ public final class DateUtil {
     public static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINA);
     public static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("HH:mm",Locale.CHINA);
 
-    private static final Calendar c = Calendar.getInstance();
+    private static final Calendar INSTANCE = Calendar.getInstance();
     public static int getYear(){
-        return c.get(Calendar.YEAR);
+        return INSTANCE.get(Calendar.YEAR);
     }
     public static int getMonth(){
-        return c.get(Calendar.MONTH);
+        return INSTANCE.get(Calendar.MONTH);
     }
     public static int getDay(){
-        return c.get(Calendar.DAY_OF_MONTH);
+        return INSTANCE.get(Calendar.DAY_OF_MONTH);
     }
     public static int getHours(){
-        return c.get(Calendar.HOUR_OF_DAY);
+        return INSTANCE.get(Calendar.HOUR_OF_DAY);
     }
     public static int getMinutes(){
-        return c.get(Calendar.MINUTE);
+        return INSTANCE.get(Calendar.MINUTE);
     }
     public static int getSeconds(){
-        return c.get(Calendar.SECOND);
+        return INSTANCE.get(Calendar.SECOND);
     }
 
     /**
@@ -47,7 +48,6 @@ public final class DateUtil {
      * @return
      */
     public static Date getAddDay(Date nowDate, int dayAddNum) {
-
         Calendar tday = new GregorianCalendar();
         tday.setTime(nowDate);
         tday.add(Calendar.DAY_OF_MONTH, dayAddNum);

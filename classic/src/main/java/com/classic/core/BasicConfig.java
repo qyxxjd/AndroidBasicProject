@@ -19,19 +19,19 @@ import com.classic.core.utils.SDcardUtil;
 public final class BasicConfig {
     private static final String LOG_TAG = "classic";
 
-    private Context context;
-    private BasicConfig(Context context){ this.context = context; }
-    private volatile static BasicConfig config ;
+    private Context mContext;
+    private BasicConfig(Context context){ this.mContext = context; }
+    private volatile static BasicConfig sBasicConfig;
 
     public static final BasicConfig getInstance(@NonNull Context context){
-        if(null == config){
+        if(null == sBasicConfig){
             synchronized (BasicConfig.class){
-                if(null == config){
-                    config = new BasicConfig(context);
+                if(null == sBasicConfig){
+                    sBasicConfig = new BasicConfig(context);
                 }
             }
         }
-        return config;
+        return sBasicConfig;
     }
 
     /**
@@ -50,7 +50,7 @@ public final class BasicConfig {
      * @return
      */
     public BasicConfig initDir(){
-        initDir(context.getPackageName());
+        initDir(mContext.getPackageName());
         return this;
     }
 
@@ -70,7 +70,7 @@ public final class BasicConfig {
      * @return
      */
     public BasicConfig initExceptionHandler(){
-        CrashHandler.getInstance(context);
+        CrashHandler.getInstance(mContext);
         return this;
     }
 

@@ -18,21 +18,22 @@ import java.util.UUID;
 
 /**
  * 设备信息工具类
+ *
  * @author 续写经典
  * @date 2015/11/3
  */
 public final class DeviceUtil
 {
-	private Context                 context;
-	private static DeviceUtil util;
-	private static TelephonyManager tm;
+	private Context mContext;
+	private static DeviceUtil sDeviceUtil;
+	private static TelephonyManager sTelephonyManager;
 	private DeviceUtil(Context context){
-		this.context = context;
+		this.mContext = context;
 	}
 	public static DeviceUtil getInstance(Context context){
-		if(null==util) util= new DeviceUtil(context);
-		tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		return util;
+		if(null== sDeviceUtil) sDeviceUtil = new DeviceUtil(context);
+		sTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+		return sDeviceUtil;
 	}
 
 	/**
@@ -62,7 +63,7 @@ public final class DeviceUtil
 	 * @return
 	 */
 	public String getAndroidId(){
-		final String androidId = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+		final String androidId = android.provider.Settings.Secure.getString(mContext.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 		return TextUtils.isEmpty(androidId) ? "" : androidId;
 	}
 	/**
@@ -99,7 +100,7 @@ public final class DeviceUtil
      * </pre>
      */
 	public String getDeviceId(){
-		final String deviceId = tm.getDeviceId();
+		final String deviceId = sTelephonyManager.getDeviceId();
 		return TextUtils.isEmpty(deviceId) ? "" : deviceId;
 	}
 	
@@ -108,7 +109,7 @@ public final class DeviceUtil
 	 * @return
 	 */
 	public String getNumber(){
-		final String number = tm.getLine1Number();
+		final String number = sTelephonyManager.getLine1Number();
 		return TextUtils.isEmpty(number) ? "" : number;
 	}
 	/**
@@ -116,7 +117,7 @@ public final class DeviceUtil
 	 * @return
 	 */
 	public String getSubscriberId(){
-		final String subscriberId = tm.getSubscriberId();
+		final String subscriberId = sTelephonyManager.getSubscriberId();
 		return TextUtils.isEmpty(subscriberId) ? "" : subscriberId;
 	}
 	/**
@@ -154,7 +155,7 @@ public final class DeviceUtil
 	 * @return
 	 */
 	public String getSimSerialNumber(){
-		final String simSerialNumber = tm.getSimSerialNumber();
+		final String simSerialNumber = sTelephonyManager.getSimSerialNumber();
 		return TextUtils.isEmpty(simSerialNumber) ? "" : simSerialNumber;
 	}
 	/**
@@ -176,7 +177,7 @@ public final class DeviceUtil
      * </pre>
      */
 	public int getPhoneType(){
-		return tm.getPhoneType();
+		return sTelephonyManager.getPhoneType();
 	}
 	/**
      * 获取网络类型
@@ -199,7 +200,7 @@ public final class DeviceUtil
      * </pre>
      */
 	public int getNetworkType(){
-		return tm.getNetworkType();
+		return sTelephonyManager.getNetworkType();
 	}
 	
 }

@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class DoubleClickExitHelper {
 
     /** 两次点击的有效时间间隔，单位：毫秒 */
-    private int TIME_INTERVAL = 2000;
+    private int timeInterval = 2000;
     private static final String DEFAULT_TOAST_STRING = "再按一次返回键退出应用";
     private final Activity mActivity;
     private boolean isOnKeyBacking;
@@ -29,7 +29,7 @@ public class DoubleClickExitHelper {
      * @param time 单位：毫秒
      */
     public DoubleClickExitHelper setTimeInterval(int time) {
-        TIME_INTERVAL = time;
+        timeInterval = time;
         return this;
     }
 
@@ -78,7 +78,7 @@ public class DoubleClickExitHelper {
         else {
             isOnKeyBacking = true;
             mBackToast.show();
-            mHandler.postDelayed(onBackTimeRunnable, TIME_INTERVAL);
+            mHandler.postDelayed(onBackTimeRunnable, timeInterval);
             return true;
         }
     }

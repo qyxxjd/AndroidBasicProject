@@ -2,11 +2,11 @@ package com.classic.core.consts;
 
 /**
  * 常用的MIME扩展类型对应的ContentType
+ *
  * @author 续写经典
  * @date 2015/11/4
  */
-public class MIME
-{
+public class MIME {
 	/** 二进制流,匹配所有类型 */
 	public static final String FILE      = "application/octet-stream";
 

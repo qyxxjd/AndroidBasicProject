@@ -1,6 +1,7 @@
 package com.classic.core.utils;
 
 /**
+ *
  * @author 续写经典
  * @date 2015/11/3
  */

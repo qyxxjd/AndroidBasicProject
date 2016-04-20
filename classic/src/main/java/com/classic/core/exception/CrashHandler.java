@@ -21,8 +21,11 @@ import java.util.Date;
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
+    public static final String LOG_NAME_PREFIX = "crash_";
+    public static final String LOG_NAME_SUFFIX = ".log";
+
     private Context mContext;
-    private static CrashHandler instance;
+    private static CrashHandler sInstance;
 
     private CrashHandler(Context context) {
         // 将当前实例设为系统默认的异常处理器
@@ -31,10 +34,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     public synchronized static CrashHandler getInstance(Context context) {
-        if (instance == null) {
-            instance = new CrashHandler(context);
+        if (sInstance == null) {
+            sInstance = new CrashHandler(context);
         }
-        return instance;
+        return sInstance;
     }
 
     /**
@@ -52,16 +55,12 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
     }
 
-    //log后缀名
-    public static final String LOG_NAME_PREFIX = "crash_";
-    public static final String LOG_NAME_SUFFIX = ".log";
-
     private void saveToSDCard(Throwable ex) throws Exception {
         final StringBuilder sb = new StringBuilder(LOG_NAME_PREFIX).append(
             new SimpleDateFormat("yyyyMM").format(new Date(System.currentTimeMillis())))
             .append(LOG_NAME_SUFFIX);
         boolean append = false;
-        final File file = new File(SDcardUtil.getLogDir(), sb.toString());
+        final File file = new File(SDcardUtil.getLogDirPath(), sb.toString());
         if (!file.exists()) {
             file.createNewFile();
         } else {

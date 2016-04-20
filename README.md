@@ -76,7 +76,7 @@ public class YourApplication extends Application {
 Activity示例
 ```java
 public class TestActivity extends BaseActivity {
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
 
     @Override public int getLayoutResId() {
         return R.layout.activity_main;
@@ -92,12 +92,12 @@ public class TestActivity extends BaseActivity {
     //初始化view
     @Override public void initView() {
         super.initView();
-        recyclerView = (RecyclerView) findViewById(R.id.main_rv);
+        mRecyclerView = (RecyclerView) findViewById(R.id.main_rv);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         
         /**
          * 使用Fragment
@@ -134,7 +134,7 @@ public class TestActivity extends BaseActivity {
 Fragment示例
 ```java
 public class TestFragment extends BaseFragment {
-    private TextView tvTitle;
+    private TextView mTitle;
 
     @Override public int getLayoutResId() {
         return R.layout.activity_listview_item;
@@ -142,7 +142,7 @@ public class TestFragment extends BaseFragment {
 
     @Override public void initView(View parentView) {
         super.initView(parentView);
-        tvTitle = (TextView) parentView.findViewById(R.id.item_title_tv);
+        mTitle = (TextView) parentView.findViewById(R.id.item_title_tv);
     }
 
     //以下为可选方法，根据需要进行重载.

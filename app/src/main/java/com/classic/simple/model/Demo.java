@@ -12,12 +12,10 @@ import java.util.List;
  */
 public class Demo implements Serializable {
     public static final int TYPE_SPLASH = 0x00;
-    //public static final int TYPE_DOWNLOAD = 0x01;
-    public static final int TYPE_ADAPTER = 0x02;
-    public static final int TYPE_EVENT = 0x03;
-    public static final int TYPE_CRASH = 0x04;
-    //public static final int TYPE_UTILS = 0x05;
-    public static final int TYPE_FRAGMENT = 0x06;
+    public static final int TYPE_ADAPTER = 0x01;
+    public static final int TYPE_EVENT = 0x02;
+    public static final int TYPE_CRASH = 0x03;
+    public static final int TYPE_FRAGMENT = 0x04;
 
     public String title;
     public int bgColor;
@@ -36,9 +34,7 @@ public class Demo implements Serializable {
 
     public static List<Demo> getDemos() {
         if (DataUtil.isEmpty(demos)) {
-            demos = new ArrayList<Demo>();
-            //demos.add(new Demo("下载", Color.parseColor("#76ff03"), TYPE_DOWNLOAD));
-            //demos.add(new Demo("工具类", Color.parseColor("#76ff03"),TYPE_UTILS));
+            demos = new ArrayList<>();
             demos.add(new Demo("启动页", Color.parseColor("#00bcd4"), TYPE_SPLASH));
             demos.add(new Demo("Fragment", Color.parseColor("#ff4081"), TYPE_FRAGMENT));
             demos.add(new Demo("通用适配器", Color.parseColor("#9c27b0"), TYPE_ADAPTER));

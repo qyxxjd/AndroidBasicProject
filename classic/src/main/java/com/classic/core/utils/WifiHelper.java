@@ -9,17 +9,15 @@ import java.util.List;
 
 /**
  * wifi工具类
+ * 需要权限：
+ * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+ * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+ * <uses-permission android:name="android.permission.WAKE_LOCK" />
  *
  * @author 续写经典
  * @date 2015/11/3
  */
 public final class WifiHelper {
-    private WifiHelper(Context context) {
-        this.mContext = context;
-        mWifiManager = (WifiManager) context.getSystemService(
-                Context.WIFI_SERVICE);
-    }
-
 
     /** wifi加密类型：无加密 */
     public static final int WIFI_ENCRYPTION_TYPE_NONE
@@ -38,6 +36,11 @@ public final class WifiHelper {
     private Context mContext;
     private WifiManager mWifiManager;
 
+    private WifiHelper(Context context) {
+        this.mContext = context;
+        mWifiManager = (WifiManager) context.getSystemService(
+                Context.WIFI_SERVICE);
+    }
 
     public static final WifiHelper getInstance(Context context) {
         if (null == sWifiHelper) {

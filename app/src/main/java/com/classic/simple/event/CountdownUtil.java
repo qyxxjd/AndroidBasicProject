@@ -12,8 +12,8 @@ import org.simple.eventbus.EventBus;
  */
 public class CountdownUtil {
     private boolean isRun;
-    private int totalTime;
-    private String countdownTag;
+    private int mTotalTime;
+    private String mCountdownTag;
 
     /**
      * 启动倒计时广播
@@ -23,8 +23,8 @@ public class CountdownUtil {
      */
     public void start(int time, String countdownTag) {
         if (isRun) return;
-        this.countdownTag = countdownTag;
-        totalTime = time;
+        this.mCountdownTag = countdownTag;
+        mTotalTime = time;
         if (null == timer) timer = new Timer();
         isRun = true;
         timer.schedule(task, 100, 1000); // 0.1s后执行task,经过1s再次执行
@@ -34,9 +34,9 @@ public class CountdownUtil {
     private final TimerTask task = new TimerTask() {
 
         @Override public void run() {
-            totalTime--;
-            EventBus.getDefault().post(totalTime, countdownTag);
-            if (totalTime == 0) {
+            mTotalTime--;
+            EventBus.getDefault().post(mTotalTime, mCountdownTag);
+            if (mTotalTime == 0) {
                 timer.cancel();
                 isRun = false;
             }

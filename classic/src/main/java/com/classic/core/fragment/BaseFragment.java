@@ -17,58 +17,22 @@ import com.classic.core.utils.SharedPreferencesUtil;
  * @date 2015/12/16
  */
 public abstract class BaseFragment extends Fragment
-    implements IFragment, IRegister, View.OnClickListener {
-    private final String SP_NAME = "firstConfig";
+        implements IFragment, IRegister, View.OnClickListener {
+    private static final String SP_NAME = "firstConfig";
     protected Activity activity;
     protected View parentView;
-    private SharedPreferencesUtil spUtil;
 
-    @Override public void onFirst() {
-    }
+    private SharedPreferencesUtil mSharedPreferencesUtil;
 
-    @Override public void initInstanceState(Bundle savedInstanceState) {
-    }
-
-    @Override public void initData() {
-    }
-
-    @Override public void initView(View parentView) {
-    }
-
-    @Override public void onChange() {
-    }
-
-    @Override public void onHidden() {
-    }
-
-    @Override public void viewClick(View v) {
-    }
-
-    @Override public void showProgress() {
-    }
-
-    @Override public void hideProgress() {
-    }
-
-    @Override public void register() {
-    }
-
-    @Override public void unRegister() {
-    }
-
-    @Override public void onClick(View v) {
-        viewClick(v);
-    }
-
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         activity = getActivity();
         parentView = inflater.inflate(getLayoutResId(), container, false);
-        spUtil = new SharedPreferencesUtil(getActivity(), SP_NAME);
+        mSharedPreferencesUtil = new SharedPreferencesUtil(getActivity(), SP_NAME);
         final String simpleName = this.getClass().getSimpleName();
-        if (spUtil.getBooleanValue(simpleName, true)) {
+        if (mSharedPreferencesUtil.getBooleanValue(simpleName, true)) {
             onFirst();
-            spUtil.putBooleanValue(simpleName, false);
+            mSharedPreferencesUtil.putBooleanValue(simpleName, false);
         }
         initInstanceState(savedInstanceState);
         initData();
@@ -76,13 +40,34 @@ public abstract class BaseFragment extends Fragment
         return parentView;
     }
 
+
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         register();
     }
 
+
     @Override public void onDestroyView() {
         unRegister();
         super.onDestroyView();
     }
+
+
+    @Override public void onFirst() { }
+    @Override public void initInstanceState(Bundle savedInstanceState) { }
+    @Override public void initData() { }
+    @Override public void initView(View parentView) { }
+    @Override public void register() { }
+    @Override public void unRegister() { }
+    @Override public void onChange() { }
+    @Override public void onHidden() { }
+    @Override public void showProgress() { }
+    @Override public void hideProgress() { }
+
+
+    @Override public void onClick(View v) {
+        viewClick(v);
+    }
+
+    @Override public void viewClick(View v) { }
 }

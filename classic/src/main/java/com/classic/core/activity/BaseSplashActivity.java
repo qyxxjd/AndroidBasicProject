@@ -80,6 +80,7 @@ public abstract class BaseSplashActivity extends Activity {
      */
     private int mOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
@@ -87,7 +88,7 @@ public abstract class BaseSplashActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow()
             .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setRequestedOrientation(mOrientation);
         this.setContentView(createLayout());
         setSplashResources(mResources);
@@ -95,10 +96,12 @@ public abstract class BaseSplashActivity extends Activity {
         startOnBackground();
     }
 
+
     private void init() {
-        mResources = new ArrayList<SplashImgResource>();
+        mResources = new ArrayList<>();
         mUiHandler = new UIHandler(this);
     }
+
 
     /**
      * 设置开场动画的图片资源。
@@ -114,6 +117,7 @@ public abstract class BaseSplashActivity extends Activity {
      */
     protected abstract Class<?> nextActivity();
 
+
     /**
      * 显示开场动画。
      */
@@ -128,6 +132,7 @@ public abstract class BaseSplashActivity extends Activity {
         mUiHandler.sendEmptyMessageDelayed(FRONTGROUND_FINISH, delayTime);
     }
 
+
     /**
      * 执行耗时的操作。
      */
@@ -140,6 +145,7 @@ public abstract class BaseSplashActivity extends Activity {
         }).start();
     }
 
+
     /**
      * 创建启动时的界面Layout。
      *
@@ -147,19 +153,19 @@ public abstract class BaseSplashActivity extends Activity {
      */
     private View createLayout() {
         FrameLayout layout = new FrameLayout(this);
-        LayoutParams layoutParams =
-            new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
         layout.setLayoutParams(layoutParams);
         layout.setBackgroundColor(getBackgroundColor());
         mSplashImage = new ImageView(this);
-        FrameLayout.LayoutParams params =
-            new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         params.gravity = Gravity.CENTER;
         layout.addView(mSplashImage, params);
 
         return layout;
     }
+
 
     /**
      * 获取背景颜色。
@@ -170,6 +176,7 @@ public abstract class BaseSplashActivity extends Activity {
         return mBackgroundColor;
     }
 
+
     /**
      * 设置背景颜色。
      *
@@ -179,24 +186,27 @@ public abstract class BaseSplashActivity extends Activity {
         this.mBackgroundColor = backgroundColor;
     }
 
+
     /**
      * 返回屏幕方向。
      *
      * @return 屏幕方向，横屏或竖屏。
      */
-    public int getmOrientation() {
+    public int getOrientation() {
         return mOrientation;
     }
+
 
     /**
      * 设置屏幕的方向。默认是竖屏。
      *
-     * @param mOrientation 屏幕方向。ActivityInfo.SCREEN_ORIENTATION_PORTRAIT或者是ActivityInfo.
+     * @param orientation 屏幕方向。ActivityInfo.SCREEN_ORIENTATION_PORTRAIT或者是ActivityInfo.
      * SCREEN_ORIENTATION_LANDSCAPE。
      */
-    public void setmOrientation(int mOrientation) {
-        this.mOrientation = mOrientation;
+    public void setOrientation(int orientation) {
+        this.mOrientation = orientation;
     }
+
 
     /**
      * 在前台中执行的代码。如需对界面进行横屏的重新设置，请此在执行setmOrientation()方法。
@@ -204,17 +214,20 @@ public abstract class BaseSplashActivity extends Activity {
     protected void runOnMainThread() {
     }
 
+
     /**
      * 在后台中执行的代码。在此进行比较耗时的操作。
      */
     protected void runOnBackground() {
     }
 
+
     /**
      * 如果需要传送数据到下一个activity，可以重写该方法。
      */
     protected void setIntentDate(Intent intent) {
     }
+
 
     /**
      * 是否自动跳转下一个activity，默认为true。如果需要自己跳转，则重写该方法并返回false。
@@ -223,6 +236,7 @@ public abstract class BaseSplashActivity extends Activity {
         return true;
     }
 
+
     protected static class UIHandler extends Handler {
         /**
          * 是否需要等待。
@@ -230,9 +244,11 @@ public abstract class BaseSplashActivity extends Activity {
         private int isWaiting = 0;
         private WeakReference<BaseSplashActivity> activity;
 
+
         public UIHandler(BaseSplashActivity activity) {
             this.activity = new WeakReference<BaseSplashActivity>(activity);
         }
+
 
         public void handleMessage(Message msg) {
             if (msg.what == SPLASH_PLAY) {
@@ -243,7 +259,8 @@ public abstract class BaseSplashActivity extends Activity {
                 if (splash != null) {
                     if (resource.isExpand) {
                         splash.mSplashImage.setScaleType(ScaleType.FIT_XY);
-                    } else {
+                    }
+                    else {
                         splash.mSplashImage.setScaleType(ScaleType.CENTER);
                     }
                     splash.mSplashImage.setImageResource(resource.mResId);
@@ -297,8 +314,10 @@ public abstract class BaseSplashActivity extends Activity {
          */
         private boolean isExpand;
 
+
         public SplashImgResource() {
         }
+
 
         /**
          * 开场动画资源的构造方法。
@@ -315,6 +334,7 @@ public abstract class BaseSplashActivity extends Activity {
             this.isExpand = isExpand;
         }
 
+
         /**
          * 获取资源图片ID。
          *
@@ -323,6 +343,7 @@ public abstract class BaseSplashActivity extends Activity {
         public int getmResId() {
             return mResId;
         }
+
 
         /**
          * 设置资源图片ID.
@@ -333,6 +354,7 @@ public abstract class BaseSplashActivity extends Activity {
             this.mResId = mResId;
         }
 
+
         /**
          * 返回资源图片的播放时间。
          *
@@ -341,6 +363,7 @@ public abstract class BaseSplashActivity extends Activity {
         public int getPlayerTime() {
             return playerTime;
         }
+
 
         /**
          * 设置资源图片的播放时间。
@@ -351,12 +374,14 @@ public abstract class BaseSplashActivity extends Activity {
             this.playerTime = playerTime;
         }
 
+
         /**
          * 得到资源开始时的透明程度。
          */
         public float getStartAlpha() {
             return startAlpha;
         }
+
 
         /**
          * 设置资源开始时的透明程度。
@@ -365,12 +390,14 @@ public abstract class BaseSplashActivity extends Activity {
             this.startAlpha = startAlpha;
         }
 
+
         /**
          * 返回图片是否设置扩展。
          */
         public boolean isExpand() {
             return isExpand;
         }
+
 
         /**
          * 设置图片是否扩展。

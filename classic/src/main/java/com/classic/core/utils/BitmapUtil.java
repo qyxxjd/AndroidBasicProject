@@ -25,26 +25,28 @@ import java.io.FileInputStream;
 
 /**
  * bitmap工具类
+ *
  * @author 续写经典
  * @date 2015/11/4
  */
 public final class BitmapUtil {
-    private BitmapUtil(){}
+    private BitmapUtil() {}
+
+
     /** 图片最大宽度. */
-    public static final int MAX_WIDTH = 4096/2;
+    public static final int MAX_WIDTH = 4096 / 2;
     /** 图片最大高度. */
-    public static final int MAX_HEIGHT = 4096/2;
+    public static final int MAX_HEIGHT = 4096 / 2;
+
+
     /**
      * 获取Bitmap大小.
      *
-     * @param bitmap
-     *            the bitmap
-     * @param mCompressFormat
-     *            图片格式 Bitmap.CompressFormat.JPEG,CompressFormat.PNG
+     * @param bitmap the bitmap
+     * @param mCompressFormat 图片格式 Bitmap.CompressFormat.JPEG,CompressFormat.PNG
      * @return 图片的大小
      */
-    public static int getByteCount(Bitmap bitmap,
-        Bitmap.CompressFormat mCompressFormat) {
+    public static int getByteCount(Bitmap bitmap, Bitmap.CompressFormat mCompressFormat) {
         int size = 0;
         ByteArrayOutputStream output = null;
         try {
@@ -60,6 +62,8 @@ public final class BitmapUtil {
         }
         return size;
     }
+
+
     /**
      * 描述：获取图片尺寸
      *
@@ -78,6 +82,7 @@ public final class BitmapUtil {
         return size;
     }
 
+
     /**
      * Byte[]转Bitmap
      */
@@ -85,11 +90,11 @@ public final class BitmapUtil {
         return BitmapFactory.decodeByteArray(data, 0, data.length);
     }
 
+
     /**
      * Bitmap转Byte[]
-     * @param bmp
+     *
      * @param needRecycle 转换完毕后是否需要回收bitmap
-     * @return
      */
     public static byte[] bitmap2Bytes(final Bitmap bmp, final boolean needRecycle) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -102,12 +107,14 @@ public final class BitmapUtil {
         return result;
     }
 
+
     /**
      * Bitmap转Drawable
      */
     public static Drawable bitmap2Drawable(Bitmap bitmap) {
         return new BitmapDrawable(bitmap);
     }
+
 
     /**
      * Drawable转Bitmap
@@ -117,12 +124,12 @@ public final class BitmapUtil {
         return bd.getBitmap();
     }
 
+
     /**
      * Bitmap对象转换TransitionDrawable对象.
      *
-     * @param bitmap
-     *            要转化的Bitmap对象 imageView.setImageDrawable(td);
-     *            td.startTransition(200);
+     * @param bitmap 要转化的Bitmap对象 imageView.setImageDrawable(td);
+     * td.startTransition(200);
      * @return Drawable 转化完成的Drawable对象
      */
     @SuppressWarnings("ResourceType")
@@ -132,44 +139,43 @@ public final class BitmapUtil {
             if (bitmap == null) {
                 return null;
             }
-            mBitmapDrawable = new TransitionDrawable(new Drawable[] {
-                new ColorDrawable(android.R.color.transparent),
-                new BitmapDrawable(bitmap) });
+            mBitmapDrawable = new TransitionDrawable(
+                    new Drawable[] { new ColorDrawable(android.R.color.transparent),
+                            new BitmapDrawable(bitmap) });
         } catch (Exception e) {
             e.printStackTrace();
         }
         return mBitmapDrawable;
     }
 
+
     /**
      * Drawable对象转换TransitionDrawable对象.
      *
-     * @param drawable
-     *            要转化的Drawable对象 imageView.setImageDrawable(td);
-     *            td.startTransition(200);
+     * @param drawable 要转化的Drawable对象 imageView.setImageDrawable(td);
+     * td.startTransition(200);
      * @return Drawable 转化完成的Drawable对象
      */
     @SuppressWarnings("ResourceType")
-    public static TransitionDrawable drawableToTransitionDrawable(
-        Drawable drawable) {
+    public static TransitionDrawable drawableToTransitionDrawable(Drawable drawable) {
         TransitionDrawable mBitmapDrawable = null;
         try {
             if (drawable == null) {
                 return null;
             }
-            mBitmapDrawable = new TransitionDrawable(new Drawable[] {
-                new ColorDrawable(android.R.color.transparent), drawable });
+            mBitmapDrawable = new TransitionDrawable(
+                    new Drawable[] { new ColorDrawable(android.R.color.transparent), drawable });
         } catch (Exception e) {
             e.printStackTrace();
         }
         return mBitmapDrawable;
     }
 
+
     /**
      * 将ImageView转换为Bitmap.
      *
-     * @param view
-     *            要转换为bitmap的View
+     * @param view 要转换为bitmap的View
      * @return byte[] 图片的byte[]
      */
     public static Bitmap imageView2Bitmap(ImageView view) {
@@ -183,11 +189,12 @@ public final class BitmapUtil {
         return bitmap;
     }
 
+
     /**
      * 旋转图像
+     *
      * @param bmp Bitmap
      * @param degrees 旋转角度
-     * @return
      */
     public static Bitmap rotateBitmap(Bitmap bmp, int degrees) {
         if (degrees != 0) {
@@ -197,6 +204,7 @@ public final class BitmapUtil {
         }
         return bmp;
     }
+
 
     /**
      * 得到bitmap的大小
@@ -212,15 +220,13 @@ public final class BitmapUtil {
         return bitmap.getRowBytes() * bitmap.getHeight();                //earlier version
     }
 
+
     /**
      * 描述：缩放图片.(超出的裁掉)
      *
-     * @param file
-     *            File对象
-     * @param desiredWidth
-     *            新图片的宽
-     * @param desiredHeight
-     *            新图片的高
+     * @param file File对象
+     * @param desiredWidth 新图片的宽
+     * @param desiredHeight 新图片的高
      * @return Bitmap 新图片
      */
     public static Bitmap getScaleBitmap(File file, int desiredWidth, int desiredHeight) {
@@ -248,7 +254,7 @@ public final class BitmapUtil {
         // 位图可以共享一个参考输入数据(inputstream、阵列等)
         opts.inInputShareable = true;
         // 缩放的比例，缩放是很难按准备的比例进行缩放的，通过inSampleSize来进行缩放，其值表明缩放的倍数，SDK中建议其值是2的指数值
-        int sampleSize = findBestSampleSize(srcWidth,srcHeight,desiredWidth,desiredHeight);
+        int sampleSize = findBestSampleSize(srcWidth, srcHeight, desiredWidth, desiredHeight);
         opts.inSampleSize = sampleSize;
         // 创建内存
         opts.inJustDecodeBounds = false;
@@ -258,28 +264,27 @@ public final class BitmapUtil {
         resizeBmp = BitmapFactory.decodeFile(file.getPath(), opts);
 
         // 缩放的比例
-        float scale = getMinScale(resizeBmp.getWidth(), resizeBmp.getHeight(), desiredWidth, desiredHeight);
-        if(scale < 1){
+        float scale = getMinScale(resizeBmp.getWidth(), resizeBmp.getHeight(), desiredWidth,
+                desiredHeight);
+        if (scale < 1) {
             // 缩小
             resizeBmp = scaleBitmap(resizeBmp, scale);
         }
 
         //超出的裁掉
         if (resizeBmp.getWidth() > desiredWidth || resizeBmp.getHeight() > desiredHeight) {
-            resizeBmp  = getCutBitmap(resizeBmp,desiredWidth,desiredHeight);
+            resizeBmp = getCutBitmap(resizeBmp, desiredWidth, desiredHeight);
         }
         return resizeBmp;
     }
 
+
     /**
      * 描述：缩放图片.(超出的裁掉)
      *
-     * @param bitmap
-     *            the bitmap
-     * @param desiredWidth
-     *            新图片的宽
-     * @param desiredHeight
-     *            新图片的高
+     * @param bitmap the bitmap
+     * @param desiredWidth 新图片的宽
+     * @param desiredHeight 新图片的高
      * @return Bitmap 新图片
      */
     public static Bitmap getScaleBitmap(Bitmap bitmap, int desiredWidth, int desiredHeight) {
@@ -301,7 +306,7 @@ public final class BitmapUtil {
         resizeBmp = scaleBitmap(bitmap, scale);
         //超出的裁掉
         if (resizeBmp.getWidth() > desiredWidth || resizeBmp.getHeight() > desiredHeight) {
-            resizeBmp  = getCutBitmap(resizeBmp,desiredWidth,desiredHeight);
+            resizeBmp = getCutBitmap(resizeBmp, desiredWidth, desiredHeight);
         }
         return resizeBmp;
     }
@@ -310,12 +315,9 @@ public final class BitmapUtil {
     /**
      * 描述：裁剪图片.
      *
-     * @param file
-     *            File对象
-     * @param desiredWidth
-     *            新图片的宽
-     * @param desiredHeight
-     *            新图片的高
+     * @param file File对象
+     * @param desiredWidth 新图片的宽
+     * @param desiredHeight 新图片的高
      * @return Bitmap 新图片
      */
     public static Bitmap getCutBitmap(File file, int desiredWidth, int desiredHeight) {
@@ -344,7 +346,7 @@ public final class BitmapUtil {
         // 位图可以共享一个参考输入数据(inputstream、阵列等)
         opts.inInputShareable = true;
         // 缩放的比例，缩放是很难按准备的比例进行缩放的，通过inSampleSize来进行缩放，其值表明缩放的倍数，SDK中建议其值是2的指数值
-        int sampleSize = findBestSampleSize(srcWidth,srcHeight,desiredWidth,desiredHeight);
+        int sampleSize = findBestSampleSize(srcWidth, srcHeight, desiredWidth, desiredHeight);
         opts.inSampleSize = sampleSize;
         // 创建内存
         opts.inJustDecodeBounds = false;
@@ -358,15 +360,13 @@ public final class BitmapUtil {
         return resizeBmp;
     }
 
+
     /**
      * 描述：裁剪图片.
      *
-     * @param bitmap
-     *            the bitmap
-     * @param desiredWidth
-     *            新图片的宽
-     * @param desiredHeight
-     *            新图片的高
+     * @param bitmap the bitmap
+     * @param desiredWidth 新图片的宽
+     * @param desiredHeight 新图片的高
      * @return Bitmap 新图片
      */
     public static Bitmap getCutBitmap(Bitmap bitmap, int desiredWidth, int desiredHeight) {
@@ -390,17 +390,19 @@ public final class BitmapUtil {
 
             if (width > desiredWidth) {
                 offsetX = (width - desiredWidth) / 2;
-            } else {
+            }
+            else {
                 desiredWidth = width;
             }
 
             if (height > desiredHeight) {
                 offsetY = (height - desiredHeight) / 2;
-            } else {
+            }
+            else {
                 desiredHeight = height;
             }
 
-            resizeBmp = Bitmap.createBitmap(bitmap, offsetX, offsetY, desiredWidth,desiredHeight);
+            resizeBmp = Bitmap.createBitmap(bitmap, offsetX, offsetY, desiredWidth, desiredHeight);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -411,13 +413,12 @@ public final class BitmapUtil {
         return resizeBmp;
     }
 
+
     /**
      * 描述：根据等比例缩放图片.
      *
-     * @param bitmap
-     *            the bitmap
-     * @param scale
-     *            比例
+     * @param bitmap the bitmap
+     * @param scale 比例
      * @return Bitmap 新图片
      */
     public static Bitmap scaleBitmap(Bitmap bitmap, float scale) {
@@ -451,17 +452,11 @@ public final class BitmapUtil {
         return resizeBmp;
     }
 
+
     /**
-     *
      * 获取缩小的比例.
-     * @param srcWidth
-     * @param srcHeight
-     * @param desiredWidth
-     * @param desiredHeight
-     * @return
      */
-    private static float getMinScale(int srcWidth, int srcHeight, int desiredWidth,
-        int desiredHeight) {
+    private static float getMinScale(int srcWidth, int srcHeight, int desiredWidth, int desiredHeight) {
         // 缩放的比例
         float scale = 0;
         // 计算缩放比例，宽高的最小比例
@@ -469,20 +464,21 @@ public final class BitmapUtil {
         float scaleHeight = (float) desiredHeight / srcHeight;
         if (scaleWidth > scaleHeight) {
             scale = scaleWidth;
-        } else {
+        }
+        else {
             scale = scaleHeight;
         }
 
         return scale;
     }
 
-    private static int[] resizeToMaxSize(int srcWidth, int srcHeight,
-        int desiredWidth, int desiredHeight) {
+
+    private static int[] resizeToMaxSize(int srcWidth, int srcHeight, int desiredWidth, int desiredHeight) {
         int[] size = new int[2];
-        if(desiredWidth <= 0){
+        if (desiredWidth <= 0) {
             desiredWidth = srcWidth;
         }
-        if(desiredHeight <= 0){
+        if (desiredHeight <= 0) {
             desiredHeight = srcHeight;
         }
         if (desiredWidth > MAX_WIDTH) {
@@ -503,6 +499,7 @@ public final class BitmapUtil {
         return size;
     }
 
+
     private static boolean checkBitmap(Bitmap bitmap) {
         if (bitmap == null) {
             return false;
@@ -514,19 +511,17 @@ public final class BitmapUtil {
         return true;
     }
 
+
     private static boolean checkSize(int desiredWidth, int desiredHeight) {
         if (desiredWidth <= 0 || desiredHeight <= 0) {
             return false;
         }
         return true;
     }
+
+
     /**
      * 找到最合适的SampleSize
-     * @param width
-     * @param height
-     * @param desiredWidth
-     * @param desiredHeight
-     * @return
      */
     private static int findBestSampleSize(int width, int height, int desiredWidth, int desiredHeight) {
         double wr = (double) width / desiredWidth;
@@ -539,13 +534,12 @@ public final class BitmapUtil {
         return (int) n;
     }
 
+
     /**
      * 描述：旋转Bitmap为一定的角度并四周暗化处理.
      *
-     * @param bitmap
-     *            the bitmap
-     * @param degrees
-     *            the degrees
+     * @param bitmap the bitmap
+     * @param degrees the degrees
      * @return the bitmap
      */
     public static Bitmap rotateBitmapTranslate(Bitmap bitmap, float degrees) {
@@ -557,7 +551,8 @@ public final class BitmapUtil {
             if ((degrees / 90) % 2 != 0) {
                 width = bitmap.getWidth();
                 height = bitmap.getHeight();
-            } else {
+            }
+            else {
                 width = bitmap.getHeight();
                 height = bitmap.getWidth();
             }
@@ -572,11 +567,11 @@ public final class BitmapUtil {
         return mBitmap;
     }
 
+
     /**
      * 转换图片转换成圆形.
      *
-     * @param bitmap
-     *            传入Bitmap对象
+     * @param bitmap 传入Bitmap对象
      * @return the bitmap
      */
     public static Bitmap toRoundBitmap(Bitmap bitmap) {
@@ -598,7 +593,8 @@ public final class BitmapUtil {
             dst_top = 0;
             dst_right = width;
             dst_bottom = width;
-        } else {
+        }
+        else {
             roundPx = height / 2;
             float clip = (width - height) / 2;
             left = clip;
@@ -616,10 +612,8 @@ public final class BitmapUtil {
         Canvas canvas = new Canvas(output);
         final int color = 0xff424242;
         final Paint paint = new Paint();
-        final Rect src = new Rect((int) left, (int) top, (int) right,
-            (int) bottom);
-        final Rect dst = new Rect((int) dst_left, (int) dst_top,
-            (int) dst_right, (int) dst_bottom);
+        final Rect src = new Rect((int) left, (int) top, (int) right, (int) bottom);
+        final Rect dst = new Rect((int) dst_left, (int) dst_top, (int) dst_right, (int) dst_bottom);
         final RectF rectF = new RectF(dst);
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
@@ -630,14 +624,14 @@ public final class BitmapUtil {
         return output;
     }
 
+
     /**
      * 转换图片转换成圆角.
      *
-     * @param bitmap
-     *            传入Bitmap对象
+     * @param bitmap 传入Bitmap对象
      * @return the bitmap
      */
-    public static Bitmap toRoundBitmap(Bitmap bitmap,int roundPx) {
+    public static Bitmap toRoundBitmap(Bitmap bitmap, int roundPx) {
         if (bitmap == null) {
             return null;
         }
@@ -654,7 +648,8 @@ public final class BitmapUtil {
             dst_top = 0;
             dst_right = width;
             dst_bottom = width;
-        } else {
+        }
+        else {
             float clip = (width - height) / 2;
             left = clip;
             right = width - clip;
@@ -671,10 +666,8 @@ public final class BitmapUtil {
         Canvas canvas = new Canvas(output);
         final int color = 0xff424242;
         final Paint paint = new Paint();
-        final Rect src = new Rect((int) left, (int) top, (int) right,
-            (int) bottom);
-        final Rect dst = new Rect((int) dst_left, (int) dst_top,
-            (int) dst_right, (int) dst_bottom);
+        final Rect src = new Rect((int) left, (int) top, (int) right, (int) bottom);
+        final Rect dst = new Rect((int) dst_left, (int) dst_top, (int) dst_right, (int) dst_bottom);
         final RectF rectF = new RectF(dst);
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
@@ -685,11 +678,11 @@ public final class BitmapUtil {
         return output;
     }
 
+
     /**
      * 转换图片转换成镜面效果的图片.
      *
-     * @param bitmap
-     *            传入Bitmap对象
+     * @param bitmap 传入Bitmap对象
      * @return the bitmap
      */
     public static Bitmap toReflectionBitmap(Bitmap bitmap) {
@@ -708,13 +701,13 @@ public final class BitmapUtil {
 
             // Create a Bitmap with the flip matrix applied to it.
             // We only want the bottom half of the image
-            Bitmap reflectionImage = Bitmap.createBitmap(bitmap, 0, height / 2,
-                width, height / 2, matrix, false);
+            Bitmap reflectionImage = Bitmap.createBitmap(bitmap, 0, height / 2, width, height / 2,
+                    matrix, false);
 
             // Create a new bitmap with same width but taller to fit
             // reflection
-            Bitmap bitmapWithReflection = Bitmap.createBitmap(width,
-                (height + height / 2), Bitmap.Config.ARGB_8888);
+            Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height / 2),
+                    Bitmap.Config.ARGB_8888);
 
             // Create a new Canvas with the bitmap that's big enough for
             // the image plus gap plus reflection
@@ -723,23 +716,22 @@ public final class BitmapUtil {
             canvas.drawBitmap(bitmap, 0, 0, null);
             // Draw in the gap
             Paint deafaultPaint = new Paint();
-            canvas.drawRect(0, height, width, height + reflectionGap,
-                deafaultPaint);
+            canvas.drawRect(0, height, width, height + reflectionGap, deafaultPaint);
             // Draw in the reflection
             canvas.drawBitmap(reflectionImage, 0, height + reflectionGap, null);
             // Create a shader that is a linear gradient that covers the
             // reflection
             Paint paint = new Paint();
-            LinearGradient shader = new LinearGradient(0, bitmap.getHeight(),
-                0, bitmapWithReflection.getHeight() + reflectionGap,
-                0x70ffffff, 0x00ffffff, Shader.TileMode.CLAMP);
+            LinearGradient shader = new LinearGradient(0, bitmap.getHeight(), 0,
+                    bitmapWithReflection.getHeight() + reflectionGap, 0x70ffffff, 0x00ffffff,
+                    Shader.TileMode.CLAMP);
             // Set the paint to use this shader (linear gradient)
             paint.setShader(shader);
             // Set the Transfer mode to be porter duff and destination in
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             // Draw a rectangle using the paint with our linear gradient
-            canvas.drawRect(0, height, width, bitmapWithReflection.getHeight()
-                + reflectionGap, paint);
+            canvas.drawRect(0, height, width, bitmapWithReflection.getHeight() + reflectionGap,
+                    paint);
 
             bitmap = bitmapWithReflection;
         } catch (Exception e) {
@@ -748,11 +740,11 @@ public final class BitmapUtil {
         return bitmap;
     }
 
+
     /**
      * 释放Bitmap对象.
      *
-     * @param bitmap
-     *            要释放的Bitmap
+     * @param bitmap 要释放的Bitmap
      */
     public static void releaseBitmap(Bitmap bitmap) {
         if (bitmap != null) {
@@ -766,11 +758,11 @@ public final class BitmapUtil {
         }
     }
 
+
     /**
      * 释放Bitmap数组.
      *
-     * @param bitmaps
-     *            要释放的Bitmap数组
+     * @param bitmaps 要释放的Bitmap数组
      */
     public static void releaseBitmapArray(Bitmap[] bitmaps) {
         if (bitmaps != null) {
@@ -785,8 +777,11 @@ public final class BitmapUtil {
         }
     }
 
+
     private static int mDesiredWidth;
     private static int mDesiredHeight;
+
+
     /**
      * 从Resources中加载图片
      */
@@ -802,6 +797,7 @@ public final class BitmapUtil {
         return createScaleBitmap(src, mDesiredWidth, mDesiredHeight); // 进一步得到目标大小的缩略图
     }
 
+
     /**
      * 从SD卡上加载图片
      */
@@ -813,6 +809,7 @@ public final class BitmapUtil {
         Bitmap src = BitmapFactory.decodeFile(pathName, options);
         return createScaleBitmap(src, mDesiredWidth, mDesiredHeight);
     }
+
 
     /**
      * 计算目标宽度，目标高度，inSampleSize
@@ -827,21 +824,23 @@ public final class BitmapUtil {
         mDesiredWidth = getResizedDimension(reqWidth, reqHeight, actualWidth, actualHeight);
         mDesiredHeight = getResizedDimension(reqHeight, reqWidth, actualHeight, actualWidth);
         // 根据现在得到计算inSampleSize
-        options.inSampleSize = calculateBestInSampleSize(actualWidth, actualHeight, mDesiredWidth, mDesiredHeight);
+        options.inSampleSize = calculateBestInSampleSize(actualWidth, actualHeight, mDesiredWidth,
+                mDesiredHeight);
         // 使用获取到的inSampleSize值再次解析图片
         options.inJustDecodeBounds = false;
         return options;
     }
 
+
     /**
      * Scales one side of a rectangle to fit aspect ratio. 最终得到重新测量的尺寸
      *
-     * @param maxPrimary      Maximum size of the primary dimension (i.e. width for max
-     *                        width), or zero to maintain aspect ratio with secondary
-     *                        dimension
-     * @param maxSecondary    Maximum size of the secondary dimension, or zero to maintain
-     *                        aspect ratio with primary dimension
-     * @param actualPrimary   Actual size of the primary dimension
+     * @param maxPrimary Maximum size of the primary dimension (i.e. width for max
+     * width), or zero to maintain aspect ratio with secondary
+     * dimension
+     * @param maxSecondary Maximum size of the secondary dimension, or zero to maintain
+     * aspect ratio with primary dimension
+     * @param actualPrimary Actual size of the primary dimension
      * @param actualSecondary Actual size of the secondary dimension
      */
     private static int getResizedDimension(int maxPrimary, int maxSecondary, int actualPrimary, int actualSecondary) {
@@ -853,13 +852,14 @@ public final class BitmapUtil {
         return resized;
     }
 
+
     /**
      * Returns the largest power-of-two divisor for use in downscaling a bitmap
      * that will not result in the scaling past the desired dimensions.
      *
-     * @param actualWidth   Actual width of the bitmap
-     * @param actualHeight  Actual height of the bitmap
-     * @param desiredWidth  Desired width of the bitmap
+     * @param actualWidth Actual width of the bitmap
+     * @param actualHeight Actual height of the bitmap
+     * @param desiredWidth Desired width of the bitmap
      * @param desiredHeight Desired height of the bitmap
      */
     // Visible for testing.
@@ -875,20 +875,25 @@ public final class BitmapUtil {
         return (int) inSampleSize;
     }
 
+
     /**
      * 通过传入的bitmap，进行压缩，得到符合标准的bitmap
      */
     private static Bitmap createScaleBitmap(Bitmap tempBitmap, int desiredWidth, int desiredHeight) {
         // If necessary, scale down to the maximal acceptable size.
-        if (tempBitmap != null && (tempBitmap.getWidth() > desiredWidth || tempBitmap.getHeight() > desiredHeight)) {
+        if (tempBitmap != null &&
+                (tempBitmap.getWidth() > desiredWidth || tempBitmap.getHeight() > desiredHeight)) {
             // 如果是放大图片，filter决定是否平滑，如果是缩小图片，filter无影响
-            Bitmap bitmap = Bitmap.createScaledBitmap(tempBitmap, desiredWidth, desiredHeight, true);
+            Bitmap bitmap = Bitmap.createScaledBitmap(tempBitmap, desiredWidth, desiredHeight,
+                    true);
             tempBitmap.recycle(); // 释放Bitmap的native像素数组
             return bitmap;
-        } else {
+        }
+        else {
             return tempBitmap; // 如果没有缩放，那么不回收
         }
     }
+
 
     /**
      * 等比例缩放图片
@@ -927,7 +932,8 @@ public final class BitmapUtil {
                     float scaleTemp2 = (float) dstMaxWH / (float) height;
                     if (scaleTemp > scaleTemp2) {
                         scale = scaleTemp2;
-                    } else {
+                    }
+                    else {
                         scale = scaleTemp;
                     }
                 }
@@ -936,7 +942,8 @@ public final class BitmapUtil {
             Bitmap dstBitmap;
             if (scale == 1.f) {
                 dstBitmap = srcBitmap;
-            } else {
+            }
+            else {
                 Matrix matrix = new Matrix();
                 matrix.postScale(scale, scale);
                 dstBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, width, height, matrix, true);
@@ -950,6 +957,8 @@ public final class BitmapUtil {
         }
         return retBm;
     }
+
+
     /**
      * 按比例取得缩略图
      */

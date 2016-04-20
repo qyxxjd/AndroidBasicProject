@@ -3,11 +3,9 @@ package com.classic.core.utils;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
-import android.text.TextWatcher;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -100,18 +98,4 @@ public final class EditTextUtil {
         editText.setLongClickable(false);
     }
 
-    public static class TextWatcherAdapter implements TextWatcher {
-
-        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override public void afterTextChanged(Editable s) {
-
-        }
-    }
 }

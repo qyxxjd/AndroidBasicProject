@@ -23,11 +23,11 @@ import java.util.List;
  * 通用适配器示例By RecyclerView
  */
 public class MainActivity extends AppBaseActivity {
-    @Bind(R.id.main_rv) RecyclerView recyclerView;
+    @Bind(R.id.main_rv) RecyclerView mRecyclerView;
 
-    private List<Demo> demos;
-    private DoubleClickExitHelper doubleClickExitHelper;
-    private DemoAdapter adapter;
+    private List<Demo> mDemos;
+    private DoubleClickExitHelper mDoubleClickExitHelper;
+    private DemoAdapter mAdapter;
 
     @Override public int getLayoutResId() {
         return R.layout.activity_main;
@@ -49,10 +49,10 @@ public class MainActivity extends AppBaseActivity {
      */
     @Override public void initData() {
         super.initData();
-        demos = Demo.getDemos();
+        mDemos = Demo.getDemos();
         //双击退出应用工具类使用方法，别忘了重写onKeyDown方法（见底部）
-        doubleClickExitHelper = new DoubleClickExitHelper(this);
-        //doubleClickExitHelper = new DoubleClickExitHelper(this)
+        mDoubleClickExitHelper = new DoubleClickExitHelper(this);
+        //mDoubleClickExitHelper = new DoubleClickExitHelper(this)
         //.setTimeInterval(3000)
         //.setToastContent("再按一次退出demo");
     }
@@ -63,19 +63,19 @@ public class MainActivity extends AppBaseActivity {
      */
     @Override public void initView() {
         super.initView();
-        recyclerView.setOnClickListener(this);
+        mRecyclerView.setOnClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
+        mRecyclerView.setLayoutManager(manager);
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new DemoAdapter(activity, R.layout.activity_main_item, demos);
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAdapter = new DemoAdapter(activity, R.layout.activity_main_item, mDemos);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
-                itemClick(demos.get(position));
+                itemClick(mDemos.get(position));
             }
         });
     }
@@ -128,7 +128,7 @@ public class MainActivity extends AppBaseActivity {
     }
 
     private void crashTest() {
-        ToastUtil.showLongToast(this, "程序即将崩溃，崩溃日志请查看：" + SDcardUtil.getLogDir());
+        ToastUtil.showLongToast(this, "程序即将崩溃，崩溃日志请查看：" + SDcardUtil.getLogDirPath());
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
                 throw new NullPointerException("666");
@@ -137,6 +137,6 @@ public class MainActivity extends AppBaseActivity {
     }
 
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return doubleClickExitHelper.onKeyDown(keyCode, event);
+        return mDoubleClickExitHelper.onKeyDown(keyCode, event);
     }
 }

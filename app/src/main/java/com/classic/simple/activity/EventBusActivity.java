@@ -18,8 +18,8 @@ import org.simple.eventbus.ThreadMode;
 public class EventBusActivity extends AppBaseActivity {
     public static final String EVENT_TAG = "classic";
 
-    @Bind(R.id.eventbus_button) Button eventbusButton;
-    @Bind(R.id.eventbus_content) TextView eventbusContent;
+    @Bind(R.id.eventbus_button) Button mBtnPostEventBus;
+    @Bind(R.id.eventbus_content) TextView mContent;
 
     @Override public boolean configEventBus() {
         return true;
@@ -31,7 +31,7 @@ public class EventBusActivity extends AppBaseActivity {
 
     @Override public void initView() {
         super.initView();
-        eventbusButton.setOnClickListener(this);
+        mBtnPostEventBus.setOnClickListener(this);
         //这里偷懒，使用默认的。实际项目中建议使用ToolBar
         getSupportActionBar().setTitle("AndroidEventBus示例");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,10 +54,10 @@ public class EventBusActivity extends AppBaseActivity {
      */
     @Subscriber(tag = EVENT_TAG, mode = ThreadMode.MAIN) public void updateUI(String params) {
         final StringBuilder sb = new StringBuilder(
-            DataUtil.isEmpty(eventbusContent.getText().toString()) ? ""
-                : eventbusContent.getText().toString());
+            DataUtil.isEmpty(mContent.getText().toString()) ? ""
+                : mContent.getText().toString());
         sb.append("\n").append("收到事件 --> ").append(params);
-        eventbusContent.setText(sb.toString());
+        mContent.setText(sb.toString());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {

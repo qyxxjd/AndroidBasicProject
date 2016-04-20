@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 /**
  * 操作输入法的工具类。可以方便的关闭和显示输入法.
+ *
  * @author Jack Tony
  * @date 2015/4/27
  */

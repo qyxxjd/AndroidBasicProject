@@ -42,17 +42,17 @@ public class ListViewActivity extends AppBaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mListView.setAdapter(
-                new CommonAdapter<Integer>(activity, R.layout.activity_listview_item, mTypeList) {
-                    @Override public int getLayoutResId(Integer item) {
-                        return item == 1
-                               ? R.layout.activity_listview_item2
-                               : R.layout.activity_listview_item;
-                    }
+            new CommonAdapter<Integer>(activity, R.layout.activity_listview_item, mTypeList) {
+                @Override public int getLayoutResId(Integer item) {
+                    return item == 1
+                           ? R.layout.activity_listview_item2
+                           : R.layout.activity_listview_item;
+                }
 
 
-                    @Override public void onUpdate(BaseAdapterHelper helper, Integer item) {
-                    }
-                });
+                @Override public void onUpdate(BaseAdapterHelper helper, Integer item, int position) {
+                }
+            });
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {

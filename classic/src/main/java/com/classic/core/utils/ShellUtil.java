@@ -25,13 +25,12 @@ import java.util.List;
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2013-5-16
  */
 public final class ShellUtil {
+    private ShellUtil() { }
 
     public static final String COMMAND_SU       = "su";
     public static final String COMMAND_SH       = "sh";
     public static final String COMMAND_EXIT     = "exit\n";
     public static final String COMMAND_LINE_END = "\n";
-
-    private ShellUtil() { }
 
     /**
      * check whether has root permission

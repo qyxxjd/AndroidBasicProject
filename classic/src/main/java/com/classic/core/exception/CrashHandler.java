@@ -21,8 +21,8 @@ import java.util.Date;
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
-    public static final String LOG_NAME_PREFIX = "crash_";
-    public static final String LOG_NAME_SUFFIX = ".log";
+    private static final String LOG_NAME_PREFIX = "crash_";
+    private static final String LOG_NAME_SUFFIX = ".log";
 
     private Context mContext;
     private static CrashHandler sInstance;

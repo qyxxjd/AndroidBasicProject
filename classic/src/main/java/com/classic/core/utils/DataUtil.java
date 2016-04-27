@@ -11,8 +11,7 @@ import java.util.Map;
  * @date 2015/11/3
  */
 public final class DataUtil {
-    private DataUtil() {
-    }
+    private DataUtil() { }
 
     /** 检查数组是否为空(去掉前后空格) */
     public static boolean isEmpty(String string) {

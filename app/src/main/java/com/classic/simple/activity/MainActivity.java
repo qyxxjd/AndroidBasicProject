@@ -86,7 +86,7 @@ public class MainActivity extends AppBaseActivity {
             super(context, layoutResId, data);
         }
 
-        @Override public void onUpdate(BaseAdapterHelper helper, Demo item) {
+        @Override public void onUpdate(BaseAdapterHelper helper, Demo item, int position) {
             final CardView cardView = helper.getView(R.id.main_item_cardview);
             cardView.setCardBackgroundColor(item.bgColor);
             helper.setText(R.id.main_item_tv, item.title);

@@ -11,7 +11,9 @@
 package com.classic.core.utils;
 
 import android.content.Context;
+import android.os.Build;
 import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
 import com.classic.core.log.Logger;
 import java.util.UUID;
@@ -22,8 +24,7 @@ import java.util.UUID;
  * @author 续写经典
  * @date 2015/11/3
  */
-public final class DeviceUtil
-{
+public final class DeviceUtil {
 	private Context mContext;
 	private static DeviceUtil sDeviceUtil;
 	private static TelephonyManager sTelephonyManager;
@@ -120,6 +121,26 @@ public final class DeviceUtil
 		final String subscriberId = sTelephonyManager.getSubscriberId();
 		return TextUtils.isEmpty(subscriberId) ? "" : subscriberId;
 	}
+
+	/**
+	 * 获取IMSI
+	 * @return
+	 */
+	public String getIMSI(){
+		return getSubscriberId();
+	}
+
+	/**
+	 * 返回设备的当前位置
+	 * <p>Requires Permission:
+	 * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION ACCESS_COARSE_LOCATION} or
+	 * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION ACCESS_FINE_LOCATION}.
+	 * @return GsmCellLocation
+	 */
+	public GsmCellLocation getGsmCellLocation(){
+		return (GsmCellLocation) sTelephonyManager.getCellLocation();
+	}
+
 	/**
 	 * 返回手机服务商名字
 	 * <pre>
@@ -133,8 +154,7 @@ public final class DeviceUtil
 	 * 46011 中国电信 (FDD-LTE)
 	 * </pre>
 	 */
-	public String getProvidersName()
-	{
+	public String getProvidersName() {
 		String ProvidersName = null;
 		// IMSI号前面3位460是国家，紧接着后面2位00 02是中国移动，01是中国联通，03是中国电信。
 		String IMSI = getSubscriberId();
@@ -158,6 +178,8 @@ public final class DeviceUtil
 		final String simSerialNumber = sTelephonyManager.getSimSerialNumber();
 		return TextUtils.isEmpty(simSerialNumber) ? "" : simSerialNumber;
 	}
+
+
 	/**
 	 * 返回序列号
 	 * <Android 2.3以上可以使用此方法>
@@ -202,5 +224,22 @@ public final class DeviceUtil
 	public int getNetworkType(){
 		return sTelephonyManager.getNetworkType();
 	}
-	
+
+
+	/** 手机品牌 */
+	public String getBrand(){ return Build.BRAND; }
+
+	/** 手机型号 */
+	public String getModel(){ return Build.MODEL; }
+
+	/** sdk版本 */
+	public int getSdkVersion(){ return Build.VERSION.SDK_INT; }
+
+	/** 系统版本 */
+	public String getUserVersion(){ return Build.VERSION.RELEASE; }
+
+	/** 硬件名称 */
+	public String getHardware(){ return Build.HARDWARE; }
+
+
 }

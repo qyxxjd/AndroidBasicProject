@@ -9,8 +9,7 @@ import java.io.IOException;
  * @date 2015/11/3
  */
 public final class CloseUtil {
-    private CloseUtil() {
-    }
+    private CloseUtil() { }
 
 
     public static void close(Closeable closeable) {

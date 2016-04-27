@@ -203,6 +203,16 @@ public final class WifiHelper {
 
 
     /**
+     * 获取mac地址
+     * @return
+     */
+    public String getMacAddress(){
+        WifiInfo info = mWifiManager.getConnectionInfo();
+        return info != null ? info.getMacAddress() : "";
+    }
+
+
+    /**
      * 断开指定ID的wifi
      * @param networkId
      */

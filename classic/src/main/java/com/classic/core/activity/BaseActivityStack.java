@@ -12,13 +12,10 @@ import java.util.Stack;
  * @date 2015/11/4
  */
 public final class BaseActivityStack {
+    private BaseActivityStack() { }
+
     private static Stack<IActivity> sActivityStack;
     private static final BaseActivityStack INSTANCE = new BaseActivityStack();
-
-
-    private BaseActivityStack() {
-    }
-
 
     public static BaseActivityStack getInstance() {
         return INSTANCE;
@@ -84,7 +81,7 @@ public final class BaseActivityStack {
 
 
     /**
-     * 结束指定的Activity(重载)
+     * 结束指定的Activity
      */
     public void finishActivity(Activity activity) {
         if (activity != null) {
@@ -95,7 +92,7 @@ public final class BaseActivityStack {
 
 
     /**
-     * 结束指定的Activity(重载)
+     * 结束指定的Activity
      */
     public void finishActivity(Class<?> cls) {
         for (IActivity activity : sActivityStack) {

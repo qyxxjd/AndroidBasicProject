@@ -26,8 +26,7 @@ import java.util.Enumeration;
  * 获取客户端IP地址
  */
 public final class IpUtil {
-    private IpUtil() {
-    }
+    private IpUtil() { }
 
     /**
      * 获取IP地址(网络为Wifi)

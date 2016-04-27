@@ -16,7 +16,6 @@ import android.widget.TextView;
  * @date 2015/4/27
  */
 public final class KeyBoardUtil {
-
     private KeyBoardUtil() { }
 
     /**

@@ -10,7 +10,6 @@ import android.util.TypedValue;
  * @date 2015/11/4
  */
 public final class ConversionUtil {
-
     private ConversionUtil() { }
 
     /**

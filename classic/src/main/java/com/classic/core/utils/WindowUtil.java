@@ -17,7 +17,6 @@ import android.view.WindowManager;
  * @see "http://www.cnblogs.com/tianzhijiexian/p/4127695.html"
  */
 public final class WindowUtil {
-
     private WindowUtil() { }
 
     /**

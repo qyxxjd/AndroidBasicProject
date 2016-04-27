@@ -7,8 +7,7 @@ package com.classic.core.utils;
  * @date 2015/11/3
  */
 public final class StringUtil {
-    private StringUtil() {
-    }
+    private StringUtil() { }
 
     /**
      * 描述：将null转化为“”.

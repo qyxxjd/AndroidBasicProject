@@ -11,15 +11,14 @@ import android.content.SharedPreferences.Editor;
  * @date 2015/11/3
  */
 public class SharedPreferencesUtil {
+    private SharedPreferencesUtil() { }
+
     private SharedPreferences mSharedPreferences;
     private Editor mEditor;
 
     public SharedPreferencesUtil(Context context, String name) {
         mSharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
-    }
-
-    private SharedPreferencesUtil() {
     }
 
     public SharedPreferences getSP() {

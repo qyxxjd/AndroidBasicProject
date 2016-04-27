@@ -3,12 +3,16 @@ package com.classic.core.utils;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 /**
@@ -18,8 +22,7 @@ import android.widget.EditText;
  * @date 2015/7/31
  */
 public final class EditTextUtil {
-    private EditTextUtil() {
-    }
+    private EditTextUtil() { }
 
     /**
      * 限制内容长度
@@ -70,6 +73,44 @@ public final class EditTextUtil {
                 InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
         } else {
             editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        }
+    }
+
+
+    /**
+     * 设置文本，并将光标移动到文本末尾
+     * @param editText
+     * @param text
+     */
+    public static void setText(EditText editText,String text){
+        if(null != editText && !TextUtils.isEmpty(text)){
+            editText.setText(text);
+            editText.setSelection(text.length());
+        }
+    }
+
+
+    /**
+     * 监听文本框内容，动态改变指定view状态
+     * 文本框无内容则隐藏指定view,有内容则显示指定view
+     * @param editText
+     * @param view
+     */
+    public static void autoHideViewByTextChanged(EditText editText,final View view){
+        if(null != editText && null != view){
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    view.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE);
+                }
+
+
+                @Override public void afterTextChanged(Editable s) { }
+            });
         }
     }
 

@@ -2,11 +2,14 @@ package com.classic.core.utils;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import com.classic.core.log.Logger;
 import com.classic.core.utils.ShellUtil.CommandResult;
@@ -48,6 +51,77 @@ public final class PackageUtil {
     public static final int APP_INSTALL_AUTO     = 0;
     public static final int APP_INSTALL_INTERNAL = 1;
     public static final int APP_INSTALL_EXTERNAL = 2;
+
+
+    /**
+     * 检查是否安装过某个应用
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public static boolean checkApkExist(Context context, String packageName) {
+        if (packageName == null || "".equals(packageName))
+            return false;
+        try {
+            ApplicationInfo info = context.getPackageManager()
+                                          .getApplicationInfo(packageName,
+                                                  PackageManager.GET_UNINSTALLED_PACKAGES);
+            return info != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * 根据包名打开应用
+     * @param packageName
+     * @return
+     */
+    public static boolean openApp(Context context, String packageName) {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo pi = null;
+        try {
+            pi = pm.getPackageInfo(packageName, 0);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (pi == null) {
+            return false;
+        }
+
+        Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
+        resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        resolveIntent.setPackage(pi.packageName);
+
+
+        List<ResolveInfo> apps = pm.queryIntentActivities(resolveIntent, 0);
+
+        ResolveInfo ri = null;
+        try {
+            ri = apps.iterator().next();
+        } catch (Exception e) {
+            return true;
+        }
+        if (ri != null) {
+            String tmpPackageName = ri.activityInfo.packageName;
+            String className = ri.activityInfo.name;
+
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+            ComponentName cn = new ComponentName(tmpPackageName, className);
+
+            intent.setComponent(cn);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } else {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 显示安装条件

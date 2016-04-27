@@ -8,6 +8,9 @@ import java.util.List;
  * 启动页示例
  */
 public class SplashActivity extends BaseSplashActivity {
+    private final int     mPlayerTime = 1000;
+    private final float   mStartAlpha = 100f;
+    private final boolean isExpand    = true;
 
     @Override protected void setSplashResources(List<SplashImgResource> resources) {
         /**
@@ -17,9 +20,9 @@ public class SplashActivity extends BaseSplashActivity {
          * startAlpha - 图片资源开始时的透明程度。0-255之间。
          * isExpand - 如果为true，则图片会被拉伸至全屏幕大小进行展示，否则按原大小展示。
          */
-        resources.add(new SplashImgResource(R.mipmap.splash, 1000, 100f, true));
-        resources.add(new SplashImgResource(R.mipmap.splash1, 1000, 100f, true));
-        resources.add(new SplashImgResource(R.mipmap.splash2, 1000, 100f, true));
+        resources.add(new SplashImgResource(R.mipmap.splash, mPlayerTime, mStartAlpha, isExpand));
+        resources.add(new SplashImgResource(R.mipmap.splash1, mPlayerTime, mStartAlpha, isExpand));
+        resources.add(new SplashImgResource(R.mipmap.splash2, mPlayerTime, mStartAlpha, isExpand));
     }
 
     @Override protected boolean isAutoStartNextActivity() {

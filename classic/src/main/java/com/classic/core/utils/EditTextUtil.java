@@ -89,27 +89,30 @@ public final class EditTextUtil {
         }
     }
 
-
     /**
-     * 监听文本框内容，动态改变指定view状态
-     * 文本框无内容则隐藏指定view,有内容则显示指定view
+     * 监听文本框内容，动态改变指定view状态，
+     * 文本框无内容则隐藏指定view,有内容则显示指定view;
+     * 点击view自动清理文本框内容。
      * @param editText
-     * @param view
+     * @param clearView
      */
-    public static void autoHideViewByTextChanged(EditText editText,final View view){
-        if(null != editText && null != view){
+    public static void autoClear(final EditText editText,final View clearView){
+        if(null != editText && null != clearView){
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
-
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    view.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE);
+                    clearView.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE);
                 }
 
-
                 @Override public void afterTextChanged(Editable s) { }
+            });
+            clearView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    editText.setText("");
+                }
             });
         }
     }

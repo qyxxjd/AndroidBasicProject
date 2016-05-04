@@ -155,19 +155,19 @@ public final class DeviceUtil {
 	 * </pre>
 	 */
 	public String getProvidersName() {
-		String ProvidersName = null;
-		// IMSI号前面3位460是国家，紧接着后面2位00 02是中国移动，01是中国联通，03是中国电信。
-		String IMSI = getSubscriberId();
-		if (IMSI.startsWith("46000") || IMSI.startsWith("46002") || IMSI.startsWith("46007")) {
-			ProvidersName = "中国移动";
-		} else if (IMSI.startsWith("46001") || IMSI.startsWith("46006")) {
-			ProvidersName = "中国联通";
-		} else if (IMSI.startsWith("46003") || IMSI.startsWith("46005") || IMSI.startsWith("46011")) {
-			ProvidersName = "中国电信";
+		String providersName = null;
+		//IMSI号前面3位460是国家，紧接着后面2位00 02是中国移动，01是中国联通，03是中国电信。
+		String imsi = getSubscriberId();
+		if (imsi.startsWith("46000") || imsi.startsWith("46002") || imsi.startsWith("46007")) {
+			providersName = "中国移动";
+		} else if (imsi.startsWith("46001") || imsi.startsWith("46006")) {
+			providersName = "中国联通";
+		} else if (imsi.startsWith("46003") || imsi.startsWith("46005") || imsi.startsWith("46011")) {
+			providersName = "中国电信";
 		} else {
-			ProvidersName = "其它服务商";
+			providersName = "其它服务商";
 		}
-		return ProvidersName;
+		return providersName;
 	}
 	/**
 	 * 返回SIM卡的序列号(IMEI)

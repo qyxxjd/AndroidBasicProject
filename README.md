@@ -15,7 +15,7 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:1.9'
+    compile 'com.classic.core:classic:2.0'
 }
 ```
 

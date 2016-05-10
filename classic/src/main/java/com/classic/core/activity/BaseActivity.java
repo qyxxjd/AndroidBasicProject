@@ -20,9 +20,7 @@ import com.classic.core.utils.SharedPreferencesUtil;
 public abstract class BaseActivity extends AppCompatActivity
         implements View.OnClickListener, IActivity, IRegister {
     private static final String SP_NAME = "firstConfig";
-    /**
-     * Activity状态
-     */
+    /** Activity状态 */
     public int activityState = DESTROY;
     protected Activity activity;
     protected BaseFragment currentFragment;

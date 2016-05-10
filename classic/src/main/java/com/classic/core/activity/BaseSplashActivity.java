@@ -22,7 +22,6 @@ package com.classic.core.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -75,27 +74,20 @@ public abstract class BaseSplashActivity extends Activity {
      * 用来显示动画。
      */
     private ImageView mSplashImage;
-    /**
-     * 屏幕方向。
-     */
-    private int mOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
-        runOnMainThread();
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow()
             .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        this.setRequestedOrientation(mOrientation);
         this.setContentView(createLayout());
+        init();
         setSplashResources(mResources);
         showSplash();
+        runOnMainThread();
         startOnBackground();
     }
-
 
     private void init() {
         mResources = new ArrayList<>();
@@ -186,30 +178,8 @@ public abstract class BaseSplashActivity extends Activity {
         this.mBackgroundColor = backgroundColor;
     }
 
-
     /**
-     * 返回屏幕方向。
-     *
-     * @return 屏幕方向，横屏或竖屏。
-     */
-    public int getOrientation() {
-        return mOrientation;
-    }
-
-
-    /**
-     * 设置屏幕的方向。默认是竖屏。
-     *
-     * @param orientation 屏幕方向。ActivityInfo.SCREEN_ORIENTATION_PORTRAIT或者是ActivityInfo.
-     * SCREEN_ORIENTATION_LANDSCAPE。
-     */
-    public void setOrientation(int orientation) {
-        this.mOrientation = orientation;
-    }
-
-
-    /**
-     * 在前台中执行的代码。如需对界面进行横屏的重新设置，请此在执行setmOrientation()方法。
+     * 在前台中执行的代码。
      */
     protected void runOnMainThread() {
     }

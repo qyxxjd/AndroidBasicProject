@@ -13,8 +13,8 @@ import android.net.NetworkInfo;
 public final class NetworkUtil {
     private NetworkUtil() { }
 
-    public static final int NONE = 0x00;
-    public static final int WIFI = 0x01;
+    public static final int NONE  = 0x00;
+    public static final int WIFI  = 0x01;
     public static final int CMWAP = 0x02;
     public static final int CMNET = 0x03;
 

@@ -116,7 +116,6 @@ public final class AppInfoUtil {
                 Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
             if (appProcess.processName.startsWith(packageName)) {
-                // System.out.println("p:"+appProcess.processName);
                 list.add(appProcess.processName);
             }
         }

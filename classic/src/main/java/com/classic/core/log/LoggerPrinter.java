@@ -21,12 +21,12 @@ import org.json.JSONObject;
  */
 final class LoggerPrinter implements Printer {
 
-    private static final int DEBUG = 3;
-    private static final int ERROR = 6;
-    private static final int ASSERT = 7;
-    private static final int INFO = 4;
+    private static final int DEBUG   = 3;
+    private static final int ERROR   = 6;
+    private static final int ASSERT  = 7;
+    private static final int INFO    = 4;
     private static final int VERBOSE = 2;
-    private static final int WARN = 5;
+    private static final int WARN    = 5;
 
     /**
      * Android's max limit for a log entry is ~4076 bytes,

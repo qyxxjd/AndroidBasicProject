@@ -28,5 +28,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.simple:androideventbus:latest'
 
-    compile 'com.classic.core:classic:1.9'
+    compile 'com.classic.core:classic:2.0'
 }

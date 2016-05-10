@@ -4,7 +4,7 @@ apply plugin: 'com.android.library'
 
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
 // 这个version影响后面的引用
-//version = "1.9"
+//version = "2.0"
 
 android {
 //    resourcePrefix "AndroidBasicProject"
@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 11
-        versionName "1.9"
+        versionCode 12
+        versionName "2.0"
     }
     buildTypes {
         release {

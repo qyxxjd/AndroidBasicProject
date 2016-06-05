@@ -30,11 +30,6 @@ public interface IFragment {
     void onFirst();
 
     /**
-     * 处理savedInstanceState
-     */
-    void initInstanceState(Bundle savedInstanceState);
-
-    /**
      * 初始化数据
      */
     void initData();
@@ -42,7 +37,7 @@ public interface IFragment {
     /**
      * 初始化控件
      */
-    void initView(View parentView);
+    void initView(View parentView, Bundle savedInstanceState);
 
     /**
      * 点击事件回调方法

@@ -22,11 +22,10 @@ public abstract class BaseActivity extends AppCompatActivity
     private static final String SP_NAME = "firstConfig";
     /** Activity状态 */
     public int activityState = DESTROY;
-    protected Activity activity;
+    protected Activity     activity;
     protected BaseFragment currentFragment;
 
     private SharedPreferencesUtil mSharedPreferencesUtil;
-
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,20 +39,16 @@ public abstract class BaseActivity extends AppCompatActivity
             onFirst();
             mSharedPreferencesUtil.putBooleanValue(simpleName, false);
         }
-        initInstanceState(savedInstanceState);
         initData();
-        initToolbar();
-        initView();
+        initView(savedInstanceState);
         register();
     }
 
 
     @Override public void onFirst() { }
     @Override public void initPre() { }
-    @Override public void initInstanceState(Bundle savedInstanceState) { }
     @Override public void initData() { }
-    @Override public void initToolbar() { }
-    @Override public void initView() { }
+    @Override public void initView(Bundle savedInstanceState) { }
     @Override public void showProgress() { }
     @Override public void hideProgress() { }
     @Override public void register() { }

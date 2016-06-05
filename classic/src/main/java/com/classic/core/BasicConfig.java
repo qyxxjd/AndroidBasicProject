@@ -20,7 +20,7 @@ public final class BasicConfig {
     private static final String LOG_TAG = "classic";
 
     private Context mContext;
-    private BasicConfig(Context context){ this.mContext = context; }
+    private BasicConfig(Context context){ this.mContext = context.getApplicationContext(); }
     private volatile static BasicConfig sBasicConfig;
 
     public static final BasicConfig getInstance(@NonNull Context context){

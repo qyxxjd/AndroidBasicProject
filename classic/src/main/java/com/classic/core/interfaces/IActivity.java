@@ -31,24 +31,14 @@ public interface IActivity {
     void initPre();
 
     /**
-     * 处理savedInstanceState
-     */
-    void initInstanceState(Bundle savedInstanceState);
-
-    /**
      * 初始化数据
      */
     void initData();
 
     /**
-     * 初始化Toolbar
-     */
-    void initToolbar();
-
-    /**
      * 初始化控件
      */
-    void initView();
+    void initView(Bundle savedInstanceState);
 
     /**
      * 点击事件回调方法

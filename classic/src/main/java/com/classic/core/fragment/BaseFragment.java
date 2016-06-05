@@ -20,23 +20,21 @@ public abstract class BaseFragment extends Fragment
         implements IFragment, IRegister, View.OnClickListener {
     private static final String SP_NAME = "firstConfig";
     protected Activity activity;
-    protected View parentView;
 
     private SharedPreferencesUtil mSharedPreferencesUtil;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         activity = getActivity();
-        parentView = inflater.inflate(getLayoutResId(), container, false);
+        View parentView = inflater.inflate(getLayoutResId(), container, false);
         mSharedPreferencesUtil = new SharedPreferencesUtil(getActivity(), SP_NAME);
         final String simpleName = this.getClass().getSimpleName();
         if (mSharedPreferencesUtil.getBooleanValue(simpleName, true)) {
             onFirst();
             mSharedPreferencesUtil.putBooleanValue(simpleName, false);
         }
-        initInstanceState(savedInstanceState);
         initData();
-        initView(parentView);
+        initView(parentView, savedInstanceState);
         return parentView;
     }
 
@@ -54,9 +52,8 @@ public abstract class BaseFragment extends Fragment
 
 
     @Override public void onFirst() { }
-    @Override public void initInstanceState(Bundle savedInstanceState) { }
     @Override public void initData() { }
-    @Override public void initView(View parentView) { }
+    @Override public void initView(View parentView, Bundle savedInstanceState) { }
     @Override public void register() { }
     @Override public void unRegister() { }
     @Override public void onChange() { }

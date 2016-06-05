@@ -1,5 +1,6 @@
 package com.classic.simple.activity;
 
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
 import butterknife.Bind;
@@ -36,8 +37,8 @@ public class ListViewActivity extends AppBaseActivity {
      * 方法执行顺序：
      * initData() --> initView() --> register()
      */
-    @Override public void initView() {
-        super.initView();
+    @Override public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         getSupportActionBar().setTitle("通用适配器示例");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

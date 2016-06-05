@@ -1,5 +1,6 @@
 package com.classic.simple.activity;
 
+import android.os.Bundle;
 import butterknife.ButterKnife;
 import com.classic.core.activity.BaseActivity;
 import com.classic.simple.event.EventUtil;
@@ -10,7 +11,7 @@ public abstract class AppBaseActivity extends BaseActivity {
         return false;
     }
 
-    @Override public void initView() {
+    @Override public void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
     }
 

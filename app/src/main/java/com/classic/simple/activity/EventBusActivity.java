@@ -1,5 +1,6 @@
 package com.classic.simple.activity;
 
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +30,8 @@ public class EventBusActivity extends AppBaseActivity {
         return R.layout.activity_eventbus;
     }
 
-    @Override public void initView() {
-        super.initView();
+    @Override public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         mBtnPostEventBus.setOnClickListener(this);
         //这里偷懒，使用默认的。实际项目中建议使用ToolBar
         getSupportActionBar().setTitle("AndroidEventBus示例");

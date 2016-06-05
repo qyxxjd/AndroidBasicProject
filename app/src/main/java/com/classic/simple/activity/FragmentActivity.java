@@ -1,5 +1,6 @@
 package com.classic.simple.activity;
 
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -19,8 +20,8 @@ public class FragmentActivity extends AppBaseActivity {
     private ImageFragment mImageFragment;
     private Image2Fragment mImage2Fragment;
 
-    @Override public void initView() {
-        super.initView();
+    @Override public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         mFragmentLayout.setOnClickListener(this);
         //这里偷懒，使用默认的。实际项目中建议使用ToolBar
         getSupportActionBar().setTitle("Fragment示例");

@@ -1,5 +1,6 @@
 package com.classic.simple.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import butterknife.ButterKnife;
 import com.classic.core.fragment.BaseFragment;
@@ -11,7 +12,7 @@ public abstract class AppBaseFragment extends BaseFragment {
         return false;
     }
 
-    @Override public void initView(View parentView) {
+    @Override public void initView(View parentView, Bundle savedInstanceState) {
         ButterKnife.bind(this, parentView);
     }
 

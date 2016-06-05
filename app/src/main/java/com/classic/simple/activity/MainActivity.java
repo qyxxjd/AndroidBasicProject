@@ -1,6 +1,7 @@
 package com.classic.simple.activity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -39,10 +40,6 @@ public class MainActivity extends AppBaseActivity {
         //这里可以做一些界面功能引导
     }
 
-    @Override public void initToolbar() {
-        super.initToolbar();
-    }
-
     /**
      * 方法执行顺序：
      * initData() --> initView() --> register()
@@ -61,8 +58,8 @@ public class MainActivity extends AppBaseActivity {
      * 方法执行顺序：
      * initData() --> initView() --> register()
      */
-    @Override public void initView() {
-        super.initView();
+    @Override public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         mRecyclerView.setOnClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -93,10 +90,6 @@ public class MainActivity extends AppBaseActivity {
         }
     }
 
-    /**
-     * 方法执行顺序：
-     * initData() --> initView() --> register()
-     */
     @Override public void register() {
         super.register();
         //这里可以注册一些广播、服务

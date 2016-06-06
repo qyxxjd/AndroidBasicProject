@@ -15,7 +15,7 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:2.0'
+    compile 'com.classic.core:classic:2.1'
 }
 ```
 
@@ -90,8 +90,8 @@ public class TestActivity extends BaseActivity {
     }
 
     //初始化view
-    @Override public void initView() {
-        super.initView();
+    @Override public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         mRecyclerView = (RecyclerView) findViewById(R.id.main_rv);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -110,20 +110,16 @@ public class TestActivity extends BaseActivity {
 
     //以下为可选方法，根据需要进行重载.
     //方法执行顺序：
-    //initPre() --> initInstanceState(Bundle savedInstanceState) --> initData() --> initView() --> register()
-    //unRegister()方法默认在onDestroy()内部执行
+    //initPre() --> initData() --> initView(Bundle savedInstanceState) --> register()
 
     //这里可以注册一些广播、服务
     @Override public void register() { }
-    //注销广播、服务
+    //注销广播、服务,在onDestroy()内部执行
     @Override public void unRegister() { }
     //只有第一次才会执行，这里可以做一些界面功能引导
     @Override public void onFirst() { }
     //这个方法会在setContentView(...)方法之前执行
     @Override public void initPre() { }
-    //处理状态的恢复操作
-    @Override public void initInstanceState(Bundle savedInstanceState) { }
-    @Override public void initToolbar() { }
     //view点击事件统一处理
     @Override public void viewClick(View v) { }
     @Override public void showProgress() { }
@@ -140,24 +136,21 @@ public class TestFragment extends BaseFragment {
         return R.layout.activity_listview_item;
     }
 
-    @Override public void initView(View parentView) {
-        super.initView(parentView);
+    @Override public void initView(View parentView, Bundle savedInstanceState) {
+        super.initView(parentView, savedInstanceState);
         mTitle = (TextView) parentView.findViewById(R.id.item_title_tv);
     }
 
     //以下为可选方法，根据需要进行重载.
     //方法执行顺序：
-    //initInstanceState(Bundle savedInstanceState) --> initData() --> initView(View parentView) --> register()
-    //unRegister()方法默认在onDestroyView()内部执行
+    //initData() --> initView(View parentView, Bundle savedInstanceState) --> register()
 
     //这里可以注册一些广播、服务
     @Override public void register() { }
-    //注销广播、服务
+    //注销广播、服务, 在onDestroyView()内部执行
     @Override public void unRegister() { }
     //只有第一次才会执行，这里可以做一些界面功能引导
     @Override public void onFirst() { }
-    //处理状态的恢复操作
-    @Override public void initInstanceState(Bundle savedInstanceState) { }
     @Override public void initData() { }
     @Override public void onChange() { }
     @Override public void onHidden() { }

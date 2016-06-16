@@ -109,6 +109,12 @@ public final class EditTextUtil {
 
                 @Override public void afterTextChanged(Editable s) { }
             });
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override public void onFocusChange(View v, boolean hasFocus) {
+                    clearView.setVisibility(
+                            !TextUtils.isEmpty(editText.getText().toString()) && hasFocus ? View.VISIBLE : View.GONE);
+                }
+            });
             clearView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     editText.setText("");

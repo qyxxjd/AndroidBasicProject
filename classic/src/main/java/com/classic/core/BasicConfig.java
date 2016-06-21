@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.classic.core.exception.CrashHandler;
+import com.classic.core.exception.impl.DefaultCrashProcess;
+import com.classic.core.interfaces.ICrashProcess;
 import com.classic.core.log.LogLevel;
 import com.classic.core.log.LogTool;
 import com.classic.core.log.Logger;
@@ -66,11 +68,18 @@ public final class BasicConfig {
     }
 
     /**
-     * 初始化异常信息收集
+     * 默认异常信息处理
      * @return
      */
     public BasicConfig initExceptionHandler(){
-        CrashHandler.getInstance(mContext);
+        return initExceptionHandler(new DefaultCrashProcess(mContext));
+    }
+    /**
+     * 自定义异常信息处理
+     * @return
+     */
+    public BasicConfig initExceptionHandler(ICrashProcess crashProcess){
+        CrashHandler.getInstance(crashProcess);
         return this;
     }
 

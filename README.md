@@ -43,30 +43,28 @@ public class YourApplication extends Application {
         BasicConfig.getInstance(this)
                    .initDir() // or initDir(rootDirName)
                    .initExceptionHandler()
-                   .initLog(true); //更多初始化日志方法见下方
+                   .initLog(true); 
 
-
-        
-
-        /**
-         * @param tag 日志标示
-         */
-        initLog(tag)
-                
-        /**
-         * @param tag 日志标示
-         * @param isDebug true:打印全部日志，false:不打印日志
-         */
-        initLog(tag, isDebug)
-
-        /**
-         * @param tag 日志标示，可以为空
-         * @param methodCount 显示方法行数，默认为：2
-         * @param isHideThreadInfo 是否显示线程信息，默认显示
-         * @param logTool 自定义日志打印，可以为空
-         * @param isDebug true:打印全部日志，false:不打印日志
-         */
-        initLog(tag, methodCount, isHideThreadInfo, logTool, isDebug)
+                    //其它初始化日志方法：
+                    /**
+                     * @param tag 日志标示
+                     */
+                    initLog(tag)
+                            
+                    /**
+                     * @param tag 日志标示
+                     * @param isDebug true:打印全部日志，false:不打印日志
+                     */
+                    initLog(tag, isDebug)
+            
+                    /**
+                     * @param tag 日志标示，可以为空
+                     * @param methodCount 显示方法行数，默认为：2
+                     * @param isHideThreadInfo 是否显示线程信息，默认显示
+                     * @param logTool 自定义日志打印，可以为空
+                     * @param isDebug true:打印全部日志，false:不打印日志
+                     */
+                    initLog(tag, methodCount, isHideThreadInfo, logTool, isDebug)
     }
 }
 ```

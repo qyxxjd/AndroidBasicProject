@@ -2,6 +2,7 @@ package com.classic.core.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -46,8 +47,8 @@ public final class IntentUtil {
     }
 
     /** 用浏览器打开url */
-    public static void browser(Activity activity, String url) {
-        if (activity != null) {
+    public static void browser(Activity activity, String url) throws ActivityNotFoundException {
+        if (activity != null && !TextUtils.isEmpty(url)) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             activity.startActivity(intent);
         }
@@ -55,7 +56,7 @@ public final class IntentUtil {
 
     /** 用系统浏览器打开url */
     public static void browserBySystem(Activity activity, String url) {
-        if (activity != null) {
+        if (activity != null && !TextUtils.isEmpty(url)) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
             activity.startActivity(intent);
@@ -146,6 +147,7 @@ public final class IntentUtil {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image/jpeg");
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(shareIntent, title));
     }
 
@@ -163,5 +165,18 @@ public final class IntentUtil {
         intent.putExtra(Intent.EXTRA_TEXT, content);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, titie));
+    }
+
+    /**
+     * 查看图片
+     * @param context
+     * @param file
+     */
+    public static void viewPhoto(Context context, File file) {
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file), "image/*");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

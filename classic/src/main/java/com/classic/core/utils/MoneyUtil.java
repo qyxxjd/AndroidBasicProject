@@ -33,6 +33,7 @@ public class MoneyUtil {
 		}else if(obj instanceof Long){
 			value = new BigDecimal(Long.toString((Long)obj));
 		}else if(obj instanceof String){
+			Integer.parseInt(obj.toString());
 			value = new BigDecimal(obj.toString());
 		}else{//未知的类型
 			throw new IllegalArgumentException("unknown type!");

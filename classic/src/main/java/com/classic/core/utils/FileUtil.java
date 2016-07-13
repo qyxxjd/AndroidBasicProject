@@ -24,8 +24,8 @@ import java.text.DecimalFormat;
  * @date 2015/11/3
  */
 public final class FileUtil {
-    private FileUtil() {
-    }
+    public static final String CHARSET_NAME = "UTF-8";
+    private FileUtil() { }
 
     /**
      * 获取文件夹大小
@@ -184,10 +184,28 @@ public final class FileUtil {
      * @return boolean 存储成功的标志
      */
     public static boolean writeFile(Context context, String fileName, String content) {
+        return writeFile(context, fileName, content, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * 存储文本
+     * @param context
+     * @param fileName
+     * @param content
+     * @param mode 读写模式
+     * <pre>
+     * @see android.content.Context#MODE_APPEND
+     * @see android.content.Context#MODE_PRIVATE
+     * @see android.content.Context#MODE_WORLD_READABLE
+     * @see android.content.Context#MODE_WORLD_WRITEABLE
+     * </pre>
+     * @return
+     */
+    public static boolean writeFile(Context context, String fileName, String content, int mode) {
         boolean success = false;
         FileOutputStream fos = null;
         try {
-            fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            fos = context.openFileOutput(fileName, mode);
             byte[] byteContent = content.getBytes();
             fos.write(byteContent);
 
@@ -211,10 +229,21 @@ public final class FileUtil {
      * @return boolean 存储成功的标志
      */
     public static boolean writeFile(String filePath, String content) {
+        return writeFile(filePath, content, false);
+    }
+
+    /**
+     * 存储文本
+     * @param filePath
+     * @param content
+     * @param append 是否追加内容
+     * @return
+     */
+    public static boolean writeFile(String filePath, String content, boolean append) {
         boolean success = false;
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(filePath);
+            fos = new FileOutputStream(filePath, append);
             byte[] byteContent = content.getBytes();
             fos.write(byteContent);
 
@@ -226,56 +255,27 @@ public final class FileUtil {
         } finally {
             CloseUtil.close(fos);
         }
-
         return success;
     }
 
     /**
      * 读取文本数据
      *
-     * @param context 程序上下文
-     * @param fileName 文件名
-     * @return String, 读取到的文本内容，失败返回null
+     * @param filePath 文件名
+     * @return
      */
-    public static String readFile(Context context, String fileName) {
-        if (!exists(context, fileName)) {
-            return null;
-        }
-        FileInputStream fis = null;
-        String content = null;
-        try {
-            fis = context.openFileInput(fileName);
-            if (fis != null) {
-
-                byte[] buffer = new byte[1024];
-                ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-                while (true) {
-                    int readLength = fis.read(buffer);
-                    if (readLength == -1) break;
-                    arrayOutputStream.write(buffer, 0, readLength);
-                }
-                fis.close();
-                arrayOutputStream.close();
-                content = new String(arrayOutputStream.toByteArray());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-            content = null;
-        } finally {
-            CloseUtil.close(fis);
-        }
-        return content;
+    public static String readFile(String filePath) {
+        return readFile(filePath, CHARSET_NAME);
     }
 
     /**
      * 读取文本数据
      *
      * @param filePath 文件名
-     * @return String, 读取到的文本内容，失败返回null
+     * @param charsetName 编码格式
+     * @return
      */
-    public static String readFile(String filePath) {
+    public static String readFile(String filePath, String charsetName) {
         if (filePath == null || !new File(filePath).exists()) {
             return null;
         }
@@ -294,7 +294,7 @@ public final class FileUtil {
                 }
                 fis.close();
                 arrayOutputStream.close();
-                content = new String(arrayOutputStream.toByteArray());
+                content = new String(arrayOutputStream.toByteArray(), charsetName);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

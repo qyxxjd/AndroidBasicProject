@@ -11,65 +11,44 @@ package com.classic.core.utils;
 public final class ByteUtil {
 
     /**
-     * 数字转byte[]
-     *
-     * @param desc 排序模式。true:按高位到低位顺序排列,false:按低位到高位顺序排列
+     * bytes转int
+     * @param asc 排序模式。true:按低位到高位顺序排列, false:按高位到低位顺序排列
+     * @param bytes
+     * @return
      */
-    public static byte[] intToBytes(int number, boolean desc) {
-        int temp = number;
-        int length = 0;
-        while (temp > 0) {
-            temp = temp / 256;
-            length++;
+    public static int bytesToInt(boolean asc, byte...bytes) {
+        if(null == bytes){
+            throw new NullPointerException("bytes is null!");
         }
-        if (length == 0) {
-            length = 1;
+        final int length = bytes.length;
+        if(length > 4){
+            throw new IllegalArgumentException( "Illegal length!");
         }
-
-        byte[] result = new byte[length];
-
-        for (int i = 0; i < length; i++) {
-            if (desc) {
-                result[i] = (byte) (number >> ((length - i - 1) * 8));
-            } else {
-                result[i] = (byte) (number >> (i * 8));
+        int result = 0;
+        if (asc)
+            for (int i = length - 1; i >= 0; i--) {
+                result <<= 8;
+                result |= (bytes[i] & 0x000000ff);
             }
-        }
+        else
+            for (int i = 0; i < length; i++) {
+                result <<= 8;
+                result |= (bytes[i] & 0x000000ff);
+            }
         return result;
     }
 
     /**
-     * bytes转数字
-     * @param bytes
-     * @param desc 排序模式。true:按高位到低位顺序排列,false:按低位到高位顺序排列
+     * int转bytes
+     * @param number
      * @return
      */
-    public static int bytesToInt(byte[] bytes, boolean desc) {
-        if(null == bytes){
-            throw new NullPointerException("bytes is null!");
+    public static byte[] intToBytes(int number) {
+        byte[] bytes = new byte[4];
+        for (int i = 0; i < 4; i++) {
+            bytes[i] = (byte) (number >>> (24 - i * 8));
         }
-        if(bytes.length > 4){
-            throw new IllegalArgumentException( "Illegal length!");
-        }
-        int value = 0;
-        switch (bytes.length){
-            case 4:
-                value = desc ? bytes[0] << 24 + bytes[1] << 16 + bytes[2] << 8 + bytes[3] :
-                        bytes[3] << 24 + bytes[2] << 16 + bytes[1] << 8 + bytes[0];
-                break;
-            case 3:
-                value = desc ? bytes[0] << 16 + bytes[1] << 8 + bytes[2] :
-                        bytes[2] << 16 + bytes[1] << 8 + bytes[0];
-                break;
-            case 2:
-                value = desc ? bytes[0] << 8 + bytes[1] :
-                        bytes[1] << 8 + bytes[0];
-                break;
-            default:
-                value = bytes[0];
-                break;
-        }
-        return value;
+        return bytes;
     }
 
     /**

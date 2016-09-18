@@ -12,12 +12,12 @@ import android.view.View;
 import butterknife.Bind;
 import com.classic.adapter.BaseAdapterHelper;
 import com.classic.adapter.CommonRecyclerAdapter;
-import com.classic.core.log.Logger;
 import com.classic.core.utils.DoubleClickExitHelper;
 import com.classic.core.utils.SDcardUtil;
 import com.classic.core.utils.ToastUtil;
 import com.classic.simple.R;
 import com.classic.simple.model.Demo;
+import com.orhanobut.logger.Logger;
 import java.util.List;
 
 /**

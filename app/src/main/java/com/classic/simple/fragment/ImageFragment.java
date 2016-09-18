@@ -1,7 +1,7 @@
 package com.classic.simple.fragment;
 
-import com.classic.core.log.Logger;
 import com.classic.simple.R;
+import com.orhanobut.logger.Logger;
 
 public class ImageFragment extends AppBaseFragment {
 

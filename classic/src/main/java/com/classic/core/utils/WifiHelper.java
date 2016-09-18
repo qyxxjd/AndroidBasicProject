@@ -1,10 +1,12 @@
 package com.classic.core.utils;
 
+import android.Manifest;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.support.annotation.RequiresPermission;
 import java.util.List;
 
 /**
@@ -12,7 +14,6 @@ import java.util.List;
  * 需要权限：
  * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
  * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
- * <uses-permission android:name="android.permission.WAKE_LOCK" />
  *
  * @author 续写经典
  * @date 2015/11/3
@@ -82,12 +83,22 @@ public final class WifiHelper {
      * 启用/禁用 wifi
      * @param enabled
      */
+    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
     public void setEnabled(boolean enabled) {
         if(mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING ||
                 mWifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLING){
             return;
         }
         mWifiManager.setWifiEnabled(enabled);
+    }
+
+    /**
+     * wifi是否打开
+     * @return
+     */
+    public boolean isEnabled() {
+        return mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING ||
+               mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED;
     }
 
 
@@ -102,6 +113,7 @@ public final class WifiHelper {
     /**
      * 扫描WiFi列表
      */
+    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
     public List<ScanResult> getScanResults() {
         List<ScanResult> list = null;
         //开始扫描WiFi
@@ -131,6 +143,7 @@ public final class WifiHelper {
      * @param scanResult
      * @return
      */
+    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
     public boolean connection(ScanResult scanResult) {
         final WifiConfiguration config = new WifiConfiguration();
         config.SSID = "\"" + scanResult.SSID + "\"";
@@ -145,6 +158,7 @@ public final class WifiHelper {
      * @param password
      * @return
      */
+    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
     public boolean connection(ScanResult scanResult, String password) {
         WifiConfiguration wifiConfiguration = new WifiConfiguration();
         wifiConfiguration.SSID = "\"" + scanResult.SSID + "\"";
@@ -173,6 +187,7 @@ public final class WifiHelper {
      * @param wifiConfiguration
      * @return
      */
+    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
     public boolean connection(WifiConfiguration wifiConfiguration) {
         int networkId = mWifiManager.addNetwork(wifiConfiguration);
         if (networkId != -1) {
@@ -216,6 +231,7 @@ public final class WifiHelper {
      * 断开指定ID的wifi
      * @param networkId
      */
+    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
     public void disconnect(int networkId) {
         mWifiManager.disableNetwork(networkId);
         mWifiManager.disconnect();

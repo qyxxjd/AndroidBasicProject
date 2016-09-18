@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import com.classic.core.log.Logger;
 import com.classic.core.utils.ShellUtil.CommandResult;
 import java.io.File;
 import java.util.List;
@@ -59,6 +58,7 @@ public final class PackageUtil {
      * @param packageName
      * @return
      */
+    @SuppressWarnings("WrongConstant")
     public static boolean checkApkExist(Context context, String packageName) {
         if (packageName == null || "".equals(packageName))
             return false;
@@ -217,11 +217,11 @@ public final class PackageUtil {
             return INSTALL_SUCCEEDED;
         }
 
-        Logger.e(new StringBuilder().append("installSilent successMsg:")
-                                    .append(commandResult.successMsg)
-                                    .append(", ErrorMsg:")
-                                    .append(commandResult.errorMsg)
-                                    .toString());
+        //Logger.e(new StringBuilder().append("installSilent successMsg:")
+        //                            .append(commandResult.successMsg)
+        //                            .append(", ErrorMsg:")
+        //                            .append(commandResult.errorMsg)
+        //                            .toString());
         if (commandResult.errorMsg == null) {
             return INSTALL_FAILED_OTHER;
         }
@@ -418,11 +418,11 @@ public final class PackageUtil {
                 && (commandResult.successMsg.contains("Success") || commandResult.successMsg.contains("success"))) {
             return DELETE_SUCCEEDED;
         }
-        Logger.e(new StringBuilder().append("uninstallSilent successMsg:")
-            .append(commandResult.successMsg)
-            .append(", ErrorMsg:")
-            .append(commandResult.errorMsg)
-            .toString());
+        //Logger.e(new StringBuilder().append("uninstallSilent successMsg:")
+        //    .append(commandResult.successMsg)
+        //    .append(", ErrorMsg:")
+        //    .append(commandResult.errorMsg)
+        //    .toString());
         if (commandResult.errorMsg == null) {
             return DELETE_FAILED_INTERNAL_ERROR;
         }
@@ -536,7 +536,7 @@ public final class PackageUtil {
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                Logger.e("pm get-install-location error");
+                //Logger.e("pm get-install-location error");
             }
         }
         return APP_INSTALL_AUTO;

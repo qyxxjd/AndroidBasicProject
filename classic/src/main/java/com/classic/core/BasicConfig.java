@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import com.classic.core.exception.CrashHandler;
 import com.classic.core.exception.impl.DefaultCrashProcess;
 import com.classic.core.interfaces.ICrashProcess;
-import com.classic.core.log.LogLevel;
-import com.classic.core.log.LogTool;
-import com.classic.core.log.Logger;
-import com.classic.core.log.Settings;
 import com.classic.core.utils.SDcardUtil;
+import com.orhanobut.logger.LogAdapter;
+import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.Settings;
 
 /**
  * 全局配置
@@ -22,14 +22,14 @@ public final class BasicConfig {
     private static final String LOG_TAG = "classic";
 
     private Context mContext;
-    private BasicConfig(Context context){ this.mContext = context.getApplicationContext(); }
+    private BasicConfig(Context context){ this.mContext = context; }
     private volatile static BasicConfig sBasicConfig;
 
     public static final BasicConfig getInstance(@NonNull Context context){
         if(null == sBasicConfig){
             synchronized (BasicConfig.class){
                 if(null == sBasicConfig){
-                    sBasicConfig = new BasicConfig(context);
+                    sBasicConfig = new BasicConfig(context.getApplicationContext());
                 }
             }
         }
@@ -118,12 +118,12 @@ public final class BasicConfig {
      * @param tag 日志标示，可以为空
      * @param methodCount 显示方法行数，默认为：2
      * @param isHideThreadInfo 是否显示线程信息，默认显示
-     * @param logTool 自定义日志打印，可以为空
+     * @param adapter 自定义log输出
      * @param isDebug true:打印全部日志，false:不打印日志
      * @return
      */
     public BasicConfig initLog(String tag,Integer methodCount,
-                               boolean isHideThreadInfo,LogTool logTool,
+                               boolean isHideThreadInfo, LogAdapter adapter,
                                boolean isDebug){
 
         Settings settings = Logger.init(TextUtils.isEmpty(tag) ? LOG_TAG : tag);
@@ -133,8 +133,8 @@ public final class BasicConfig {
         if(isHideThreadInfo){
             settings.hideThreadInfo();
         }
-        if(null != logTool){
-            settings.logTool(logTool);
+        if(null != adapter){
+            settings.logAdapter(adapter);
         }
         settings.logLevel(isDebug ? LogLevel.FULL : LogLevel.NONE);
         return this;

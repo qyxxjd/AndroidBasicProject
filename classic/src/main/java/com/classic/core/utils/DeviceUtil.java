@@ -15,7 +15,6 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
-import com.classic.core.log.Logger;
 import java.util.UUID;
 
 /**
@@ -52,7 +51,7 @@ public final class DeviceUtil {
 		sb.append("getSerialNumber:").append(getSerialNumber()).append("\n");
 		sb.append("getPhoneType:").append(getPhoneType()).append("\n");
 		sb.append("getNetworkType:").append(getNetworkType()).append("\n");
-		Logger.d(sb.toString());
+		//Logger.d(sb.toString());
 	}
 	
 	/**

@@ -4,19 +4,19 @@ apply plugin: 'com.android.library'
 
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
 // 这个version影响后面的引用
-//version = "2.1"
+//version = "2.2"
 
 android {
 //    resourcePrefix "AndroidBasicProject"
 
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 13
-        versionName "2.1"
+        targetSdkVersion 24
+        versionCode 15
+        versionName "2.2"
     }
     buildTypes {
         release {
@@ -25,10 +25,16 @@ android {
                     'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.orhanobut:logger:1.15'
 }
 
 //def siteUrl = 'https://github.com/qyxxjd/AndroidBasicProject'
@@ -87,7 +93,7 @@ dependencies {
 //        charSet 'UTF-8'
 //        author true
 //        version true
-//        links "http://docs.oracle.com/javase/7/docs/api"
+//        links "http://docs.oracle.com/javase/8/docs/api"
 //    }
 //}
 //artifacts {

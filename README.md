@@ -8,11 +8,11 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 
 通用适配器请参考: [CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
 
-[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.6.apk?raw=true)
+[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-2.2-beta.apk?raw=true)
 
 ##感谢
-[Logger](https://github.com/orhanobut/logger)
-[EasyPermissions](https://github.com/googlesamples/easypermissions)
+    [Logger](https://github.com/orhanobut/logger)
+    [EasyPermissions](https://github.com/googlesamples/easypermissions)
 
 ##使用步骤
 

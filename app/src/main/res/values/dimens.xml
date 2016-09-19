@@ -7,4 +7,11 @@
   <dimen name="listview_item_height">144dp</dimen>
   <dimen name="text_size_24">24sp</dimen>
   <dimen name="text_size_18">18sp</dimen>
+  <dimen name="text_margin">4dp</dimen>
+
+  <dimen name="size_main_content">24sp</dimen>
+  <dimen name="size_item_title">18sp</dimen>
+  <dimen name="size_item_subtitle">12sp</dimen>
+  <dimen name="size_item_intro">14sp</dimen>
+  <dimen name="size_item_cover_height">100dp</dimen>
 </resources>

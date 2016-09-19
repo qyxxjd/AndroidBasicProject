@@ -1,17 +1,23 @@
 package com.classic.simple.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import butterknife.Bind;
+import android.widget.Toast;
+import butterknife.BindView;
 import com.classic.adapter.BaseAdapterHelper;
 import com.classic.adapter.CommonRecyclerAdapter;
+import com.classic.core.permissions.AfterPermissionGranted;
+import com.classic.core.permissions.EasyPermissions;
 import com.classic.core.utils.DoubleClickExitHelper;
 import com.classic.core.utils.SDcardUtil;
 import com.classic.core.utils.ToastUtil;
@@ -24,7 +30,11 @@ import java.util.List;
  * 通用适配器示例By RecyclerView
  */
 public class MainActivity extends AppBaseActivity {
-    @Bind(R.id.main_rv) RecyclerView mRecyclerView;
+    private static final int    REQUEST_CODE_CAMERA   = 101;
+    private static final int    REQUEST_CODE_SETTINGS = 102;
+    private static final String TAG                   = "MainActivity";
+
+    @BindView(R.id.main_rv) RecyclerView mRecyclerView;
 
     private List<Demo> mDemos;
     private DoubleClickExitHelper mDoubleClickExitHelper;
@@ -67,7 +77,7 @@ public class MainActivity extends AppBaseActivity {
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new DemoAdapter(activity, R.layout.activity_main_item, mDemos);
+        mAdapter = new DemoAdapter(mActivity, R.layout.activity_main_item, mDemos);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
             @Override
@@ -77,7 +87,7 @@ public class MainActivity extends AppBaseActivity {
         });
     }
 
-    private class DemoAdapter extends CommonRecyclerAdapter<Demo> {
+    private final class DemoAdapter extends CommonRecyclerAdapter<Demo> {
 
         public DemoAdapter(Context context, int layoutResId, List<Demo> data) {
             super(context, layoutResId, data);
@@ -108,14 +118,14 @@ public class MainActivity extends AppBaseActivity {
             case Demo.TYPE_CRASH:
                 crashTest();
                 break;
-            case Demo.TYPE_EVENT:
-                startActivity(MainActivity.this, EventBusActivity.class);
-                break;
             case Demo.TYPE_SPLASH:
                 startActivity(MainActivity.this, SplashActivity.class);
                 break;
             case Demo.TYPE_FRAGMENT:
                 startActivity(MainActivity.this, FragmentActivity.class);
+                break;
+            case Demo.TYPE_PERMISSIONS:
+                useCamera();
                 break;
         }
     }
@@ -129,7 +139,34 @@ public class MainActivity extends AppBaseActivity {
         }, 3000);
     }
 
+
+    @AfterPermissionGranted(REQUEST_CODE_CAMERA)
+    public void useCamera() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+            showToast("相机权限已授权");
+            //TODO 业务逻辑处理
+        } else {
+            //请求权限
+            EasyPermissions.requestPermissions(this, "应用需要访问你的相机进行拍照",
+                                               REQUEST_CODE_CAMERA, Manifest.permission.CAMERA);
+        }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.e(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+    }
+
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         return mDoubleClickExitHelper.onKeyDown(keyCode, event);
+    }
+
+    private void showToast(@NonNull String content){
+        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
     }
 }

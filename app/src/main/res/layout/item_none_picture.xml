@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_bg"
+    android:layout_marginBottom="@dimen/layout_margin"
+    android:padding="@dimen/layout_margin" >
+
+    <TextView
+        style="@style/Item.Title"
+        android:id="@+id/item_none_picture_title"
+        android:layout_marginBottom="@dimen/text_margin"
+        tools:text="我国手机用户数冲破13亿" />
+    <TextView
+        style="@style/Item.Title.Subtitle"
+        android:id="@+id/item_none_picture_author"
+        android:layout_below="@id/item_none_picture_title"
+        tools:text="报道人：续写经典" />
+    <TextView
+        style="@style/Item.Title.Subtitle"
+        android:id="@+id/item_none_picture_date"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/item_none_picture_title"
+        android:layout_alignBottom="@id/item_none_picture_author"
+        tools:text="2016-01-26 10:23" />
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/item_none_picture_divider"
+        android:layout_below="@id/item_none_picture_author"
+        android:layout_marginTop="@dimen/text_margin"
+        />
+
+    <TextView
+        style="@style/Item.Intro.Long"
+        android:id="@+id/item_none_picture_intro"
+        android:layout_below="@id/item_none_picture_divider"
+        tools:text="2G用户正在加速向4G迁徙。2015年我国2G手机用户减少1.83亿户，是上年净减数的1.5倍，占手机用户的比重降至39.9%。与此同时，4G用户飞速增长。数据显示，2015年我国4G手机用户新增约2.89亿户，总数达3.86亿户，在手机用户中的渗透率达到29.6%。" />
+
+</RelativeLayout>

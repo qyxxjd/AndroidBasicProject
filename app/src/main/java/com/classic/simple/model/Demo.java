@@ -11,11 +11,11 @@ import java.util.List;
  * @date 2015/11/7
  */
 public class Demo implements Serializable {
-    public static final int TYPE_SPLASH = 0x00;
-    public static final int TYPE_ADAPTER = 0x01;
-    public static final int TYPE_EVENT = 0x02;
-    public static final int TYPE_CRASH = 0x03;
-    public static final int TYPE_FRAGMENT = 0x04;
+    public static final int TYPE_SPLASH      = 0x00;
+    public static final int TYPE_ADAPTER     = 0x01;
+    public static final int TYPE_CRASH       = 0x02;
+    public static final int TYPE_FRAGMENT    = 0x03;
+    public static final int TYPE_PERMISSIONS = 0x04;
 
     public String title;
     public int bgColor;
@@ -39,7 +39,7 @@ public class Demo implements Serializable {
             demos.add(new Demo("Fragment", Color.parseColor("#ff4081"), TYPE_FRAGMENT));
             demos.add(new Demo("通用适配器", Color.parseColor("#9c27b0"), TYPE_ADAPTER));
             demos.add(new Demo("异常日志收集", Color.parseColor("#e51c23"), TYPE_CRASH));
-            demos.add(new Demo("AndroidEventBus", Color.parseColor("#ff9800"), TYPE_EVENT));
+            demos.add(new Demo("Android6.0权限请求", Color.parseColor("#ff9800"), TYPE_PERMISSIONS));
         }
         return demos;
     }

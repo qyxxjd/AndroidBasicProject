@@ -10,6 +10,10 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 
 [APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-1.6.apk?raw=true)
 
+##感谢
+[Logger](https://github.com/orhanobut/logger)
+[EasyPermissions](https://github.com/googlesamples/easypermissions)
+
 ##使用步骤
 
 第一步：
@@ -239,9 +243,6 @@ Logger.xml(xmlContent);
 * [ViewHolder - View复用工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/ViewHolder.java)<br/>
 * [WifiHelper - wifi管理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/WifiHelper.java)<br/>
 * [WindowUtil - 屏幕管理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/WindowUtil.java)<br/>
-
-##感谢
-[logger](https://github.com/orhanobut/logger)
 
 ##关于
 * Blog: [http://blog.csdn.net/qy1387](http://blog.csdn.net/qy1387)

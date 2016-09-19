@@ -1,0 +1,32 @@
+<resources>
+    <dimen name="font_larger">18sp</dimen>
+    <dimen name="font_large">16sp</dimen>
+    <dimen name="font_normal">14sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+
+    <dimen name="margin_larger">24dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_normal">8dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+
+    <dimen name="radius_large">8dp</dimen>
+    <dimen name="radius_normal">4dp</dimen>
+    <dimen name="radius_small">2dp</dimen>
+
+    <dimen name="button_larger">56dp</dimen>
+    <dimen name="button_large">48dp</dimen>
+    <dimen name="button_normal">40dp</dimen>
+    <dimen name="button_small">32dp</dimen>
+
+    <dimen name="icon_larger">48dp</dimen>
+    <dimen name="icon_large">40dp</dimen>
+    <dimen name="icon_normal">32dp</dimen>
+    <dimen name="icon_small">24dp</dimen>
+
+    <dimen name="item_height_larger">72dp</dimen>
+    <dimen name="item_height_large">64dp</dimen>
+    <dimen name="item_height_normal">56dp</dimen>
+    <dimen name="item_height_small">48dp</dimen>
+
+    <dimen name="divider_height">1dp</dimen>
+</resources>

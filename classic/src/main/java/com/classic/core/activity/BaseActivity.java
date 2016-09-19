@@ -3,13 +3,16 @@ package com.classic.core.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.classic.core.fragment.BaseFragment;
 import com.classic.core.interfaces.IActivity;
 import com.classic.core.interfaces.IRegister;
+import com.classic.core.permissions.EasyPermissions;
 import com.classic.core.utils.KeyBoardUtil;
 import com.classic.core.utils.SharedPreferencesUtil;
+import java.util.List;
 
 /**
  * Activity父类
@@ -18,32 +21,35 @@ import com.classic.core.utils.SharedPreferencesUtil;
  * @date 2015/11/7
  */
 public abstract class BaseActivity extends AppCompatActivity
-        implements View.OnClickListener, IActivity, IRegister {
+        implements View.OnClickListener, IActivity, IRegister, EasyPermissions.PermissionCallbacks {
     private static final String SP_NAME = "firstConfig";
-    /** Activity状态 */
-    public int activityState = DESTROY;
-    protected Activity     activity;
-    protected BaseFragment currentFragment;
 
-    private SharedPreferencesUtil mSharedPreferencesUtil;
+    private   int          mActivityState;
+    private   BaseFragment mCurrentFragment;
+    protected Activity     mActivity;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = this;
+        mActivity = this;
         initPre();
         BaseActivityStack.getInstance().addActivity(this);
         setContentView(getLayoutResId());
-        mSharedPreferencesUtil = new SharedPreferencesUtil(this, SP_NAME);
+        SharedPreferencesUtil spUtil = new SharedPreferencesUtil(this, SP_NAME);
         final String simpleName = this.getClass().getSimpleName();
-        if (mSharedPreferencesUtil.getBooleanValue(simpleName, true)) {
+        if (spUtil.getBooleanValue(simpleName, true)) {
             onFirst();
-            mSharedPreferencesUtil.putBooleanValue(simpleName, false);
+            spUtil.putBooleanValue(simpleName, false);
         }
         initData();
         initView(savedInstanceState);
         register();
     }
 
+    @Override public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 
     @Override public void onFirst() { }
     @Override public void initPre() { }
@@ -53,14 +59,13 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override public void hideProgress() { }
     @Override public void register() { }
     @Override public void unRegister() { }
-
+    @Override public void viewClick(View v) { }
+    @Override public void onPermissionsGranted(int requestCode, List<String> perms) { }
+    @Override public void onPermissionsDenied(int requestCode, List<String> perms) { }
 
     @Override public void onClick(View v) {
         viewClick(v);
     }
-
-
-    @Override public void viewClick(View v) { }
 
 
     @Override public void skipActivity(Activity aty, Class<?> cls) {
@@ -100,6 +105,26 @@ public abstract class BaseActivity extends AppCompatActivity
         aty.startActivity(intent);
     }
 
+    /**
+     * 获取当前Activity状态
+     *     {@link IActivity#RESUME},
+     *     {@link IActivity#PAUSE},
+     *     {@link IActivity#STOP},
+     *     {@link IActivity#DESTROY}.
+     *
+     * @return
+     */
+    public int getActivityState() {
+        return mActivityState;
+    }
+
+    /**
+     * 获取当前显示的Fragment
+     * @return
+     */
+    public BaseFragment getFragment() {
+        return mCurrentFragment;
+    }
 
     /**
      * 用Fragment替换视图
@@ -108,7 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity
      * @param targetFragment 用来替换的Fragment
      */
     public void changeFragment(int resView, BaseFragment targetFragment) {
-        if (targetFragment.equals(currentFragment)) {
+        if (targetFragment.equals(mCurrentFragment)) {
             return;
         }
         android.support.v4.app.FragmentTransaction transaction
@@ -118,40 +143,32 @@ public abstract class BaseActivity extends AppCompatActivity
         }
         if (targetFragment.isHidden()) {
             transaction.show(targetFragment);
-            targetFragment.onChange();
+            targetFragment.onFragmentShow();
         }
-        if (currentFragment != null && currentFragment.isVisible()) {
-            transaction.hide(currentFragment);
-            currentFragment.onHidden();
+        if (mCurrentFragment != null && mCurrentFragment.isVisible()) {
+            transaction.hide(mCurrentFragment);
+            mCurrentFragment.onFragmentHide();
         }
-        currentFragment = targetFragment;
+        mCurrentFragment = targetFragment;
         transaction.commit();
     }
 
 
     @Override protected void onResume() {
         super.onResume();
-        activityState = RESUME;
+        mActivityState = RESUME;
     }
 
 
     @Override protected void onPause() {
         super.onPause();
-        activityState = PAUSE;
+        mActivityState = PAUSE;
     }
 
 
     @Override protected void onStop() {
         super.onStop();
-        activityState = STOP;
-    }
-
-
-    @Override protected void onDestroy() {
-        unRegister();
-        super.onDestroy();
-        activityState = DESTROY;
-        BaseActivityStack.getInstance().finishActivity(this);
+        mActivityState = STOP;
     }
 
 
@@ -159,4 +176,15 @@ public abstract class BaseActivity extends AppCompatActivity
         KeyBoardUtil.hide(getWindow().getDecorView());
         super.finish();
     }
+
+
+    @Override protected void onDestroy() {
+        unRegister();
+        super.onDestroy();
+        mActivityState = DESTROY;
+        BaseActivityStack.getInstance().finishActivity(this);
+    }
+
+
+
 }

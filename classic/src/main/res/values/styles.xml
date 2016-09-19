@@ -1,0 +1,35 @@
+<resources>
+
+    <style name="ListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:divider">@color/divider</item>
+        <item name="android:dividerHeight">@dimen/divider_height</item>
+    </style>
+    <style name="ListView.NoScrollbars">
+        <item name="android:scrollbars">none</item>
+    </style>
+    <style name="ListView.NoDivider">
+        <item name="android:dividerHeight">0dp</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+    <style name="Divider.Vertical">
+        <item name="android:layout_width">@dimen/divider_height</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="Divider.Dark">
+        <item name="android:background">@color/divider_dark</item>
+    </style>
+    <style name="Divider.Dark.Vertical">
+        <item name="android:layout_width">@dimen/divider_height</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+</resources>

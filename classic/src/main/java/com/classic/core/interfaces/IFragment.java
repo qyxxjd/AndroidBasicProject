@@ -19,12 +19,12 @@ public interface IFragment {
     /**
      * Fragment被切换到前台时调用
      */
-    void onChange();
+    void onFragmentShow();
 
     /**
      * Fragment被切换到后台时调用
      */
-    void onHidden();
+    void onFragmentHide();
 
     /** 第一次启动会执行此方法 */
     void onFirst();

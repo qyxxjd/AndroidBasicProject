@@ -5,21 +5,21 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 - 异常信息收集
 - 日志打印
 - 丰富的工具类
-
-通用适配器请参考: [CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
+- Android6.0权限管理
+- 通用适配器  [请参考CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
 
 [APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-2.2-beta.apk?raw=true)
 
 ##感谢
-    [Logger](https://github.com/orhanobut/logger)
-    [EasyPermissions](https://github.com/googlesamples/easypermissions)
+  [Logger](https://github.com/orhanobut/logger)
+  [EasyPermissions](https://github.com/googlesamples/easypermissions)
 
 ##使用步骤
 
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:2.1'
+    compile 'com.classic.core:classic:2.2'
 }
 ```
 
@@ -36,7 +36,7 @@ public class YourApplication extends Application {
          */
         BasicConfig.getInstance(this).init();
 
-//        or
+        or
 
         /**
          * 自定义配置
@@ -65,10 +65,10 @@ public class YourApplication extends Application {
                      * @param tag 日志标示，可以为空
                      * @param methodCount 显示方法行数，默认为：2
                      * @param isHideThreadInfo 是否显示线程信息，默认显示
-                     * @param logTool 自定义日志打印，可以为空
+                     * @param adapter 自定义log输出
                      * @param isDebug true:打印全部日志，false:不打印日志
                      */
-                    initLog(tag, methodCount, isHideThreadInfo, logTool, isDebug)
+                    initLog(tag, methodCount, isHideThreadInfo, adapter, isDebug)
     }
 }
 ```
@@ -100,13 +100,16 @@ public class TestActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        
-        /**
-         * 使用Fragment
-         * 参数1：被替换为Fragment的视图id
-         * 参数2：BaseFragment对象
-         */
-        changeFragment(R.id.fragment_layout, new ImageFragment());
+
+        if(savedInstanceState == null){
+            /**
+             * 使用Fragment
+             * 参数1：被替换为Fragment的视图id
+             * 参数2：BaseFragment对象
+             */
+            changeFragment(R.id.fragment_layout, new ImageFragment());
+        }
+
     }
 
 
@@ -154,12 +157,15 @@ public class TestFragment extends BaseFragment {
     //只有第一次才会执行，这里可以做一些界面功能引导
     @Override public void onFirst() { }
     @Override public void initData() { }
-    @Override public void onChange() { }
-    @Override public void onHidden() { }
     //view点击事件统一处理
     @Override public void viewClick(View v) { }
     @Override public void showProgress() { }
     @Override public void hideProgress() { }
+
+    //Fragment被切换到前台时调用
+    @Override public void onFragmentShow() { }
+    //Fragment被切换到后台时调用
+    @Override public void onFragmentHide() { }
 }
 ```
 
@@ -215,6 +221,36 @@ Logger.xml(xmlContent);
 ```
 注意事项：确保包装选项是禁用的
 ![](https://github.com/qyxxjd/AndroidBasicProject/blob/master/screenshots/log.png)
+
+
+Android6.0权限管理  [更多使用方法点这里](https://github.com/googlesamples/easypermissions)
+```java
+//以使用相机为例，在Activity/Fragment添加以下代码
+
+private static final int REQUEST_CODE_CAMERA = 101;//请求相机权限的requestCode
+
+@AfterPermissionGranted(REQUEST_CODE_CAMERA)
+public void useCamera() {
+    if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+        ToastUtil.showToast(getApplicationContext(), "相机权限已授权,可以开始使用相机了");
+    } else {
+        //请求权限
+        EasyPermissions.requestPermissions(this, "应用需要访问你的相机进行拍照",
+                                           REQUEST_CODE_CAMERA, Manifest.permission.CAMERA);
+    }
+}
+
+@Override
+public void onPermissionsGranted(int requestCode, List<String> perms) {
+    //用户授权成功
+}
+
+@Override
+public void onPermissionsDenied(int requestCode, List<String> perms) {
+    //用户拒绝授权
+}
+```
+
 
 ##工具类
 * [AppInfoUtil - 应用程序相关信息](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/AppInfoUtil.java) <br/>

@@ -5,7 +5,6 @@ package com.classic.core.utils;
  *
  * @author 还如一梦中
  * @version v1.0
- * @date：2013-01-18 下午11:52:13
  */
 public final class HtmlUtil {
 	private HtmlUtil(){}

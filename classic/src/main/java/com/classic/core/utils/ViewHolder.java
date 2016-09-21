@@ -6,9 +6,7 @@ import android.view.View;
 /**
  * 比较规范独立的的ViewHolder.
  *
- * @author Jack Tony
- * @see "http://www.cnblogs.com/tianzhijiexian/p/4157889.html"
- * @date 2015/4/28
+ * @author Jack Tony see {http://www.cnblogs.com/tianzhijiexian/p/4157889.html}
  */
 public final class ViewHolder {
     private ViewHolder(){}

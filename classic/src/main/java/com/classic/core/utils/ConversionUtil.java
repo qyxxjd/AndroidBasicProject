@@ -7,7 +7,7 @@ import android.util.TypedValue;
  * 单位转换工具类
  * 
  * @author 续写经典
- * @date 2015/11/4
+ * @version 1.0 2015/11/4
  */
 public final class ConversionUtil {
     private ConversionUtil() { }

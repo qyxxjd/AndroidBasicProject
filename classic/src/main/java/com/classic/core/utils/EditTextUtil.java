@@ -19,7 +19,7 @@ import android.widget.EditText;
  * 文本输入框工具类
  *
  * @author Jack Tony
- * @date 2015/7/31
+ * @version 1.0 2015/7/31
  */
 public final class EditTextUtil {
     private EditTextUtil() { }
@@ -125,7 +125,6 @@ public final class EditTextUtil {
 
     /**
      * 屏蔽复制、粘贴功能
-     * 需要sdk>=11
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB) public static void pasteUnable(EditText editText) {
         editText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {

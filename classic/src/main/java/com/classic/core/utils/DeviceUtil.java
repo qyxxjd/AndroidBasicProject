@@ -21,7 +21,7 @@ import java.util.UUID;
  * 设备信息工具类
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public final class DeviceUtil {
 	private Context mContext;
@@ -67,7 +67,7 @@ public final class DeviceUtil {
 		return TextUtils.isEmpty(androidId) ? "" : androidId;
 	}
 	/**
-	 * 获取UUID <BR/>
+	 * 获取UUID
 	 * UUID是指在一台机器上生成的数字，它保证对在同一时空中的所有机器都是唯一的。
 	 * @return
 	 */
@@ -76,7 +76,7 @@ public final class DeviceUtil {
 	}
 	
 	/**
-	 * 获取设备绝对的唯一标识<BR/>
+	 * 获取设备绝对的唯一标识
 	 * 先获取DeviceId,如果为空,获取ANDROID_ID,如果还是空,生成一个UUID
 	 * @return
 	 */
@@ -105,7 +105,7 @@ public final class DeviceUtil {
 	}
 	
 	/**
-	 * 返回手机号码<可能为空>
+	 * 返回手机号码 (可能为空)
 	 * @return
 	 */
 	public String getNumber(){
@@ -180,8 +180,7 @@ public final class DeviceUtil {
 
 
 	/**
-	 * 返回序列号
-	 * <Android 2.3以上可以使用此方法>
+	 * 返回序列号 (Android 2.3以上可以使用此方法)
 	 * @return
 	 */
 	public String getSerialNumber(){

@@ -8,7 +8,7 @@ import android.net.NetworkInfo;
  * 网络状态工具类
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public final class NetworkUtil {
     private NetworkUtil() { }

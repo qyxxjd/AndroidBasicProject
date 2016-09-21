@@ -6,7 +6,7 @@ import java.io.IOException;
 /**
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public final class CloseUtil {
     private CloseUtil() { }

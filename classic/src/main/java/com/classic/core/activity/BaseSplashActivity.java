@@ -43,7 +43,6 @@ import java.util.List;
  * 启动页
  *
  * @author Geek_Soledad
- * @date 2015/11/7
  */
 public abstract class BaseSplashActivity extends Activity {
     /**

@@ -5,7 +5,7 @@ import android.database.Cursor;
 /**
  *
  * @author 续写经典
- * @date 2016/6/17
+ * @version 2.2 2016/6/17
  */
 public final class CursorUtil {
     private CursorUtil(){ }

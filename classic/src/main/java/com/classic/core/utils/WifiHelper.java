@@ -11,12 +11,9 @@ import java.util.List;
 
 /**
  * wifi工具类
- * 需要权限：
- * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
- * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public final class WifiHelper {
 
@@ -83,7 +80,9 @@ public final class WifiHelper {
      * 启用/禁用 wifi
      * @param enabled
      */
-    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
+    @RequiresPermission(allOf = {
+            Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.ACCESS_WIFI_STATE})
     public void setEnabled(boolean enabled) {
         if(mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING ||
                 mWifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLING){
@@ -96,6 +95,7 @@ public final class WifiHelper {
      * wifi是否打开
      * @return
      */
+    @RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     public boolean isEnabled() {
         return mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING ||
                mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED;
@@ -105,6 +105,7 @@ public final class WifiHelper {
     /**
      * 获取已连接过的wifi配置列表
      */
+    @RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     public List<WifiConfiguration> getConfiguration() {
         return mWifiManager.getConfiguredNetworks();
     }
@@ -113,7 +114,9 @@ public final class WifiHelper {
     /**
      * 扫描WiFi列表
      */
-    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
+    @RequiresPermission(allOf = {
+            Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.ACCESS_WIFI_STATE})
     public List<ScanResult> getScanResults() {
         List<ScanResult> list = null;
         //开始扫描WiFi
@@ -133,6 +136,7 @@ public final class WifiHelper {
     /**
      * 获取当前连接的WIFI信息
      */
+    @RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     public WifiInfo getConnectionInfo() {
         return mWifiManager.getConnectionInfo();
     }
@@ -206,6 +210,7 @@ public final class WifiHelper {
      * @param scanResult
      * @return
      */
+    @RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     public WifiConfiguration existConfig(ScanResult scanResult) {
         // 查看该网络是否已经配置过
         for (WifiConfiguration config : getConfiguration()) {
@@ -221,6 +226,7 @@ public final class WifiHelper {
      * 获取mac地址
      * @return
      */
+    @RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     public String getMacAddress(){
         WifiInfo info = mWifiManager.getConnectionInfo();
         return info != null ? info.getMacAddress() : "";

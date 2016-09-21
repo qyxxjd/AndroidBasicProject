@@ -9,7 +9,7 @@ import android.view.View;
  * 规范Activity接口协议
  *
  * @author 续写经典
- * @date 2015/11/4
+ * @version 1.0 2015/11/4
  */
 public interface IActivity {
     int DESTROY = 0x00;

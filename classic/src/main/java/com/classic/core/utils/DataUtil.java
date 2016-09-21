@@ -8,7 +8,7 @@ import java.util.Map;
  * 常用的数据非空检查工具类
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public final class DataUtil {
     private DataUtil() { }

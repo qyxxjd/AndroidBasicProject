@@ -7,8 +7,8 @@ import java.io.File;
 /**
  * SD卡工具类
  *
- * @author:续写经典
- * @createtime:2015/11/4
+ * @author 续写经典
+ * @version 1.0 2015/11/4
  */
 public final class SDcardUtil {
     private SDcardUtil() { }

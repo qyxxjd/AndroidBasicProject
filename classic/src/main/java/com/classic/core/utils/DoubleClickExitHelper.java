@@ -10,7 +10,7 @@ import android.widget.Toast;
  * 双击退出应用程序
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public class DoubleClickExitHelper {
 

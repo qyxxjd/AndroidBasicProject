@@ -15,9 +15,11 @@
  */
 package com.classic.core.utils;
 
+import android.Manifest;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.support.annotation.RequiresPermission;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
@@ -30,11 +32,10 @@ public final class IpUtil {
 
     /**
      * 获取IP地址(网络为Wifi)
-     * 需要权限：
-     * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-     * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-     * <uses-permission android:name="android.permission.WAKE_LOCK" />
      */
+    @RequiresPermission(allOf = {
+            Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.ACCESS_WIFI_STATE})
     public static String getWifiIp(Context context) {
         // 获取wifi服务
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -54,8 +55,6 @@ public final class IpUtil {
 
     /**
      * 获取ip地址(网络为GPRS)
-     * 需要权限：
-     * <uses-permission android:name="android.permission.INTERNET" />
      */
     public static String getGPRSIp() {
         try {

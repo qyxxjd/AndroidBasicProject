@@ -3,7 +3,7 @@ package com.classic.core.utils;
 /**
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public final class SizeUtil {
     private SizeUtil() { }

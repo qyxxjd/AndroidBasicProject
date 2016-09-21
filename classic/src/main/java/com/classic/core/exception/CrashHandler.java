@@ -6,7 +6,7 @@ import com.classic.core.interfaces.ICrashProcess;
  * 异常信息收集
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private static CrashHandler  sInstance;

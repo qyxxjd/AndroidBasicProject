@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  * 高精度数据计算工具类
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public class MoneyUtil {
 	// 默认除法运算精度

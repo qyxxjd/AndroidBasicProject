@@ -4,15 +4,15 @@ package com.classic.core.consts;
  * 常用的MIME扩展类型对应的ContentType
  *
  * @author 续写经典
- * @date 2015/11/4
+ * @version 1.0 2015/11/4
  */
 public class MIME {
 	/** 二进制流,匹配所有类型 */
 	public static final String FILE      = "application/octet-stream";
 
 	/**
-	 * "application/xml" 和 "text/xml" 二者功能一模一样，唯一的区别就是编码格式.<br/>
-	 * text/xml : 忽略xml头所指定编码格式而默认采用us-ascii编码<br/>
+	 * "application/xml" 和 "text/xml" 二者功能一模一样，唯一的区别就是编码格式.
+	 * text/xml : 忽略xml头所指定编码格式而默认采用us-ascii编码
 	 * application/xml : 会根据xml头指定的编码格式来编码
 	 */
 	public static final String HTTP_XML  = "application/xml;charset=UTF-8";
@@ -40,8 +40,8 @@ public class MIME {
 	public static final String TEXT      = "text/plain";
 	public static final String HTML      = "text/html";
 	/**
-	 * "application/xml" 和 "text/xml" 二者功能一模一样，唯一的区别就是编码格式.<br/>
-	 * text/xml : 忽略xml头所指定编码格式而默认采用us-ascii编码<br/>
+	 * "application/xml" 和 "text/xml" 二者功能一模一样，唯一的区别就是编码格式.
+	 * text/xml : 忽略xml头所指定编码格式而默认采用us-ascii编码
 	 * application/xml : 会根据xml头指定的编码格式来编码
 	 */
 	public static final String XML       = "text/xml";

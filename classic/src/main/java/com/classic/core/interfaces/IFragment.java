@@ -7,7 +7,7 @@ import android.view.View;
  * 规范Fragment接口协议
  *
  * @author 续写经典
- * @date 2015/11/12
+ * @version 1.0 2015/11/12
  */
 public interface IFragment {
 

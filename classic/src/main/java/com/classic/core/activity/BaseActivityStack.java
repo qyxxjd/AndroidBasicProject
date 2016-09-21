@@ -9,7 +9,7 @@ import java.util.Stack;
  * Activity栈管理
  *
  * @author 续写经典
- * @date 2015/11/4
+ * @version 1.0 2015/11/4
  */
 public final class BaseActivityStack {
     private BaseActivityStack() { }

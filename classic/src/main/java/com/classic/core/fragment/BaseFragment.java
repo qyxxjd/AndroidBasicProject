@@ -19,7 +19,7 @@ import java.util.List;
  * Fragment父类
  *
  * @author 续写经典
- * @date 2015/12/16
+ * @version 1.0 2015/12/16
  */
 public abstract class BaseFragment extends Fragment
         implements IFragment, IRegister, View.OnClickListener, EasyPermissions.PermissionCallbacks {

@@ -12,9 +12,6 @@ import android.view.WindowManager;
  * 与屏幕相关的工具类，可以方便的设置全屏模式，可以得到屏幕的宽度高度。
  *
  * @author Jack Tony
- * @date 2015/4/26
- * @see "http://www.cnblogs.com/tianzhijiexian/p/4113937.html"
- * @see "http://www.cnblogs.com/tianzhijiexian/p/4127695.html"
  */
 public final class WindowUtil {
     private WindowUtil() { }

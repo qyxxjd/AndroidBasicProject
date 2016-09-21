@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * 正则匹配工具类
  *
  * @author 续写经典
- * @date 2015/11/3
+ * @version 1.0 2015/11/3
  */
 public final class MatcherUtil {
 	private MatcherUtil() { }

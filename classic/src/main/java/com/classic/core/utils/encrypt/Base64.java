@@ -355,14 +355,12 @@ public class Base64 {
 	
 	/**
 	 * 
-	* @Title: base64Encode 
-	* @Description: DES加密
+	* DES加密
+	 *
 	* @param data
 	* @param key
 	* @param charSet
 	* @return
-	* @return String 返回类型 
-	* @throws
 	 */
 	public final static String base64Encode(String data, String key, String charSet) {
 		try {

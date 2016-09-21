@@ -66,7 +66,6 @@ public final class DESUtil {
      *
      * @param text 要解密的内容
      * @return
-     * @throws Exception
      */
     public static String decrypt(String text) {
     	return decrypt(text, DEFAULT_KEY);
@@ -78,7 +77,6 @@ public final class DESUtil {
      * @param text 要解密的内容
      * @param key 加密key
      * @return
-     * @throws Exception
      */
     public static String decrypt(String text, String key) {
         return decrypt(text, key, DEFAULT_CHARSET_NAME);
@@ -92,7 +90,6 @@ public final class DESUtil {
      * @param key 加密key
      * @param charsetName 编码格式
      * @return
-     * @throws Exception
      */
     public static String decrypt(String text, String key, String charsetName) {
         try {

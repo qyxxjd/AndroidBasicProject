@@ -18,7 +18,7 @@ import java.util.List;
  * Activity父类
  *
  * @author 续写经典
- * @date 2015/11/7
+ * @version 1.0 2015/11/7
  */
 public abstract class BaseActivity extends AppCompatActivity
         implements View.OnClickListener, IActivity, IRegister, EasyPermissions.PermissionCallbacks {

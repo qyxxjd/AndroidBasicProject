@@ -16,7 +16,7 @@ import com.orhanobut.logger.Settings;
  * 全局配置
  *
  * @author 续写经典
- * @date 2016/03/13
+ * @version 2.2 2016/03/13
  */
 public final class BasicConfig {
     private static final String LOG_TAG = "classic";
@@ -38,7 +38,6 @@ public final class BasicConfig {
 
     /**
      * 默认配置
-     * @return
      */
     public void init(){
         initDir();

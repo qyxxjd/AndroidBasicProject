@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
 import butterknife.BindView;
 import com.classic.adapter.BaseAdapterHelper;
 import com.classic.adapter.CommonRecyclerAdapter;
@@ -31,7 +29,6 @@ import java.util.List;
  */
 public class MainActivity extends AppBaseActivity {
     private static final int    REQUEST_CODE_CAMERA   = 101;
-    private static final int    REQUEST_CODE_SETTINGS = 102;
     private static final String TAG                   = "MainActivity";
 
     @BindView(R.id.main_rv) RecyclerView mRecyclerView;
@@ -143,8 +140,7 @@ public class MainActivity extends AppBaseActivity {
     @AfterPermissionGranted(REQUEST_CODE_CAMERA)
     public void useCamera() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
-            showToast("相机权限已授权");
-            //TODO 业务逻辑处理
+            ToastUtil.showToast(getApplicationContext(), "相机权限已授权,可以开始使用相机了");
         } else {
             //请求权限
             EasyPermissions.requestPermissions(this, "应用需要访问你的相机进行拍照",
@@ -164,9 +160,5 @@ public class MainActivity extends AppBaseActivity {
 
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         return mDoubleClickExitHelper.onKeyDown(keyCode, event);
-    }
-
-    private void showToast(@NonNull String content){
-        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
     }
 }

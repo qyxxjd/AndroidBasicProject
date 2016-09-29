@@ -1,3 +1,9 @@
+<p>
+  <a target="_blank" href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#GINGERBREAD"><img src="https://img.shields.io/badge/API-9%2B-blue.svg?style=flat" alt="API" /></a>
+  <a target="_blank" href=""><img src="https://img.shields.io/badge/Version-v2.2.1-brightgreen.svg" alt="Library version" /></a>
+  <a target="_blank" href="LICENSE"><img src="https://img.shields.io/npm/l/express.svg?maxAge=2592000" alt="License" /></a>
+</p>
+
 AndroidBasicProject是一个简易的Android基础项目，方便您快速进行开发。
 包含以下内容：
 - BaseActivity、BaseFragment
@@ -8,7 +14,7 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 - Android6.0权限管理
 - 通用适配器  [请参考CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
 
-[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-2.2-beta.apk?raw=true)
+[APK下载](https://github.com/qyxxjd/AndroidBasicProject/blob/master/apk/demo-2.2.1.apk?raw=true)
 
 ##感谢
 [Logger](https://github.com/orhanobut/logger)
@@ -20,7 +26,7 @@ AndroidBasicProject是一个简易的Android基础项目，方便您快速进行
 第一步：
 ```gradle
 dependencies {
-    compile 'com.classic.core:classic:2.2'
+    compile 'com.classic.core:classic:2.2.1'
     compile 'com.orhanobut:logger:1.15'
 }
 ```

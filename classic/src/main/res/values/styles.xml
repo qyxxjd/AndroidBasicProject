@@ -1,5 +1,11 @@
 <resources>
 
+    <style name="AppDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/accent_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
     <style name="ListView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

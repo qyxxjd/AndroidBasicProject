@@ -22,11 +22,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import com.classic.core.R;
 
 /**
  * Dialog to prompt the user to go to the app's settings screen and enable permissions. If the
@@ -41,17 +43,17 @@ public class AppSettingsDialog {
 
     private AlertDialog mAlertDialog;
 
-    private AppSettingsDialog(@NonNull final Object activityOrFragment,
-                              @NonNull final Context context,
-                              @NonNull String rationale,
-                              @Nullable String title,
-                              @Nullable String positiveButton,
-                              @Nullable String negativeButton,
-                              @Nullable DialogInterface.OnClickListener negativeListener,
-                              int requestCode) {
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB) private AppSettingsDialog(@NonNull final Object activityOrFragment,
+                                                                        @NonNull final Context context,
+                                                                        @NonNull String rationale,
+                                                                        @Nullable String title,
+                                                                        @Nullable String positiveButton,
+                                                                        @Nullable String negativeButton,
+                                                                        @Nullable DialogInterface.OnClickListener negativeListener,
+                                                                        int requestCode) {
 
         // Create empty builder
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, R.style.AppDialogStyle);
 
         // Set rationale
         dialogBuilder.setMessage(rationale);

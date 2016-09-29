@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import com.classic.core.R;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -126,7 +127,7 @@ public class EasyPermissions {
                 return;
             }
 
-            AlertDialog dialog = new AlertDialog.Builder(activity)
+            AlertDialog dialog = new AlertDialog.Builder(activity, R.style.AppDialogStyle)
                     .setMessage(rationale)
                     .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                         @Override

@@ -1,7 +1,7 @@
 <p>
-  <a target="_blank" href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#GINGERBREAD"><img src="https://img.shields.io/badge/API-9%2B-blue.svg?style=flat" alt="API" /></a>
-  <a target="_blank" href=""><img src="https://img.shields.io/badge/Version-v2.2.1-brightgreen.svg" alt="Library version" /></a>
-  <a target="_blank" href="LICENSE"><img src="https://img.shields.io/npm/l/express.svg?maxAge=2592000" alt="License" /></a>
+  <a href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#GINGERBREAD"><img src="https://img.shields.io/badge/API-9%2B-blue.svg?style=flat" alt="API" /></a>
+  <a href="javascript:void(0);"><img src="https://img.shields.io/badge/Version-v2.2.1-brightgreen.svg" alt="Library version" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/npm/l/express.svg?maxAge=2592000" alt="License" /></a>
 </p>
 
 AndroidBasicProject是一个简易的Android基础项目，方便您快速进行开发。

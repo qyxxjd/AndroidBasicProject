@@ -32,40 +32,8 @@ import java.io.FileInputStream;
 public final class BitmapUtil {
     private BitmapUtil() {}
 
-
-    /** 图片最大宽度. */
-    public static final int MAX_WIDTH = 4096 / 2;
-    /** 图片最大高度. */
-    public static final int MAX_HEIGHT = 4096 / 2;
-
-
     /**
-     * 获取Bitmap大小.
-     *
-     * @param bitmap the bitmap
-     * @param mCompressFormat 图片格式 Bitmap.CompressFormat.JPEG,CompressFormat.PNG
-     * @return 图片的大小
-     */
-    public static int getByteCount(Bitmap bitmap, Bitmap.CompressFormat mCompressFormat) {
-        int size = 0;
-        ByteArrayOutputStream output = null;
-        try {
-            output = new ByteArrayOutputStream();
-            bitmap.compress(mCompressFormat, 100, output);
-            byte[] result = output.toByteArray();
-            size = result.length;
-            result = null;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            CloseUtil.close(output);
-        }
-        return size;
-    }
-
-
-    /**
-     * 描述：获取图片尺寸
+     * 获取图片尺寸
      *
      * @param file File对象
      * @return 尺寸数组. 0:width,1:height
@@ -112,7 +80,14 @@ public final class BitmapUtil {
      * Bitmap转Drawable
      */
     public static Drawable bitmap2Drawable(Bitmap bitmap) {
-        return new BitmapDrawable(bitmap);
+        return bitmap2Drawable(null, bitmap);
+    }
+
+    /**
+     * Bitmap转Drawable
+     */
+    public static Drawable bitmap2Drawable(Resources res, Bitmap bitmap) {
+        return new BitmapDrawable(res, bitmap);
     }
 
 
@@ -133,7 +108,7 @@ public final class BitmapUtil {
      * @return Drawable 转化完成的Drawable对象
      */
     @SuppressWarnings("ResourceType")
-    public static TransitionDrawable bitmapToTransitionDrawable(Bitmap bitmap) {
+    public static TransitionDrawable bitmap2TransitionDrawable(Bitmap bitmap) {
         TransitionDrawable mBitmapDrawable = null;
         try {
             if (bitmap == null) {
@@ -141,7 +116,7 @@ public final class BitmapUtil {
             }
             mBitmapDrawable = new TransitionDrawable(
                     new Drawable[] { new ColorDrawable(android.R.color.transparent),
-                            new BitmapDrawable(bitmap) });
+                            new BitmapDrawable(null, bitmap) });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,7 +132,7 @@ public final class BitmapUtil {
      * @return Drawable 转化完成的Drawable对象
      */
     @SuppressWarnings("ResourceType")
-    public static TransitionDrawable drawableToTransitionDrawable(Drawable drawable) {
+    public static TransitionDrawable drawable2TransitionDrawable(Drawable drawable) {
         TransitionDrawable mBitmapDrawable = null;
         try {
             if (drawable == null) {
@@ -217,326 +192,12 @@ public final class BitmapUtil {
             return bitmap.getByteCount();
         }
         // 在低版本中用一行的字节x高度
-        return bitmap.getRowBytes() * bitmap.getHeight();                //earlier version
+        return bitmap.getRowBytes() * bitmap.getHeight(); //earlier version
     }
 
 
     /**
-     * 描述：缩放图片.(超出的裁掉)
-     *
-     * @param file File对象
-     * @param desiredWidth 新图片的宽
-     * @param desiredHeight 新图片的高
-     * @return Bitmap 新图片
-     */
-    public static Bitmap getScaleBitmap(File file, int desiredWidth, int desiredHeight) {
-
-        Bitmap resizeBmp = null;
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        // 设置为true,decodeFile先不创建内存 只获取一些解码边界信息即图片大小信息
-        opts.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(file.getPath(), opts);
-
-        // 获取图片的原始宽度高度
-        int srcWidth = opts.outWidth;
-        int srcHeight = opts.outHeight;
-
-        //需要的尺寸重置
-        int[] size = resizeToMaxSize(srcWidth, srcHeight, desiredWidth, desiredHeight);
-        desiredWidth = size[0];
-        desiredHeight = size[1];
-
-        // 默认为ARGB_8888.
-        opts.inPreferredConfig = Bitmap.Config.RGB_565;
-        // 以下两个字段需一起使用：
-        // 产生的位图将得到像素空间，如果系统gc，那么将被清空。当像素再次被访问，如果Bitmap已经decode，那么将被自动重新解码
-        opts.inPurgeable = true;
-        // 位图可以共享一个参考输入数据(inputstream、阵列等)
-        opts.inInputShareable = true;
-        // 缩放的比例，缩放是很难按准备的比例进行缩放的，通过inSampleSize来进行缩放，其值表明缩放的倍数，SDK中建议其值是2的指数值
-        int sampleSize = findBestSampleSize(srcWidth, srcHeight, desiredWidth, desiredHeight);
-        opts.inSampleSize = sampleSize;
-        // 创建内存
-        opts.inJustDecodeBounds = false;
-        // 使图片不抖动
-        opts.inDither = false;
-
-        resizeBmp = BitmapFactory.decodeFile(file.getPath(), opts);
-
-        // 缩放的比例
-        float scale = getMinScale(resizeBmp.getWidth(), resizeBmp.getHeight(), desiredWidth,
-                desiredHeight);
-        if (scale < 1) {
-            // 缩小
-            resizeBmp = scaleBitmap(resizeBmp, scale);
-        }
-
-        //超出的裁掉
-        if (resizeBmp.getWidth() > desiredWidth || resizeBmp.getHeight() > desiredHeight) {
-            resizeBmp = getCutBitmap(resizeBmp, desiredWidth, desiredHeight);
-        }
-        return resizeBmp;
-    }
-
-
-    /**
-     * 描述：缩放图片.(超出的裁掉)
-     *
-     * @param bitmap the bitmap
-     * @param desiredWidth 新图片的宽
-     * @param desiredHeight 新图片的高
-     * @return Bitmap 新图片
-     */
-    public static Bitmap getScaleBitmap(Bitmap bitmap, int desiredWidth, int desiredHeight) {
-
-        if (!checkBitmap(bitmap)) {
-            return null;
-        }
-        Bitmap resizeBmp = null;
-
-        // 获得图片的宽高
-        int srcWidth = bitmap.getWidth();
-        int srcHeight = bitmap.getHeight();
-
-        int[] size = resizeToMaxSize(srcWidth, srcHeight, desiredWidth, desiredHeight);
-        desiredWidth = size[0];
-        desiredHeight = size[1];
-
-        float scale = getMinScale(srcWidth, srcHeight, desiredWidth, desiredHeight);
-        resizeBmp = scaleBitmap(bitmap, scale);
-        //超出的裁掉
-        if (resizeBmp.getWidth() > desiredWidth || resizeBmp.getHeight() > desiredHeight) {
-            resizeBmp = getCutBitmap(resizeBmp, desiredWidth, desiredHeight);
-        }
-        return resizeBmp;
-    }
-
-
-    /**
-     * 描述：裁剪图片.
-     *
-     * @param file File对象
-     * @param desiredWidth 新图片的宽
-     * @param desiredHeight 新图片的高
-     * @return Bitmap 新图片
-     */
-    public static Bitmap getCutBitmap(File file, int desiredWidth, int desiredHeight) {
-
-        Bitmap resizeBmp = null;
-
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        // 设置为true,decodeFile先不创建内存 只获取一些解码边界信息即图片大小信息
-        opts.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(file.getPath(), opts);
-
-        // 获取图片的原始宽度
-        int srcWidth = opts.outWidth;
-        // 获取图片原始高度
-        int srcHeight = opts.outHeight;
-
-        int[] size = resizeToMaxSize(srcWidth, srcHeight, desiredWidth, desiredHeight);
-        desiredWidth = size[0];
-        desiredHeight = size[1];
-
-        // 默认为ARGB_8888.
-        opts.inPreferredConfig = Bitmap.Config.RGB_565;
-        // 以下两个字段需一起使用：
-        // 产生的位图将得到像素空间，如果系统gc，那么将被清空。当像素再次被访问，如果Bitmap已经decode，那么将被自动重新解码
-        opts.inPurgeable = true;
-        // 位图可以共享一个参考输入数据(inputstream、阵列等)
-        opts.inInputShareable = true;
-        // 缩放的比例，缩放是很难按准备的比例进行缩放的，通过inSampleSize来进行缩放，其值表明缩放的倍数，SDK中建议其值是2的指数值
-        int sampleSize = findBestSampleSize(srcWidth, srcHeight, desiredWidth, desiredHeight);
-        opts.inSampleSize = sampleSize;
-        // 创建内存
-        opts.inJustDecodeBounds = false;
-        // 使图片不抖动
-        opts.inDither = false;
-        resizeBmp = BitmapFactory.decodeFile(file.getPath(), opts);
-
-        if (resizeBmp != null) {
-            resizeBmp = getCutBitmap(resizeBmp, desiredWidth, desiredHeight);
-        }
-        return resizeBmp;
-    }
-
-
-    /**
-     * 描述：裁剪图片.
-     *
-     * @param bitmap the bitmap
-     * @param desiredWidth 新图片的宽
-     * @param desiredHeight 新图片的高
-     * @return Bitmap 新图片
-     */
-    public static Bitmap getCutBitmap(Bitmap bitmap, int desiredWidth, int desiredHeight) {
-
-        if (!checkBitmap(bitmap)) {
-            return null;
-        }
-
-        if (!checkSize(desiredWidth, desiredHeight)) {
-            return null;
-        }
-
-        Bitmap resizeBmp = null;
-
-        try {
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
-
-            int offsetX = 0;
-            int offsetY = 0;
-
-            if (width > desiredWidth) {
-                offsetX = (width - desiredWidth) / 2;
-            }
-            else {
-                desiredWidth = width;
-            }
-
-            if (height > desiredHeight) {
-                offsetY = (height - desiredHeight) / 2;
-            }
-            else {
-                desiredHeight = height;
-            }
-
-            resizeBmp = Bitmap.createBitmap(bitmap, offsetX, offsetY, desiredWidth, desiredHeight);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (resizeBmp != bitmap) {
-                bitmap.recycle();
-            }
-        }
-        return resizeBmp;
-    }
-
-
-    /**
-     * 描述：根据等比例缩放图片.
-     *
-     * @param bitmap the bitmap
-     * @param scale 比例
-     * @return Bitmap 新图片
-     */
-    public static Bitmap scaleBitmap(Bitmap bitmap, float scale) {
-
-        if (!checkBitmap(bitmap)) {
-            return null;
-        }
-
-        if (scale == 1) {
-            return bitmap;
-        }
-
-        Bitmap resizeBmp = null;
-        try {
-            // 获取Bitmap资源的宽和高
-            int bmpW = bitmap.getWidth();
-            int bmpH = bitmap.getHeight();
-
-            // 注意这个Matirx是android.graphics底下的那个
-            Matrix matrix = new Matrix();
-            // 设置缩放系数，分别为原来的0.8和0.8
-            matrix.postScale(scale, scale);
-            resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bmpW, bmpH, matrix, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (resizeBmp != bitmap) {
-                bitmap.recycle();
-            }
-        }
-        return resizeBmp;
-    }
-
-
-    /**
-     * 获取缩小的比例.
-     */
-    private static float getMinScale(int srcWidth, int srcHeight, int desiredWidth, int desiredHeight) {
-        // 缩放的比例
-        float scale = 0;
-        // 计算缩放比例，宽高的最小比例
-        float scaleWidth = (float) desiredWidth / srcWidth;
-        float scaleHeight = (float) desiredHeight / srcHeight;
-        if (scaleWidth > scaleHeight) {
-            scale = scaleWidth;
-        }
-        else {
-            scale = scaleHeight;
-        }
-
-        return scale;
-    }
-
-
-    private static int[] resizeToMaxSize(int srcWidth, int srcHeight, int desiredWidth, int desiredHeight) {
-        int[] size = new int[2];
-        if (desiredWidth <= 0) {
-            desiredWidth = srcWidth;
-        }
-        if (desiredHeight <= 0) {
-            desiredHeight = srcHeight;
-        }
-        if (desiredWidth > MAX_WIDTH) {
-            // 重新计算大小
-            desiredWidth = MAX_WIDTH;
-            float scaleWidth = (float) desiredWidth / srcWidth;
-            desiredHeight = (int) (desiredHeight * scaleWidth);
-        }
-
-        if (desiredHeight > MAX_HEIGHT) {
-            // 重新计算大小
-            desiredHeight = MAX_HEIGHT;
-            float scaleHeight = (float) desiredHeight / srcHeight;
-            desiredWidth = (int) (desiredWidth * scaleHeight);
-        }
-        size[0] = desiredWidth;
-        size[1] = desiredHeight;
-        return size;
-    }
-
-
-    private static boolean checkBitmap(Bitmap bitmap) {
-        if (bitmap == null) {
-            return false;
-        }
-
-        if (bitmap.getWidth() <= 0 || bitmap.getHeight() <= 0) {
-            return false;
-        }
-        return true;
-    }
-
-
-    private static boolean checkSize(int desiredWidth, int desiredHeight) {
-        if (desiredWidth <= 0 || desiredHeight <= 0) {
-            return false;
-        }
-        return true;
-    }
-
-
-    /**
-     * 找到最合适的SampleSize
-     */
-    private static int findBestSampleSize(int width, int height, int desiredWidth, int desiredHeight) {
-        double wr = (double) width / desiredWidth;
-        double hr = (double) height / desiredHeight;
-        double ratio = Math.min(wr, hr);
-        float n = 1.0f;
-        while ((n * 2) <= ratio) {
-            n *= 2;
-        }
-        return (int) n;
-    }
-
-
-    /**
-     * 描述：旋转Bitmap为一定的角度并四周暗化处理.
+     * 旋转Bitmap为一定的角度并四周暗化处理.
      *
      * @param bitmap the bitmap
      * @param degrees the degrees
@@ -593,8 +254,7 @@ public final class BitmapUtil {
             dst_top = 0;
             dst_right = width;
             dst_bottom = width;
-        }
-        else {
+        } else {
             roundPx = height / 2;
             float clip = (width - height) / 2;
             left = clip;
@@ -742,160 +402,6 @@ public final class BitmapUtil {
 
 
     /**
-     * 释放Bitmap对象.
-     *
-     * @param bitmap 要释放的Bitmap
-     */
-    public static void releaseBitmap(Bitmap bitmap) {
-        if (bitmap != null) {
-            try {
-                if (!bitmap.isRecycled()) {
-                    bitmap.recycle();
-                }
-            } catch (Exception e) {
-            }
-            bitmap = null;
-        }
-    }
-
-
-    /**
-     * 释放Bitmap数组.
-     *
-     * @param bitmaps 要释放的Bitmap数组
-     */
-    public static void releaseBitmapArray(Bitmap[] bitmaps) {
-        if (bitmaps != null) {
-            try {
-                for (Bitmap bitmap : bitmaps) {
-                    if (bitmap != null && !bitmap.isRecycled()) {
-                        bitmap.recycle();
-                    }
-                }
-            } catch (Exception e) {
-            }
-        }
-    }
-
-
-    private static int mDesiredWidth;
-    private static int mDesiredHeight;
-
-
-    /**
-     * 从Resources中加载图片
-     */
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        // 设置成了true,不占用内存，只获取bitmap宽高
-        options.inJustDecodeBounds = true;
-        // 初始化options对象
-        BitmapFactory.decodeResource(res, resId, options);
-        // 得到计算好的options，目标宽、目标高
-        options = getBestOptions(options, reqWidth, reqHeight);
-        Bitmap src = BitmapFactory.decodeResource(res, resId, options); // 载入一个稍大的缩略图
-        return createScaleBitmap(src, mDesiredWidth, mDesiredHeight); // 进一步得到目标大小的缩略图
-    }
-
-
-    /**
-     * 从SD卡上加载图片
-     */
-    public static Bitmap decodeSampledBitmapFromFile(String pathName, int reqWidth, int reqHeight) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(pathName, options);
-        options = getBestOptions(options, reqWidth, reqHeight);
-        Bitmap src = BitmapFactory.decodeFile(pathName, options);
-        return createScaleBitmap(src, mDesiredWidth, mDesiredHeight);
-    }
-
-
-    /**
-     * 计算目标宽度，目标高度，inSampleSize
-     *
-     * @return BitmapFactory.Options对象
-     */
-    private static BitmapFactory.Options getBestOptions(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // 读取图片长宽
-        int actualWidth = options.outWidth;
-        int actualHeight = options.outHeight;
-        // Then compute the dimensions we would ideally like to decode to.
-        mDesiredWidth = getResizedDimension(reqWidth, reqHeight, actualWidth, actualHeight);
-        mDesiredHeight = getResizedDimension(reqHeight, reqWidth, actualHeight, actualWidth);
-        // 根据现在得到计算inSampleSize
-        options.inSampleSize = calculateBestInSampleSize(actualWidth, actualHeight, mDesiredWidth,
-                mDesiredHeight);
-        // 使用获取到的inSampleSize值再次解析图片
-        options.inJustDecodeBounds = false;
-        return options;
-    }
-
-
-    /**
-     * Scales one side of a rectangle to fit aspect ratio. 最终得到重新测量的尺寸
-     *
-     * @param maxPrimary Maximum size of the primary dimension (i.e. width for max
-     * width), or zero to maintain aspect ratio with secondary
-     * dimension
-     * @param maxSecondary Maximum size of the secondary dimension, or zero to maintain
-     * aspect ratio with primary dimension
-     * @param actualPrimary Actual size of the primary dimension
-     * @param actualSecondary Actual size of the secondary dimension
-     */
-    private static int getResizedDimension(int maxPrimary, int maxSecondary, int actualPrimary, int actualSecondary) {
-        double ratio = (double) actualSecondary / (double) actualPrimary;
-        int resized = maxPrimary;
-        if (resized * ratio > maxSecondary) {
-            resized = (int) (maxSecondary / ratio);
-        }
-        return resized;
-    }
-
-
-    /**
-     * Returns the largest power-of-two divisor for use in downscaling a bitmap
-     * that will not result in the scaling past the desired dimensions.
-     *
-     * @param actualWidth Actual width of the bitmap
-     * @param actualHeight Actual height of the bitmap
-     * @param desiredWidth Desired width of the bitmap
-     * @param desiredHeight Desired height of the bitmap
-     */
-    // Visible for testing.
-    private static int calculateBestInSampleSize(int actualWidth, int actualHeight, int desiredWidth, int desiredHeight) {
-        double wr = (double) actualWidth / desiredWidth;
-        double hr = (double) actualHeight / desiredHeight;
-        double ratio = Math.min(wr, hr);
-        float inSampleSize = 1.0f;
-        while ((inSampleSize * 2) <= ratio) {
-            inSampleSize *= 2;
-        }
-
-        return (int) inSampleSize;
-    }
-
-
-    /**
-     * 通过传入的bitmap，进行压缩，得到符合标准的bitmap
-     */
-    private static Bitmap createScaleBitmap(Bitmap tempBitmap, int desiredWidth, int desiredHeight) {
-        // If necessary, scale down to the maximal acceptable size.
-        if (tempBitmap != null &&
-                (tempBitmap.getWidth() > desiredWidth || tempBitmap.getHeight() > desiredHeight)) {
-            // 如果是放大图片，filter决定是否平滑，如果是缩小图片，filter无影响
-            Bitmap bitmap = Bitmap.createScaledBitmap(tempBitmap, desiredWidth, desiredHeight,
-                    true);
-            tempBitmap.recycle(); // 释放Bitmap的native像素数组
-            return bitmap;
-        }
-        else {
-            return tempBitmap; // 如果没有缩放，那么不回收
-        }
-    }
-
-
-    /**
      * 等比例缩放图片
      *
      * @param pathString 文件路径
@@ -914,43 +420,38 @@ public final class BitmapUtil {
         try {
             // 打开源文件
             Bitmap srcBitmap;
-            {
-                java.io.InputStream is;
-                is = new FileInputStream(pathString);
-                BitmapFactory.Options opts = getOptionsWithInSampleSize(pathString, dstMaxWH);
-                srcBitmap = BitmapFactory.decodeStream(is, null, opts);
-                if (srcBitmap == null) return retBm;
+            java.io.InputStream is = new FileInputStream(pathString);
+            BitmapFactory.Options opts = getOptionsWithInSampleSize(pathString, dstMaxWH);
+            srcBitmap = BitmapFactory.decodeStream(is, null, opts);
+            if (srcBitmap == null){
+                return retBm;
             }
             // 原图片宽高
             int width = srcBitmap.getWidth();
             int height = srcBitmap.getHeight();
             // 获得缩放因子
             float scale = 1.f;
-            {
-                if (width > dstMaxWH || height > dstMaxWH) {
-                    float scaleTemp = (float) dstMaxWH / (float) width;
-                    float scaleTemp2 = (float) dstMaxWH / (float) height;
-                    if (scaleTemp > scaleTemp2) {
-                        scale = scaleTemp2;
-                    }
-                    else {
-                        scale = scaleTemp;
-                    }
+            if (width > dstMaxWH || height > dstMaxWH) {
+                float scaleTemp = (float) dstMaxWH / (float) width;
+                float scaleTemp2 = (float) dstMaxWH / (float) height;
+                if (scaleTemp > scaleTemp2) {
+                    scale = scaleTemp2;
+                }
+                else {
+                    scale = scaleTemp;
                 }
             }
             // 图片缩放
             Bitmap dstBitmap;
             if (scale == 1.f) {
                 dstBitmap = srcBitmap;
-            }
-            else {
+            } else {
                 Matrix matrix = new Matrix();
                 matrix.postScale(scale, scale);
                 dstBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, width, height, matrix, true);
                 if (!srcBitmap.isRecycled()) srcBitmap.recycle();
                 srcBitmap = null;
             }
-
             retBm = dstBitmap;
         } catch (Exception e) {
             return retBm;
@@ -978,5 +479,25 @@ public final class BitmapUtil {
         }
         bitmapOptions.inSampleSize = inSampleSize;
         return bitmapOptions;
+    }
+
+
+    /**
+     * 释放Bitmap
+     *
+     * @param bitmaps
+     */
+    public static void release(Bitmap... bitmaps) {
+        if (bitmaps != null) {
+            try {
+                for (Bitmap bitmap : bitmaps) {
+                    if (bitmap != null && !bitmap.isRecycled()) {
+                        bitmap.recycle();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -81,25 +81,4 @@ public final class KeyBoardUtil {
             }
         });
     }
-
-    /**
-     * 监听各种action动作
-     * 
-     * android:imeOptions="actionSearch"
-     * android:inputType="text"
-     * android:singleLine="true"
-     */
-    public static void setActionListener(EditText editText, final View.OnClickListener listener) {
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //if (actionId == EditorInfo.IME_ACTION_SEARCH) { // 这里的action和在layout中设置的android:imeOptions属性是对应的.
-                // 返回值:  如果你处理了该事件，返回true；否则返回false。
-                listener.onClick(v);
-                return true;
-                //}
-                //return false;
-            }
-        });
-    }
 }

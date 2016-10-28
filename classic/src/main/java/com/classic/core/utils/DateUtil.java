@@ -1,5 +1,6 @@
 package com.classic.core.utils;
 
+import android.support.annotation.NonNull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,25 +18,66 @@ public final class DateUtil {
     public static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
     public static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINA);
     public static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("HH:mm",Locale.CHINA);
+    public static final SimpleDateFormat FORMAT_DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
 
     private static final Calendar INSTANCE = Calendar.getInstance();
     public static int getYear(){
-        return INSTANCE.get(Calendar.YEAR);
+        return getTimeByType(Calendar.YEAR);
     }
     public static int getMonth(){
-        return INSTANCE.get(Calendar.MONTH);
+        return getTimeByType(Calendar.MONTH);
     }
     public static int getDay(){
-        return INSTANCE.get(Calendar.DAY_OF_MONTH);
+        return getTimeByType(Calendar.DAY_OF_MONTH);
     }
     public static int getHours(){
-        return INSTANCE.get(Calendar.HOUR_OF_DAY);
+        return getTimeByType(Calendar.HOUR_OF_DAY);
     }
     public static int getMinutes(){
-        return INSTANCE.get(Calendar.MINUTE);
+        return getTimeByType(Calendar.MINUTE);
     }
     public static int getSeconds(){
-        return INSTANCE.get(Calendar.SECOND);
+        return getTimeByType(Calendar.SECOND);
+    }
+    private static int getTimeByType(int type){
+        INSTANCE.setTimeInMillis(System.currentTimeMillis());
+        return INSTANCE.get(type);
+    }
+
+    /**
+     * 时间格式化
+     * @param format
+     * @param time
+     * @return
+     */
+    public static String formatDate(String format,Long time) {
+        return formatDate(new SimpleDateFormat(format, Locale.CHINA), time);
+    }
+    /**
+     * 时间格式化
+     * @param format
+     * @param time
+     * @return
+     */
+    public static String formatDate(SimpleDateFormat format,Long time) {
+        if(null==time || time<=0) return "";
+        return format.format(new Date(String.valueOf(time).length() == 13 ? time : time * 1000));
+    }
+
+    /**
+     * 根据月份获得最大天数
+     * @param year 年
+     * @param month 月
+     * @return 最大天数
+     */
+    public static int getMaxDayByMonth(int year,int month){
+        Calendar time=Calendar.getInstance();//使用默认时区和语言环境获得一个日历
+        //注意：在使用set方法之前，必须先调用clear（），否则很多信息会继承自系统当前的时间
+        time.clear();
+        time.set(Calendar.YEAR,year);
+        time.set(Calendar.MONTH,month);//注意Calendar对象默认一月是为零的
+        int day=time.getActualMaximum(Calendar.DAY_OF_MONTH);//获得本月份的天数
+        return day;
     }
 
     /**
@@ -65,23 +107,68 @@ public final class DateUtil {
     }
 
     /**
-     * 时间格式化
-     * @param format
-     * @param time
-     * @return
+     * 根据日期获得星期
      */
-    public static String formatDate(String format,Long time) {
-        return formatDate(new SimpleDateFormat(format, Locale.CHINA), time);
+    public static String getWeek(Date d) {
+        final String dayNames[] = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五","星期六" };
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(d);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        if (dayOfWeek < 0)
+            dayOfWeek = 0;
+        return (dayNames[dayOfWeek]);
     }
+
     /**
-     * 时间格式化
-     * @param format
-     * @param time
+     * 获取某一周第一天
      * @return
      */
-    public static String formatDate(SimpleDateFormat format,Long time) {
-        if(null==time || time<=0) return "";
-        return format.format(new Date(String.valueOf(time).length() == 13 ? time : time * 1000));
+    public static Date getFirstDayByWeek(@NonNull Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int min = calendar.getActualMinimum(Calendar.DAY_OF_WEEK); //获取周开始基准
+        int current = calendar.get(Calendar.DAY_OF_WEEK); //获取当天周内天数
+        calendar.add(Calendar.DAY_OF_WEEK, min-current); //当天-基准，获取周开始日期
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取某一周最后一天
+     * @return
+     */
+    public static Date getLastDayByWeek(@NonNull Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int min = calendar.getActualMinimum(Calendar.DAY_OF_WEEK);
+        int current = calendar.get(Calendar.DAY_OF_WEEK);
+        calendar.add(Calendar.DAY_OF_WEEK, min-current+6);
+        return calendar.getTime();
+    }
+
+    /**
+     * 返回某月份的第一天
+     * @param date
+     * @return
+     */
+    public static Date getFirstDayByMonth(@NonNull Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, -1);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
+
+    /**
+     * 返回某月份的最后一天
+     * @param date
+     * @return
+     */
+    public static Date getLastDayByMonth(@NonNull Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        return calendar.getTime();
     }
 
     /**
@@ -99,60 +186,31 @@ public final class DateUtil {
     }
 
     /**
-     * 根据月份获得最大天数
-     * @param year 年
-     * @param month 月
-     * @return 最大天数
-     */
-    public static int getMaxDayByMonth(int year,int month){
-        Calendar time=Calendar.getInstance();//使用默认时区和语言环境获得一个日历
-        //注意：在使用set方法之前，必须先调用clear（），否则很多信息会继承自系统当前的时间
-        time.clear();
-        time.set(Calendar.YEAR,year);
-        time.set(Calendar.MONTH,month);//注意Calendar对象默认一月是为零的
-        int day=time.getActualMaximum(Calendar.DAY_OF_MONTH);//获得本月份的天数
-        return day;
-    }
-
-    /**
-     * 根据日期获得星期
-     */
-    public static String getWeek(Date d) {
-        final String dayNames[] = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五","星期六" };
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(d);
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        if (dayOfWeek < 0)
-            dayOfWeek = 0;
-        return (dayNames[dayOfWeek]);
-    }
-
-    /**
      * 时间格式化（刚刚、几分钟前、几小时前、昨天、前天、年-月-日）
      * @param time
      * @return
      */
     public static String getShortTime(long time) {
-        String shortstring = "";
+        String shortString = "";
         if (time == 0)
-            return shortstring;
+            return shortString;
 
         long now = Calendar.getInstance().getTimeInMillis();
         long datetime = (now - time) / 1000;
         if (datetime > 365 * 24 * 60 * 60) {
-            shortstring = FORMAT_DATE.format(new Date(time));
+            shortString = FORMAT_DATE.format(new Date(time));
         } else if (datetime > 24 * 60 * 60 && ((int) (datetime / (24 * 60 * 60)))==2){
-            shortstring = "前天";
+            shortString = "前天";
         } else if (datetime > 24 * 60 * 60 && ((int) (datetime / (24 * 60 * 60)))==1){
-            shortstring = "昨天";
+            shortString = "昨天";
         } else if (datetime > 60 * 60) {
-            shortstring = (int) (datetime / (60 * 60)) + "小时前";
+            shortString = (int) (datetime / (60 * 60)) + "小时前";
         } else if (datetime > 60) {
-            shortstring = (int) (datetime / (60)) + "分钟前";
+            shortString = (int) (datetime / (60)) + "分钟前";
         } else {
-            shortstring = "刚刚";
+            shortString = "刚刚";
         }
-        return shortstring;
+        return shortString;
     }
 
     /**
@@ -161,182 +219,21 @@ public final class DateUtil {
      * @return
      */
     public static String getShortTime2(long time) {
-        String shortstring = "";
+        String shortString = "";
         if (time == 0)
-            return shortstring;
+            return shortString;
 
         long now = Calendar.getInstance().getTimeInMillis();
         long datetime = (now - time) / 1000; // 秒
         if (datetime > 24 * 60 * 60) {
-            shortstring = (int) (datetime / (24 * 60 * 60)) + "天";
+            shortString = (int) (datetime / (24 * 60 * 60)) + "天";
         } else if (datetime > 60 * 60) {
-            shortstring = (int) (datetime / (60 * 60)) + "小时";
+            shortString = (int) (datetime / (60 * 60)) + "小时";
         } else if (datetime > 60) {
-            shortstring = (int) (datetime / (60)) + "分钟";
+            shortString = (int) (datetime / (60)) + "分钟";
         } else {
-            shortstring = (int) datetime + "秒";
+            shortString = (int) datetime + "秒";
         }
-        return shortstring;
+        return shortString;
     }
-
-    /**
-     * 获取当前日期上一周的开始日期 （周日）
-     */
-    public static String previousWeekByDate(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(4, 6));
-        int day = Integer.parseInt(date.substring(6));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day);
-        Date newdate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newdate);
-        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        if (1 == dayWeek) {
-            cal.add(Calendar.DAY_OF_MONTH, -1);
-        }
-        cal.setFirstDayOfWeek(Calendar.SUNDAY);//设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
-        int s = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - s);//根据日历的规则，给当前日期减往星期几与一个星期第一天的差值 
-        cal.add(Calendar.WEEK_OF_YEAR, -1);
-        String imptimeBegin = sdf.format(cal.getTime());
-        return imptimeBegin;
-    }
-
-
-    /**
-     * 获取当前日期上一周的结束日期 （周六）
-     */
-    public static String previousWeekEndDayByDate(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(4, 6));
-        int day = Integer.parseInt(date.substring(6));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day);
-        Date newdate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newdate);
-        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        if (1 == dayWeek) {
-            cal.add(Calendar.DAY_OF_MONTH, -1);
-        }
-        cal.setFirstDayOfWeek(Calendar.SUNDAY);//设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
-        int s = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() + (6 - s));
-        cal.add(Calendar.WEEK_OF_YEAR, -1);
-        String imptimeBegin = sdf.format(cal.getTime());
-        return imptimeBegin;
-    }
-
-
-    /**
-     * 获取当前日期当前一周的开始日期 （周日）
-     */
-    public static String getCurrentWeekFirstDayByDate(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(4, 6));
-        int day = Integer.parseInt(date.substring(6));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day);
-        Date newdate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newdate);
-        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        if (1 == dayWeek) {
-            cal.add(Calendar.DAY_OF_MONTH, -1);
-        }
-        cal.setFirstDayOfWeek(Calendar.SUNDAY);//设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
-        int s = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - s);//根据日历的规则，给当前日期减往星期几与一个星期第一天的差值 
-
-        String imptimeBegin = sdf.format(cal.getTime());
-        return imptimeBegin;
-    }
-
-    /**
-     * 获取当前日期当前一周的结束日期 （周六）
-     */
-    public static String getCurrentWeekEndDayByDate(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(4, 6));
-        int day = Integer.parseInt(date.substring(6));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day);
-        Date newdate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newdate);
-        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        if (1 == dayWeek) {
-            cal.add(Calendar.DAY_OF_MONTH, -1);
-        }
-        cal.setFirstDayOfWeek(Calendar.SUNDAY);//设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
-        int s = cal.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
-        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() + (6 - s));
-
-        String imptimeBegin = sdf.format(cal.getTime());
-        return imptimeBegin;
-    }
-
-
-    /**
-     * 返回上一个月的第一天
-     *
-     * @return 20120201
-     */
-    public static String previousMonthByDate(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(4, 6));
-        int day = Integer.parseInt(date.substring(6));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 2, 1);
-        Date newdate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newdate);
-        String imptimeBegin = sdf.format(cal.getTime());
-        return imptimeBegin;
-    }
-
-    /**
-     * 返回下一个月的第一天
-     *
-     * @return 20120401
-     */
-    public static String nextMonthByDate(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(4, 6));
-        int day = Integer.parseInt(date.substring(6));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, 1);
-        Date newdate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newdate);
-        String imptimeBegin = sdf.format(cal.getTime());
-        return imptimeBegin;
-    }
-
-    /**
-     * 返回当前月的第一天
-     *
-     * @return 20120101
-     */
-    public static String getCurrentMonthFirstDayByDate(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(4, 6));
-        int day = Integer.parseInt(date.substring(6));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, 1);
-        Date newdate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newdate);
-        String imptimeBegin = sdf.format(cal.getTime());
-        return imptimeBegin;
-    }
-
 }

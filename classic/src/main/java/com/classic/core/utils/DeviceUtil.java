@@ -28,7 +28,7 @@ public final class DeviceUtil {
 	private static DeviceUtil sDeviceUtil;
 	private static TelephonyManager sTelephonyManager;
 	private DeviceUtil(Context context){
-		this.mContext = context;
+		this.mContext = context.getApplicationContext();
 	}
 	public static DeviceUtil getInstance(Context context){
 		if(null== sDeviceUtil) sDeviceUtil = new DeviceUtil(context);

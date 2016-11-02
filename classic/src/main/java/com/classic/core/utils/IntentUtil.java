@@ -26,7 +26,7 @@ public final class IntentUtil {
     /** 进入拨号界面 */
     public static void dial(@NonNull Context context, @NonNull String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -122,7 +122,7 @@ public final class IntentUtil {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image/jpeg");
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(shareIntent, title));
     }
 
@@ -141,7 +141,7 @@ public final class IntentUtil {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, content);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, titie));
     }
 
@@ -161,6 +161,7 @@ public final class IntentUtil {
         File file = new File(apkPath);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(context.getApplicationContext(), authority, file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(file);
         }
@@ -182,11 +183,12 @@ public final class IntentUtil {
         Uri uri = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(context, authority, file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(file);
         }
         intent.setDataAndType(uri, "image/*");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }

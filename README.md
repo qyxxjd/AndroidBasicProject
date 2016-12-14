@@ -4,6 +4,10 @@
   <a href="LICENSE"><img src="https://img.shields.io/npm/l/express.svg?maxAge=2592000" alt="License" /></a>
 </p>
 
+
+## 此项目停止更新，新项目地址：[BaseProject](https://github.com/qyxxjd/BaseProject)
+
+
 AndroidBasicProject是一个简易的Android基础项目，方便您快速进行开发。
 包含以下内容：
 - BaseActivity、BaseFragment
